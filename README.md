@@ -225,3 +225,4 @@ influenceをどうやって定義するか
 |email|メアド| string |  | false | |
 |name|ユーザーネーム | string | | false | |
 |password|パスワード | string | | false | |
+
