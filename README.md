@@ -23,14 +23,14 @@
 |9|ユーザ	|ユーザはグループを作成可能、facebookのグループのようなもの|
 |10|ユーザ|	フォローしているユーザの投稿から構成されるタイムラインが作成可能|
 |11|ユーザ|	いいね、コメントをするとその投稿をした本人と他にコメントをした人に通知が飛ぶ|
-|12|ユーザ|	ユーザの影響力を集計。投稿にいいねされると1点、投稿をすると1点、コメントにいいねがつくと1点、プロフィールが閲覧されると1点|
+|12|ユーザ|	ユーザの影響力を集計。投稿にいいねされると1点、投稿をすると1点、コメントにいいねがつくと1点、プロフィールが閲覧されると1点。影響力は一部カスタマイズする|
 |13|ユーザ	|おすすめユーザ機能。影響力の高い順に並んだランキングを作成しフォローをおすすめする。|
 |14|ユーザ	|ユーザはメールの通知を受け取るか受け取らないかを設定可能|
 |15|ユーザ|	プロフィールページを作成|
 |16|グループ|グループ内への投稿が可能|
 |17|グループ|グループは招待制、グループメンバーのみが他の人を招待可能|
 |18|グループ|	グループ内の投稿はグループメンバーのみ閲覧可能|
-|19|グループ|グループへの投稿内容はコメントと写真|
+|19|グループ|グループへの投稿内容はコメントと写真、返信はなし、いいねあり|
 |20|管理画面|ユーザが一覧できる|
 |21|管理画面|ユーザ情報の詳細が見られる|
 
@@ -49,43 +49,119 @@
 - フォローユーザー投稿への切り替えはページ遷移とするか、first viewと同じ画面で切り替える same page
 
 ##見積もり
+まずは基本機能から
+
+1. ユーザーモデル関連(devise)
+	1. 新規ユーザー作成
+	1. ユーザーのログイン
+	1. ユーザーのログアウト
+	1. ユーザーのプロフィール変更（hobbyはinfluenceまで後回し、写真も後回し）
+1. フォロー機能（influenceは後回し、とりあえずユーザーを列挙してフォローできるように、フォローは拒否できない、解除は可能）
+	1. ユーザー一覧を表示させる（名前とかのプロフィールは見れる状態）
+	1. フォローできるようにする
+1. 個人投稿(feeds)作成（写真は後回し、とりあえず文字だけ）
+1. ファーストビューとっかかり
+	1. ファーストビュー１（ログイン前）
+	1. ファーストビュー２（ログイン後1)
+	1. ファーストビュー３（ログイン後2、フォロワーの投稿に限定）
+1. 個人投稿続き
+	1. 返信機能
+	1. いいね機能
+	1. 編集機能（公開度のみ）
+1. グループ
+	1. グループ作成
+	1. 招待
+	1. グループ内投稿作成
+	1. グループ内投稿閲覧
+	1. 投稿へのいいね
+1. ファーストビューの改良
+	1. feedsだけでなくグループ投稿も表示できるようにする
+1. 写真関連(carrier wave)
+	1. 投稿
+		1. 個人のfeedで
+		1. グループ内で
+		1. feedへのコメントで
+	1. プロフィール写真
+		1. まず設定できるように
+		1. フォロー画面で表示できるように
+		1. クリックしたら大きくしてもいいかも
+1. 通知機能（mailer）
+	1. いいねした時の通知
+	1. コメントした時の通知
+1. 管理者権限
+	1. namespace使ってまず機能（profileの生年月日見れる）を
+	1. ログイン関連
+		1. 新規登録
+		1. ログイン
+		1. ログアウト
+1. UI
+	1. Bootstrapの導入
+	1. 実装
+1. influence
+	1. 全員共通の影響力(投稿やいいね数）
+	1. ユーザーのhobbyテーブルの作成
+	1. 影響力のカスタマイズ化のアルゴリズム決定
+	1. アルゴリズム実装（投稿数、いいね数、etc..)
+
 ##UI設計
 ##テーブル設計
-###users
-
+###1. users
 
 |column|説明|type|default|null|備考|
 |---|---|---|---|---|---|
 |email|メアド| string |  | false | |
 |name|ユーザーネーム | string | | false | |
 |password|パスワード | string | | false | |
-|age|年齢|integer||true|プロフィール画面で後から設定可能|
-|birth|生年月日|||true|同上|
-|hobby|趣味|string||true|同上|
+|birth_date||date||true|自由登録|
+|portfolio||写真||true|自由登録|
 
-###follow_relationships
+誕生日は登録自由、公開only。
 
+ageはbirth_datesに合体
+
+###2. hobbies
 |column|説明|type|default|null|備考|
 |---|---|---|---|---|---|
-|follower_id||integer||false||
-|followed_id||integer||false||
+|name|趣味|string||false|同上|
 
+これはオススメに使いたいので公開only。
+このテーブル作れば趣味複数登録できる
 
-###user_influence
-
-
+###3. users_hobbies
 |column|説明|type|default|null|備考|
 |---|---|---|---|---|---|
 |user_id||integer||false||
+|hobby_id||integer||false||
+
+###4. follow_relationships
+
+|column|説明|type|default|null|備考|
+|---|---|---|---|---|---|
+|follower_user_id||integer||false||
+|followee_user_id||integer||false||
+
+
+###5. user_influence
+
+|column|説明|type|default|null|備考|
+|---|---|---|---|---|---|
+|influencer_user_id||integer||false||
+|influenced_user_id|影響される側|integer||false||
 |influence|影響力|integer|0|false||
 
-###groups
+influenceをどうやって定義するか
+①自分のフォローしてるユーザーにいいねされまくってるユーザー、趣味共通のユーザー、をオススメしたい（年齢や誕生日はプライバシー感があるのでオススメには使わず）
+②始めたばっかで友達少ないユーザーにはフォロワーめっちゃ多い人もオススメ
+
+つまり、完全カスタマイズではなく、多少は共通部分もあるようにする。そうすればユーザーからすると、使い始めもサポートしてくれる一方で友達増やしたりサービス使えば使うほどオススメの精度が上がったように感じられるはず？
+
+###6. groups
 
 |column|説明|type|default|null|備考|
 |---|---|---|---|---|---|
 |name|グループ名|string||false||
 
-###groups_users
+###7. groups_users
 
 |column|説明|type|default|null|備考|
 |---|---|---|---|---|---|
@@ -93,7 +169,7 @@
 |user_id||integer||false||
 
 
-###feeds
+###8. feeds
 個人の投稿
 
 |column|説明|type|default|null|備考|
@@ -102,7 +178,7 @@
 |content|メッセージ内容|stringか写真||false||
 |privacy|公開度|enum|public|false|public, follower, privateの3つ|
 
-###group_posts
+###9. group_posts
 
 |column|説明|type|default|null|備考|
 |---|---|---|---|---|---|
@@ -111,14 +187,14 @@
 |content|メッセージ内容|stringか写真？||false||
 
 
-###group_posts_favorites
+###10. group_posts_favorites
 
 |column|説明|type|default|null|備考|
 |---|---|---|---|---|---|
 |group_post_id||integer||false||
 |user_id||integer||false||
 
-###replies
+###11. replies
 個人の投稿に対する返信
 
 |column|説明|type|default|null|備考|
@@ -127,14 +203,14 @@
 |user_id||integer||false||
 |content|返信内容|stringか写真||false||
 
-###feeds_favorites
+###12. feeds_favorites
 
 |column|説明|type|default|null|備考|
 |---|---|---|---|---|---|
 |post_id||integer||false||
 |user_id||integer||false||
 
-###replies_favorites
+###13. replies_favorites
 個人投稿への返信へのファボ
 
 |column|説明|type|default|null|備考|
@@ -142,12 +218,13 @@
 |reply_id||integer||false||
 |user_id||integer||false||
 
-###admin
+###14. admin
 
 |column|説明|type|default|null|備考|
 |---|---|---|---|---|---|
 |email|メアド| string |  | false | |
 |name|ユーザーネーム | string | | false | |
 |password|パスワード | string | | false | |
+
 
 
