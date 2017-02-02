@@ -37,16 +37,16 @@
 ###機能要件の未確定部分
 テーブル設計にも関連
 
-- adminとuserを分離するか
-	- userでないadminが存在するか
-- adminは複数人登録可能か
+- adminとuserを分離するか yes
+	- userでないadminが存在するか yes
+- adminは複数人登録可能か yes
 - 投稿は編集・削除可能か
-	- reply含めた流れが消えるのでできれば不可としたい
-	- 編集可能でないとしても、公開度だけは編集可能か
-- ログイン後すぐの画面(first view)において表示する投稿は公開投稿&フォローユーザー投稿&グループ投稿で良いか
-- グループに友人以外のuserを招待可能か
-	- 不可として、相互フォローのみ招待可能とするか、片側フォローでも可とするか
-- フォローユーザー投稿への切り替えはページ遷移とするか、first viewと同じ画面で切り替える
+	- reply含めた流れが消えるのでできれば不可としたい can edit, but can't delete
+	- 編集可能でないとしても、公開度だけは編集可能か yes
+- ログイン後すぐの画面(first view)において表示する投稿は公開投稿&フォローユーザー投稿&グループ投稿で良いか yes
+- グループに友人以外のuserを招待可能か no
+	- 不可として、相互フォローのみ招待可能とするか、片側フォローでも可とするか only follow_followed relationship
+- フォローユーザー投稿への切り替えはページ遷移とするか、first viewと同じ画面で切り替える same page
 
 ##見積もり
 ##UI設計
@@ -110,6 +110,14 @@
 |group_id||integer||false||
 |content|メッセージ内容|stringか写真？||false||
 
+
+###group_posts_favorites
+
+|column|説明|type|default|null|備考|
+|---|---|---|---|---|---|
+|group_post_id||integer||false||
+|user_id||integer||false||
+
 ###replies
 個人の投稿に対する返信
 
@@ -141,3 +149,5 @@
 |email|メアド| string |  | false | |
 |name|ユーザーネーム | string | | false | |
 |password|パスワード | string | | false | |
+
+
