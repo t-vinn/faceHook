@@ -14,7 +14,7 @@ table
       tr 
         td = user.name
         td = user.birth_date
-        td = link_to 'Follow', users_path
+        td = link_to 'Follow',new_user_follow_relationship_path(user)
 
 br
 
