@@ -1,0 +1,21 @@
+h1   Follow_relationships#index
+p
+p
+  | フォローページ！
+
+table
+  thead
+    tr
+      th Name
+      th Born on
+      th colspan="3"
+  tbody
+    - @users.each do |user|
+      tr 
+        td = user.name
+        td = user.birth_date
+        td = link_to 'Follow', users_path
+
+br
+
+= link_to 'Back', users_path
