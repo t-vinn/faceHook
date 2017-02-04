@@ -11,10 +11,12 @@ table
       th colspan="3"
   tbody
     - @users.each do |user|
-      tr 
+      tr
         td = user.name
         td = user.birth_date
-        td = link_to 'Follow',new_user_follow_relationship_path(user)
+        td = link_to 'Follow', user_follow_relationships_path(:follow_relationship=>{:follower_user_id=>current_user.id, :followee_user_id=>user.id}),
+        method: :create, data:{confirm: "Are you sure?"}
+
 
 br
 

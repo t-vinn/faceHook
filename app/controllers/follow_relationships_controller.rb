@@ -4,11 +4,18 @@ class FollowRelationshipsController < ApplicationController
   end
 
   def new
+    @followee = User.find(params[:id])
     @follow_relationship = FollowRelationship.new
   end
 
   def create
+    #@id = FollowRelationship.count + 1
+    #@followee_id = params[:followee_id]
+    #@created = Time.now
+    #@follow_relationship = FollowRelationship.create(id: @id, follower_user_id: current_user.id, followee_user_id: @followee_id, created_at: @created, updated_at: @created)
     @follow_relationship = FollowRelationship.new(params.require(:follow_relationship).permit(:follower_user_id, :followee_user_id))
+    
+
 
     if @follow_relationship.save
       redirect_to user_follow_relationships_path(current_user.id)
