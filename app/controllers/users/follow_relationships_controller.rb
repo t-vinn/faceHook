@@ -1,4 +1,4 @@
-class FollowRelationshipsController < ApplicationController
+class Users::FollowRelationshipsController < Users::BaseController
   def index
     @users = User.all
   end
@@ -14,14 +14,14 @@ class FollowRelationshipsController < ApplicationController
     #@created = Time.now
     #@follow_relationship = FollowRelationship.create(id: @id, follower_user_id: current_user.id, followee_user_id: @followee_id, created_at: @created, updated_at: @created)
     @follow_relationship = FollowRelationship.new(params.require(:follow_relationship).permit(:follower_user_id, :followee_user_id))
-    
+
 
 
     if @follow_relationship.save
-      redirect_to user_follow_relationships_path(current_user.id)
+      redirect_to users_user_follow_relationships_path(current_user.id)
       flash.now[:alert] = 'Followed new person!'
     else
-      redirect_to user_follow_relationships_path(current_user.id)
+      redirect_to users_user_follow_relationships_path(current_user.id)
       flash.now[:alert] = 'follow failed!'
     end
   end
