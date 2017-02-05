@@ -1,0 +1,8 @@
+h1
+  | users/users#index
+p
+  | Find me in app/views/users/users/index.html.erb
+p
+  | トップページ！
+
+= link_to 'Follow', users_user_follow_relationships_path(current_user.id)
