@@ -1,4 +1,4 @@
-class Users::FollowRelationshipsController < Users::BaseController
+class Users::Users::FollowRelationshipsController < Users::BaseController
 
   def index
     @active_relationships = FollowRelationship.where(:follower_user_id => current_user.id)

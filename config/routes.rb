@@ -5,9 +5,7 @@ Rails.application.routes.draw do
   }
   root 'users/users#index'
   namespace :users do
-    resources :users do
-      resources :follow_relationships
-    end
+    resources :follow_relationships, module: :users
   end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
