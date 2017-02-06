@@ -1,7 +1,17 @@
 class Users::FollowRelationshipsController < Users::BaseController
 
   def index
-    @users = User.all
+    @active_relationships = FollowRelationship.where(:follower_user_id => current_user.id)
+
+    @unfollowing_users = User.all
+    @following_users = current_user.following_users
+    @unfollowing_users.delete(current_user) #これだとUser消えちゃう
+    @unfollowing_users.except(@following_users) #これだとUser消えちゃう
+    #@following_users.each do |following_user|
+      #@unfollowing_users.delete(following_user)
+    #end
+
+
   end
 
   def new
