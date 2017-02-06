@@ -1,11 +1,11 @@
-h1   フォローページ
+h1   トップページ
 p
 p
   | ユーザーをフォローしてfaceHookをさらに使いこなそう！
 
 hr
 p
-  | フォロー
+  | まだフォローしてないユーザー
 table
   thead
     tr
@@ -17,10 +17,7 @@ table
       tr
         td = unfollowing_user.name
         td = unfollowing_user.birth_date
-        td = link_to 'Follow', users_user_follow_relationships_path(:follow_relationship=>{:follower_user_id=>current_user.id, :followee_user_id=>unfollowing_user.id}),
-        method: :create, data:{confirm: "Follow this person?"}
+        td = link_to 'Follow', users_follow_relationships_path(:follow_relationship=>{:follower_user_id=>current_user.id, :followee_user_id=>unfollowing_user.id}), method: :create, data:{confirm: "Follow this person?"}
 
 
 br
-
-= link_to 'Back', users_users_path
