@@ -50,15 +50,15 @@ group :development do
 
   gem 'pry-rails'
 
-  # デバッガー
+  # debugger
   gem 'pry-byebug'
   gem 'pry-stack_explorer'
 
-  # pryの入出力に色付け
-  gem 'pry-coolline'
+  # pry input/output colored
   gem 'awesome_print'
+  gem 'pry-coolline'
 
-  # PryでのSQLの結果を綺麗に表示
+  # pry output formatted
   gem 'hirb'
   gem 'hirb-unicode'
   gem 'web-console', '>= 3.3.0'

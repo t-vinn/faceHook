@@ -5,12 +5,10 @@ class FollowRelationship < ApplicationRecord
   validates :followee_user_id, presence: true
   validate :cant_follow_yourself
 
-private
+  private
 
   def cant_follow_yourself
-    if followee_user_id == follower_user_id
-      errors.add(:followee_user_id, "can't follow yourself")
-    end
+    return unless followee_user_id == follower_user_id
+    errors.add(:followee_user_id, "can't follow yourself")
   end
-
 end
