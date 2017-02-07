@@ -2,7 +2,7 @@ module Users
   module Users
     class FollowRelationshipsController < BaseController
       def create
-        if FollowRelationship.create(follow_relatinoship_params)
+        if FollowRelationship.create(follow_relationship_params)
           redirect_to root_path, notice: 'Followed new person!'
         else
           flash.now[:alert] = 'follow failed!'
@@ -19,7 +19,7 @@ module Users
 
       private
 
-        def follow_relatinoship_params
+        def follow_relationship_params
           params.require(:follow_relationship).permit(:follower_user_id, :followee_user_id)
         end
     end
