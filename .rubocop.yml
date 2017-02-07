@@ -51,3 +51,8 @@ Rails/HttpPositionalArguments:
 # Ignore "Missing frozen string literal comment."
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+# Method definitions after `private` or `protected` isolated calls need one extra level of indentation.
+Style/IndentationConsistency:
+  Enabled: true
+  EnforcedStyle: rails

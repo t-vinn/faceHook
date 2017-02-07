@@ -1,17 +1,8 @@
 module Users
   module Users
     class FollowRelationshipsController < BaseController
-      def index; end
-
-      def new
-        @followee = User.find(params[:id])
-        @follow_relationship = FollowRelationship.new
-      end
-
       def create
-        @follow_relationship = FollowRelationship.new(
-          params.require(:follow_relationship).permit(:follower_user_id, :followee_user_id)
-        )
+        @follow_relationship = FollowRelationship.new(follow_relatinoship_params)
 
         if @follow_relationship.save!
           redirect_to root_path, notice: 'Followed new person!'
@@ -29,6 +20,12 @@ module Users
           flash.now[:notice] = 'An error occured and faceHook failed to delete your follow.'
         end
       end
+
+      private
+
+        def follow_relatinoship_params
+          params.require(:follow_relationship).permit(:follower_user_id, :followee_user_id)
+        end
     end
   end
 end
