@@ -11,5 +11,6 @@ class Users::UsersController < Users::BaseController
       #@unfollowing_users.delete(following_user)
     #end
     @unfollowing_users = User.all - @following_users
+    @unfollowing_users.delete(current_user)
   end
 end
