@@ -9,17 +9,22 @@ class Users::Users::FollowRelationshipsController < Users::BaseController
   end
 
   def create
-    #@id = FollowRelationship.count + 1
-    #@followee_id = params[:followee_id]
-    #@created = Time.now
-    #@follow_relationship = FollowRelationship.create(id: @id, follower_user_id: current_user.id, followee_user_id: @followee_id, created_at: @created, updated_at: @created)
     @follow_relationship = FollowRelationship.new(params.require(:follow_relationship).permit(:follower_user_id, :followee_user_id))
 
     if @follow_relationship.save!
-      redirect_to users_follow_relationships_path(current_user.id)
-      flash.now[:alert] = 'Followed new person!'
+      redirect_to root_path, notice: 'Followed new person!'
     else
       flash.now[:alert] = 'follow failed!'
+    end
+  end
+
+  def destroy
+    @follow_relationship = FollowRelationship.find(params[:id])
+
+    if @follow_relationship.destroy
+      redirect_to root_path, notice: 'Your follow deleted.'
+    else
+      flash.now[:notice] = 'An error occured and faceHook failed to delete your follow.'
     end
   end
 end

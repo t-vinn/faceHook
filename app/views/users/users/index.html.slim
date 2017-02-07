@@ -19,5 +19,19 @@ table
         td = unfollowing_user.birth_date
         td = link_to 'Follow', users_follow_relationships_path(:follow_relationship=>{:follower_user_id=>current_user.id, :followee_user_id=>unfollowing_user.id}), method: :create, data:{confirm: "Follow this person?"}
 
+p
+  | フォロー済ユーザー
+table
+  thead
+    tr
+      th Name
+      th Born on
+      th colspan="3"
+  tbody
+    - @following_users.each do |following_user|
+      tr
+        td = following_user.name
+        td = following_user.birth_date
+        td = link_to 'Unfollow', users_follow_relationship_path(current_user.active_relationships.find_by(followee_user_id: following_user.id)), method: :delete, data:{confirm: "Unfollow this person?"}
 
 br
