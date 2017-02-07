@@ -2,9 +2,7 @@ module Users
   module Users
     class FollowRelationshipsController < BaseController
       def create
-        @follow_relationship = FollowRelationship.new(follow_relatinoship_params)
-
-        if @follow_relationship.save!
+        if FollowRelationship.create(follow_relatinoship_params)
           redirect_to root_path, notice: 'Followed new person!'
         else
           flash.now[:alert] = 'follow failed!'
@@ -12,9 +10,7 @@ module Users
       end
 
       def destroy
-        @follow_relationship = FollowRelationship.find(params[:id])
-
-        if @follow_relationship.destroy
+        if FollowRelationship.find(params[:id]).destroy
           redirect_to root_path, notice: 'Your follow deleted.'
         else
           flash.now[:notice] = 'An error occured and faceHook failed to delete your follow.'
