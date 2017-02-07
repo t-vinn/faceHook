@@ -47,3 +47,7 @@ Documentation:
 # No HttpPositionalArguments in Rails 4.2
 Rails/HttpPositionalArguments:
   Enabled: false
+
+# Ignore "Missing frozen string literal comment."
+Style/FrozenStringLiteralComment:
+  Enabled: false
