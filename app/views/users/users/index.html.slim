@@ -32,6 +32,6 @@ table
       tr
         td = following_user.name
         td = following_user.birth_date
-        td = link_to 'Unfollow', users_follow_relationship_path(current_user.active_relationships.find_by(followee_user_id: following_user.id)), method: :delete, data:{confirm: "Unfollow this person?"}
+        td = link_to 'Unfollow', users_follow_relationship_path(@follow_relationships_index_by_followee_user_id[following_user.id]), method: :delete, data:{confirm: "Unfollow this person?"}
 
 br
