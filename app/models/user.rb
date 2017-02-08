@@ -16,4 +16,5 @@ class User < ApplicationRecord
            foreign_key: 'followee_user_id', dependent: :destroy
   has_many :following_users, through: :active_relationships, source: :followee_user
   has_many :follower_users, through: :passive_relationships, source: :follower_user
+  has_many :feeds
 end
