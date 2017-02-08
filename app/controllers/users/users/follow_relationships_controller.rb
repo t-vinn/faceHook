@@ -2,7 +2,9 @@ module Users
   module Users
     class FollowRelationshipsController < BaseController
       def create
-        if FollowRelationship.create(follow_relationship_params)
+        @follow_relationship = FollowRelationship.new
+        @follow_relationship.assign_attributes(follower_user_id: current_user.id, followee_user_id: params[:followee_user_id])
+        if @follow_relationship.save!
           redirect_to root_path, notice: 'Followed new person!'
         else
           flash.now[:alert] = 'follow failed!'
