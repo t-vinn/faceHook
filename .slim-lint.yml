@@ -26,7 +26,7 @@ linters:
     max: 120
 
   RuboCop:
-    enabled: false
+    enabled: true
     # These cops are incredibly noisy since the Ruby we extract from Slim
     # templates isn't well-formatted, so we ignore them.
     ignored_cops:
@@ -46,6 +46,8 @@ linters:
       - Style/TrailingBlankLines
       - Style/TrailingWhitespace
       - Style/WhileUntilModifier
+      - Style/MultilineOperationIndentation
+      - Metrics/BlockLength
 
   TagCase:
     enabled: true
