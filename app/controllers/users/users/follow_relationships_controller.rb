@@ -3,7 +3,10 @@ module Users
     class FollowRelationshipsController < BaseController
       def create
         @follow_relationship = FollowRelationship.new
-        @follow_relationship.assign_attributes(follower_user_id: current_user.id, followee_user_id: params[:followee_user_id])
+        @follow_relationship.assign_attributes(
+          follower_user_id: current_user.id,
+          followee_user_id: params[:followee_user_id]
+        )
         if @follow_relationship.save!
           redirect_to root_path, notice: 'Followed new person!'
         else
