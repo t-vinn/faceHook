@@ -1,0 +1,19 @@
+h1 個人投稿
+p 個人の投稿には公開・フォロワーのみ・非公開の3つがある。
+
+//ここに多分フィード一覧？
+table
+  thead
+    tr
+      th name
+      th message
+      th colspan='3'
+  tbody
+    - @feeds.each do |feed|
+      tr
+        td = feed.user_id
+        td = feed.content
+
+
+//フィード新規投稿フォーム
+= render 'form'
