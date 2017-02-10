@@ -7,9 +7,9 @@ module Users
           privacy: 1,
           user: current_user.following_users
         ).or(Feed.where(
-          privacy: 0
+               privacy: 0
         )).or(Feed.where(
-          user: current_user
+                user: current_user
         ))
       end
 
