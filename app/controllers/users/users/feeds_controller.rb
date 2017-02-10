@@ -11,8 +11,7 @@ module Users
         if @feed.save
           redirect_to '/users/feeds', notice: 'a new feed created'
         else
-          flash.now[:alert] = 'the message is too short'
-          render :index
+          redirect_to '/users/feeds', notice: 'your message is too long!'
         end
       end
 

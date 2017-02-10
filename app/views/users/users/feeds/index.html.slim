@@ -5,15 +5,16 @@ p 個人の投稿には公開・フォロワーのみ・非公開の3つがあ�
 table
   thead
     tr
-      th name
       th message
-      th colspan='3'
+      th name
+      th posted at
   tbody
     - @feeds.each do |feed|
       tr
-        td = feed.user_id
         td = feed.content
-
-
+        td = feed.user.name
+        td = feed.created_at
+br
+hr
 //フィード新規投稿フォーム
 = render 'form'
