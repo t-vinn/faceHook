@@ -37,6 +37,7 @@ group :development, :test do
   gem 'rubocop'
   gem 'rubocop-rspec'
   gem 'rubycritic'
+  gem 'slim_lint'
 end
 
 group :development do
