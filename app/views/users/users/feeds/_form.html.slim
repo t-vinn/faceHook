@@ -1,15 +1,15 @@
 = form_for @feed, url: { action: 'create' } do |f|
   div class ='field'
-    = f.label :content, '投稿内容'
-    = f.text_field :content
+    = f.label :content, '投稿内容：'
+    = f.text_field :content, size: 60, maxlength: 140
     br
-    = f.label :privacy, '公開度'
-      = f.radio_button :privacy, 'public_feed'
-      = f.label :privacy, '公開', value: 0
-      = f.radio_button :privacy, 'follower_only_feed'
-      = f.label :privacy, 'フォロワー', value: 1
-      = f.radio_button :privacy, 'private_feed'
-      = f.label :privacy, '非公開', value: 2
+    = f.label :privacy, '公開度：'
+    = f.radio_button :privacy, 'public_feed'
+    = f.label :privacy, '公開', value: 0
+    = f.radio_button :privacy, 'follower_only_feed'
+    = f.label :privacy, 'フォロワー', value: 1
+    = f.radio_button :privacy, 'private_feed'
+    = f.label :privacy, '非公開', value: 2
     = f.hidden_field :user_id, value: current_user.id
 
   div class='actions'
