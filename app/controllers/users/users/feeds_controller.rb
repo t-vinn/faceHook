@@ -14,11 +14,10 @@ module Users
       end
 
       def create
-        @feed = Feed.new(feed_params)
-        if @feed.save
-          redirect_to '/users/feeds', notice: 'a new feed created'
+        if Feed.create(feed_params)
+          redirect_to users_feeds_path, notice: 'a new feed created'
         else
-          redirect_to '/users/feeds', notice: 'your message is too long!'
+          redirect_to users_feeds_path, notice: 'your message is too long!'
         end
       end
 
