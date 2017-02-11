@@ -14,10 +14,10 @@ module Users
       end
 
       def create
-        if Feed.create(feed_params)
+        if Feed.create!(feed_params)
           redirect_to users_feeds_path, notice: 'a new feed created'
         else
-          redirect_to users_feeds_path, notice: 'your message is too long!'
+          redirect_to users_feeds_path, notice: 'your message is too short or long!'
         end
       end
 
