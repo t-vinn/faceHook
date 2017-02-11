@@ -1,4 +1,4 @@
-= form_for @feed, url: { action: 'create' } do |f|
+= form_for ([:users, @feed]) do |f|
   div class ='field'
     = f.label :content, '投稿内容：'
     = f.text_field :content, size: 60, maxlength: 140
