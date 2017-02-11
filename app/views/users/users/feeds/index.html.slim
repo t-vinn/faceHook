@@ -17,6 +17,6 @@ table
 br
 hr
 //フィード新規投稿フォーム
-= render 'form'
+= render partial: 'form', locals: { feed: @feed }
 hr
 = link_to 'Back', root_path
