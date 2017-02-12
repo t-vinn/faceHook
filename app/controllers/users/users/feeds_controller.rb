@@ -11,6 +11,10 @@ module Users
         )).or(Feed.where(
                 user: current_user
         ))
+        @following_feeds = Feed.where(
+          privacy: [0, 1],
+          user: current_user.following_users
+        )
       end
 
       def create

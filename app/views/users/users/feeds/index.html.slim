@@ -1,20 +1,41 @@
 h1 個人投稿
 p 個人の投稿には公開・フォロワーのみ・非公開の3つがある。
+= stylesheet_link_tag "feed/feed", :media => "all"
+div data-turbolinks="false"
+  a href='#all' All
+  a href='#following' Following
 
-//ここにフィード一覧
-table
-  thead
-    tr
-      th message
-      th name
-      th posted at
-  tbody
-    - @feeds.each do |feed|
+div id='all' class='content' 
+  table
+    thead
       tr
-        td = feed.content
-        td = feed.user.name
-        td = feed.created_at
+        th message
+        th name
+        th posted at
+    br
+    tbody
+      - @feeds.each do |feed|
+        tr
+          td = feed.content
+          td = feed.user.name
+          td = feed.created_at
+hr
+
+div id='following' class='content'
+  table
+    thead
+      tr
+        th message
+        th name
+        th posted at
+    tbody
+      - @following_feeds.each do |following_feed|
+        tr
+          td = following_feed.content
+          td = following_feed.user.name
+          td = following_feed.created_at
 br
+
 hr
 //フィード新規投稿フォーム
 = render partial: 'form', locals: { feed: @feed }
