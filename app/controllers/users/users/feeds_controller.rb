@@ -3,10 +3,10 @@ module Users
     class FeedsController < BaseController
       def index
         @feed = Feed.new
-        @feeds = Feed.follower_only_feed.where(
+        @feeds = Feed.share_with_follower.where(
           user: current_user.following_users
-        ).or(Feed.public_feed).or(Feed.where(
-                                    user: current_user
+        ).or(Feed.share_with_all).or(Feed.where(
+                                       user: current_user
         ))
       end
 
