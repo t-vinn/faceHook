@@ -12,6 +12,7 @@ div id='all' class='content'
         th message
         th name
         th posted at
+        th colspan='1'
     br
     tbody
       - @feeds.each do |feed|
@@ -19,6 +20,8 @@ div id='all' class='content'
           td = feed.content
           td = feed.user.name
           td = feed.created_at
+          td = link_to_if(feed.user_id == current_user.id, "Edit privacy", edit_users_feed_path(feed)) {}
+
 hr
 
 div id='following' class='content'

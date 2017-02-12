@@ -25,6 +25,20 @@ module Users
         end
       end
 
+      def edit
+        @feed = Feed.find(params[:id])
+      end
+
+      def update
+        @feed = Feed.find(params[:id])
+        if @feed.update(feed_params)
+          redirect_to users_feeds_path, notice: 'the privacy of your feed revised'
+        else
+          flash.now[:alert] = "We couldn't update the privacy."
+          render :edit
+        end
+      end
+
       private
 
         def feed_params
