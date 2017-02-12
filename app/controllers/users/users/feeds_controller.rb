@@ -3,6 +3,7 @@ module Users
     class FeedsController < BaseController
       def index
         @feed = Feed.new
+        # show public feeds, current_user's own feeds, and feeds by users current_user follows
         @feeds = Feed.share_with_all.or(Feed.where(
                                           user: current_user
         )).or(Feed.share_with_follower.where(
