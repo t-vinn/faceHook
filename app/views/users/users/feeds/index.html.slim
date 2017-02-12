@@ -20,7 +20,7 @@ div id='all' class='content'
           td = feed.content
           td = feed.user.name
           td = feed.created_at
-          td = link_to_if(feed.user_id == current_user.id, "Edit privacy", edit_users_feed_path(feed)) {}
+          td = link_to_if(feed.user_id == current_user.id, 'Edit privacy', edit_users_feed_path(feed)) {}
 
 hr
 
