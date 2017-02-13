@@ -16,3 +16,17 @@ h2
   .actions
     = f.submit 'Log in'
 = render 'devise/shared/links'
+
+h3 公開投稿一覧
+table
+  thead
+    tr
+      th message
+      th name
+      th posted at
+  tbody
+    - @public_feeds.each do |feed|
+      tr
+        td = feed.content
+        td = feed.user.name
+        td = feed.created_at

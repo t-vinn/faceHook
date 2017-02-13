@@ -1,0 +1,17 @@
+= form_for [:users, feed] do |f|
+  div class ='field'
+    = f.label :content, '投稿内容：'
+    = f.text_field :content, size: 60, maxlength: 140
+    br
+    = f.label :privacy, '公開度：'
+    = f.radio_button :privacy, 'share_with_all'
+    = f.label :privacy, '公開', value: 0
+    = f.radio_button :privacy, 'share_with_follower'
+    = f.label :privacy, 'フォロワー', value: 1
+    = f.radio_button :privacy, 'share_with_only_me'
+    = f.label :privacy, '非公開', value: 2
+    = f.hidden_field :user_id, value: current_user.id
+
+  div class='actions'
+    = f.submit
+
