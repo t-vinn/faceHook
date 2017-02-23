@@ -3,13 +3,11 @@ module Users
     class FeedsController < BaseController
       def index
         @feed = Feed.new
-        @feeds = Feed.where(
-          privacy: 1,
-          user: current_user.following_users
-        ).or(Feed.where(
-               privacy: 0
-        )).or(Feed.where(
-                user: current_user
+        # show public feeds, current_user's own feeds, and feeds by users current_user follows
+        @feeds = Feed.share_with_all.or(Feed.where(
+                                          user: current_user
+        )).or(Feed.share_with_follower.where(
+                user: current_user.following_users
         ))
         @following_feeds = Feed.where(
           privacy: [0, 1],

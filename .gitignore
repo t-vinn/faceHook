@@ -19,5 +19,6 @@ vendor/bundle
 .byebug_history
 
 *.swp
+*.swo
 
 config/secrets.yml
