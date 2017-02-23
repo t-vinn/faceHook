@@ -10,7 +10,7 @@ module Users
                 user: current_user.following_users
         ))
         @following_feeds = Feed.where(
-          privacy: [0, 1],
+          privacy: [:share_with_all, :share_with_follower],
           user: current_user.following_users
         )
       end
