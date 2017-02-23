@@ -1,40 +1,51 @@
+link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css"
+script src="https://code.jquery.com/jquery-2.2.3.js"
+script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"
+
+
 h1 個人投稿
 p 個人の投稿には公開・フォロワーのみ・非公開の3つがある。
 = stylesheet_link_tag 'feed/feed', media: 'all'
-div data-turbolinks="false"
-  a href='#all' All
-  a href='#following' Following
 
-div id='all' class='content'
-  table
-    thead
-      tr
-        th message
-        th name
-        th posted at
-    br
-    tbody
-      - @feeds.each do |feed|
-        tr
-          td = feed.content
-          td = feed.user.name
-          td = feed.created_at
-hr
+ul class="nav nav-tabs"
+  li class='nav-item'
+    a href='#all' class='nav-link' data-toggle='tab' All
+  li class='nav-item'
+    a href='#following' class='nav-link' data-toggle='tab' Following
 
-div id='following' class='content'
-  table
-    thead
-      tr
-        th message
-        th name
-        th posted at
-    tbody
-      - @following_feeds.each do |following_feed|
+
+
+
+div class='tab-content'
+  div id='all' class='tab-pane active'
+    table
+      thead
         tr
-          td = following_feed.content
-          td = following_feed.user.name
-          td = following_feed.created_at
-br
+          th message
+          th name
+          th posted at
+      tbody
+        - @feeds.each do |feed|
+          tr
+            td = feed.content
+            td = feed.user.name
+            td = feed.created_at
+  hr
+
+  div id='following' class='tab-pane'
+    table
+      thead
+        tr
+          th message
+          th name
+          th posted at
+      tbody
+        - @following_feeds.each do |following_feed|
+          tr
+            td = following_feed.content
+            td = following_feed.user.name
+            td = following_feed.created_at
+  br
 
 hr
 //フィード新規投稿フォーム
