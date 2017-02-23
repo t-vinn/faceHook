@@ -2,7 +2,6 @@ link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/cs
 script src="https://code.jquery.com/jquery-2.2.3.js"
 script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"
 
-
 h1 個人投稿
 p 個人の投稿には公開・フォロワーのみ・非公開の3つがある。
 = stylesheet_link_tag 'feed/feed', media: 'all'
@@ -12,9 +11,6 @@ ul class="nav nav-tabs"
     a href='#all' class='nav-link' data-toggle='tab' All
   li class='nav-item'
     a href='#following' class='nav-link' data-toggle='tab' Following
-
-
-
 
 div class='tab-content'
   div id='all' class='tab-pane active'
@@ -31,7 +27,6 @@ div class='tab-content'
             td = feed.user.name
             td = feed.created_at
   hr
-
   div id='following' class='tab-pane'
     table
       thead
@@ -46,8 +41,8 @@ div class='tab-content'
             td = following_feed.user.name
             td = following_feed.created_at
   br
-
 hr
+
 //フィード新規投稿フォーム
 = render partial: 'form', locals: { feed: @feed }
 hr
