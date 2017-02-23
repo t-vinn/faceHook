@@ -1,10 +1,5 @@
-link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css"
-script src="https://code.jquery.com/jquery-2.2.3.js"
-script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"
-
 h1 個人投稿
 p 個人の投稿には公開・フォロワーのみ・非公開の3つがある。
-= stylesheet_link_tag 'feed/feed', media: 'all'
 
 ul class="nav nav-tabs"
   li class='nav-item'
@@ -26,7 +21,7 @@ div class='tab-content'
             td = feed.content
             td = feed.user.name
             td = feed.created_at
-  hr
+
   div id='following' class='tab-pane'
     table
       thead
