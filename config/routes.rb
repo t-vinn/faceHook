@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     resources :follow_relationships, only: [:create, :destroy], module: :users
     resources :feeds, module: :users do
       resources :replies, only: [:new, :create]
+      resources :feeds_favorites, only: [:create, :destroy]
     end
   end
 
