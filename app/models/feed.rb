@@ -4,4 +4,5 @@ class Feed < ApplicationRecord
   validates :user_id, presence: true
   validates :content, presence: true, length: { in: 1..140 }
   validates :privacy, presence: true
+  has_many :replies
 end
