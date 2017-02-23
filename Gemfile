@@ -71,4 +71,14 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # Devise
 gem 'devise'
 
+# slim
 gem 'slim-rails'
+
+# bootstrap
+gem 'bootstrap-sass'
+
+# compass
+gem 'compass-rails'
+
+# font-awesome
+gem 'font-awesome-rails'
