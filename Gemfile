@@ -80,5 +80,5 @@ gem 'bootstrap-sass'
 # compass
 gem 'compass-rails'
 
-#font-awesome
+# font-awesome
 gem 'font-awesome-rails'
