@@ -12,7 +12,7 @@ div id='all' class='content'
         th message
         th name
         th posted at
-        th colspan='1'
+        th colspan='2'
     br
     tbody
       - @feeds.each do |feed|
@@ -20,6 +20,7 @@ div id='all' class='content'
           td = feed.content
           td = feed.user.name
           td = feed.created_at
+          td = link_to 'Reply', new_users_feed_reply_path(feed)
           td = link_to_if(feed.user_id == current_user.id, 'Edit privacy', edit_users_feed_path(feed)) {}
 
 hr
@@ -31,12 +32,15 @@ div id='following' class='content'
         th message
         th name
         th posted at
+        th colspan ='1'
     tbody
       - @following_feeds.each do |following_feed|
         tr
           td = following_feed.content
           td = following_feed.user.name
           td = following_feed.created_at
+          td = link_to 'Reply', new_users_feed_reply_path(following_feed)
+
 br
 
 hr
