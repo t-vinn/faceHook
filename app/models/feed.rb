@@ -5,5 +5,5 @@ class Feed < ApplicationRecord
   validates :content, presence: true, length: { in: 1..140 }
   validates :privacy, presence: true
   has_many :replies
-  has_many :feeds_favorites
+  has_many :feed_favorites
 end

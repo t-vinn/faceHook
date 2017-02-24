@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170223111003) do
+ActiveRecord::Schema.define(version: 20170224031506) do
+
+  create_table "feed_favorites", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "user_id",    null: false
+    t.integer  "feed_id",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["feed_id"], name: "index_feed_favorites_on_feed_id", using: :btree
+    t.index ["user_id"], name: "index_feed_favorites_on_user_id", using: :btree
+  end
 
   create_table "feeds", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id",                          null: false
@@ -18,15 +27,6 @@ ActiveRecord::Schema.define(version: 20170223111003) do
     t.integer  "privacy",    limit: 1, default: 0, null: false
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
-  end
-
-  create_table "feeds_favorites", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer  "user_id",    null: false
-    t.integer  "feed_id",    null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["feed_id"], name: "index_feeds_favorites_on_feed_id", using: :btree
-    t.index ["user_id"], name: "index_feeds_favorites_on_user_id", using: :btree
   end
 
   create_table "follow_relationships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -66,8 +66,8 @@ ActiveRecord::Schema.define(version: 20170223111003) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
-  add_foreign_key "feeds_favorites", "feeds"
-  add_foreign_key "feeds_favorites", "users"
+  add_foreign_key "feed_favorites", "feeds"
+  add_foreign_key "feed_favorites", "users"
   add_foreign_key "replies", "feeds"
   add_foreign_key "replies", "users"
 end

@@ -1,4 +1,4 @@
-class FeedsFavorite < ApplicationRecord
+class FeedFavorite < ApplicationRecord
   belongs_to :user
   belongs_to :feed
   validates :user_id, presence: true
