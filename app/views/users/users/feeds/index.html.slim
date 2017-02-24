@@ -7,8 +7,8 @@ ul.nav.nav-tabs
   li.nav-item
     a.nav-link href='#following' data-toggle='tab' Following
 
-div.tab-content
-  div.tab-pane.active#all
+.tab-content
+  .tab-pane.active#all
     table
       thead
         tr
@@ -22,7 +22,7 @@ div.tab-content
             td = feed.user.name
             td = feed.created_at
 
-  div.tab-pane#following
+  .tab-pane#following
     table
       thead
         tr

@@ -1,5 +1,5 @@
 = form_for [:users, feed] do |f|
-  div.field
+  .field
     = f.label :content, '投稿内容：'
     = f.text_field :content, size: 60, maxlength: 140
     br
@@ -12,6 +12,6 @@
     = f.label :privacy, '非公開', value: 2
     = f.hidden_field :user_id, value: current_user.id
 
-  div.actions
+  .actions
     = f.submit
 
