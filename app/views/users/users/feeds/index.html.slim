@@ -53,6 +53,11 @@ ul.nav.nav-tabs
             td = following_feed.user.name
             td = following_feed.created_at
             td = link_to 'Reply', new_users_feed_reply_path(following_feed)
+          - following_feed.replies.each do |reply|
+            tr
+              td = '<REPLY> ' << reply.content
+              td = reply.user.name
+              td = reply.created_at
   br
 hr
 
