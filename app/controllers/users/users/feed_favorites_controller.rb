@@ -2,10 +2,11 @@ module Users
   module Users
     class FeedFavoritesController < BaseController
       def create
-        if FeedFavorite.create!(user_id: current_user.id, feed_id: params[:feed_id])
+        feed_favorite = FeedFavorite.new(user_id: current_user.id, feed_id: params[:feed_id])
+        if feed_favorite.save
           redirect_to users_feeds_path, notice: 'You liked a feed!'
         else
-          redirect_to root_path, notice: 'FAIL'
+          redirect_to users_feeds_path, notice: 'FAIL. Try again.'
         end
       end
 
