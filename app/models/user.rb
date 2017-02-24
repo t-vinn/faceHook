@@ -19,4 +19,5 @@ class User < ApplicationRecord
   has_many :feeds
   has_many :replies
   has_many :feed_favorites
+  has_many :reply_favorites
 end
