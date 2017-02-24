@@ -1,21 +1,43 @@
 h1 個人投稿
-p 個人の投稿には公開・フォロワーのみ・非公開の3つがある。
+//個人の投稿には公開・フォロワーのみ・非公開の3つがある。
 
-//ここにフィード一覧
-table
-  thead
-    tr
-      th message
-      th name
-      th posted at
-  tbody
-    - @feeds.each do |feed|
-      tr
-        td = feed.content
-        td = feed.user.name
-        td = feed.created_at
-br
+ul.nav.nav-tabs
+  li.nav-item
+    a.nav-link href='#all' data-toggle='tab' All
+  li.nav-item
+    a.nav-link href='#following' data-toggle='tab' Following
+
+.tab-content
+  .tab-pane.active#all
+    table
+      thead
+        tr
+          th message
+          th name
+          th posted at
+      tbody
+        - @feeds.each do |feed|
+          tr
+            td = feed.content
+            td = feed.user.name
+            td = feed.created_at
+
+  .tab-pane#following
+    table
+      thead
+        tr
+          th message
+          th name
+          th posted at
+      tbody
+        - @following_feeds.each do |following_feed|
+          tr
+            td = following_feed.content
+            td = following_feed.user.name
+            td = following_feed.created_at
+  br
 hr
+
 //フィード新規投稿フォーム
 = render partial: 'form', locals: { feed: @feed }
 hr

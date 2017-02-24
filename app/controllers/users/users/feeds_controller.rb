@@ -9,6 +9,10 @@ module Users
         )).or(Feed.share_with_follower.where(
                 user: current_user.following_users
         ))
+        @following_feeds = Feed.where(
+          privacy: [:share_with_all, :share_with_follower],
+          user: current_user.following_users
+        )
       end
 
       def create
