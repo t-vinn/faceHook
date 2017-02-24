@@ -23,9 +23,13 @@ ul.nav.nav-tabs
             td = feed.user.name
             td = feed.created_at
             td = link_to 'Reply', new_users_feed_reply_path(feed)
-            td = link_to_if(feed.user_id == current_user.id, 'Edit privacy', edit_users_feed_path(feed)) do
-               = link_to 'Favorite', users_feed_feed_favorites_path(feed),
-                 method: :post, data: { confirm: 'You like this feed?' }
+            - if feed.user_id == current_user.id
+              td = link_to 'Edit privacy', edit_users_feed_path(feed)
+            - elsif feed.feed_favorites.exists?(user_id: current_user.id)
+              td = link_to 'Remove Favorite', users_feed_feed_favorite_path(feed, @feed_favorites_index_by_feed_id[feed.id]), method: :delete
+            - else
+              td = link_to 'Favorite', users_feed_feed_favorites_path(feed),
+                  method: :post
             td = feed.feed_favorites.count
           - feed.replies.each do |reply|
             tr

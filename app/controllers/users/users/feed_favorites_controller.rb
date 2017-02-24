@@ -9,7 +9,13 @@ module Users
         end
       end
 
-      def destroy; end
+      def destroy
+        if FeedFavorite.find(params[:id]).destroy
+          redirect_to users_feeds_path, notice: 'Your favorite deleted.'
+        else
+          flash.now[:notice] = 'An error occured and faceHook failed to delete your follow.'
+        end
+      end
     end
   end
 end

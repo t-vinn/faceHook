@@ -13,6 +13,8 @@ module Users
           privacy: [:share_with_all, :share_with_follower],
           user: current_user.following_users
         )
+        @feed_favorites_index_by_feed_id = \
+          current_user.feed_favorites.index_by(&:feed_id)
       end
 
       def create
