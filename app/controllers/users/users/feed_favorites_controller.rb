@@ -6,7 +6,7 @@ module Users
         if FeedFavorite.create!(user_id: current_user.id, feed_id: feed.id)
           redirect_to users_feeds_path, notice: 'You liked a feed!'
         else
-          flash.now[:alert] = 'Failed!'
+          redirect_to root_path, notice: 'FAIL'
         end
       end
 

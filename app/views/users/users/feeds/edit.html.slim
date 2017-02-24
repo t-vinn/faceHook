@@ -5,7 +5,7 @@ p 元のコメント内容:
 p = @feed.content
 hr
 = form_for [:users, @feed] do |f|
-  div class='field'
+  .field
     = f.label :privacy, '公開度：'
     = f.radio_button :privacy, 'public_feed'
     = f.label :privacy, '公開', value: 0
@@ -15,5 +15,5 @@ hr
     = f.label :privacy, '非公開', value: 2
     = f.hidden_field :user_id, value: current_user.id
 
-  div class='actions'
+  .actions
     = f.submit
