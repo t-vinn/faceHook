@@ -1,14 +1,14 @@
 h1 個人投稿
 //個人の投稿には公開・フォロワーのみ・非公開の3つがある。
 
-ul class="nav nav-tabs"
-  li class='nav-item'
-    a href='#all' class='nav-link' data-toggle='tab' All
-  li class='nav-item'
-    a href='#following' class='nav-link' data-toggle='tab' Following
+ul.nav.nav-tabs
+  li.nav-item
+    a.nav-link href='#all' data-toggle='tab' All
+  li.nav-item
+    a.nav-link href='#following' data-toggle='tab' Following
 
-div class='tab-content'
-  div id='all' class='tab-pane active'
+div.tab-content
+  div.tab-pane.active#all
     table
       thead
         tr
@@ -22,7 +22,7 @@ div class='tab-content'
             td = feed.user.name
             td = feed.created_at
 
-  div id='following' class='tab-pane'
+  div.tab-pane#following
     table
       thead
         tr
