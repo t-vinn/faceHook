@@ -1,54 +1,52 @@
 h1 個人投稿
-p 個人の投稿には公開・フォロワーのみ・非公開の3つがある。
-= stylesheet_link_tag 'feed/feed', media: 'all'
-div data-turbolinks="false"
-  a href='#all' All
-  a href='#following' Following
+//個人の投稿には公開・フォロワーのみ・非公開の3つがある。
 
-div id='all' class='content'
-  table
-    thead
-      tr
-        th message
-        th name
-        th posted at
-        th colspan='2'
-    br
-    tbody
-      - @feeds.each do |feed|
+ul.nav.nav-tabs
+  li.nav-item
+    a.nav-link href='#all' data-toggle='tab' All
+  li.nav-item
+    a.nav-link href='#following' data-toggle='tab' Following
+
+.tab-content
+  .tab-pane.active#all
+    table
+      thead
         tr
-          td = feed.content
-          td = feed.user.name
-          td = feed.created_at
-          td = link_to 'Reply', new_users_feed_reply_path(feed)
-          td = link_to_if(feed.user_id == current_user.id, 'Edit privacy', edit_users_feed_path(feed)) {}
-        - feed.replies.each do |reply|
+          th message
+          th name
+          th posted at
+          th colspan='2'
+      tbody
+        - @feeds.each do |feed|
           tr
-            td = '<REPLY> ' << reply.content
-            td = reply.user.name
-            td = reply.created_at
-
-hr
-
-div id='following' class='content'
-  table
-    thead
-      tr
-        th message
-        th name
-        th posted at
-        th colspan ='1'
-    tbody
-      - @following_feeds.each do |following_feed|
+            td = feed.content
+            td = feed.user.name
+            td = feed.created_at
+            td = link_to 'Reply', new_users_feed_reply_path(feed)
+            td = link_to_if(feed.user_id == current_user.id, 'Edit privacy', edit_users_feed_path(feed)) {}
+          - feed.replies.each do |reply|
+            tr
+              td = '<REPLY> ' << reply.content
+              td = reply.user.name
+              td = reply.created_at
+  .tab-pane#following
+    table
+      thead
         tr
-          td = following_feed.content
-          td = following_feed.user.name
-          td = following_feed.created_at
-          td = link_to 'Reply', new_users_feed_reply_path(following_feed)
-
-br
-
+          th message
+          th name
+          th posted at
+          th colspan ='1'
+      tbody
+        - @following_feeds.each do |following_feed|
+          tr
+            td = following_feed.content
+            td = following_feed.user.name
+            td = following_feed.created_at
+            td = link_to 'Reply', new_users_feed_reply_path(following_feed)
+  br
 hr
+
 //フィード新規投稿フォーム
 = render partial: 'form', locals: { feed: @feed }
 hr
