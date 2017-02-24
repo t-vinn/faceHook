@@ -26,7 +26,9 @@ ul.nav.nav-tabs
             - if feed.user_id == current_user.id
               td = link_to 'Edit privacy', edit_users_feed_path(feed)
             - elsif feed.feed_favorites.exists?(user_id: current_user.id)
-              td = link_to 'Remove Favorite', users_feed_feed_favorite_path(feed, @feed_favorites_index_by_feed_id[feed.id]), method: :delete
+              td = link_to 'Remove Favorite',
+                users_feed_feed_favorite_path(feed, @feed_favorites_index_by_feed_id[feed.id]),
+                method: :delete
             - else
               td = link_to 'Favorite', users_feed_feed_favorites_path(feed),
                   method: :post
