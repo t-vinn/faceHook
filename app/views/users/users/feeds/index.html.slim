@@ -23,7 +23,8 @@ ul.nav.nav-tabs
             td = feed.user.name
             td = feed.created_at
             td = link_to 'Reply', new_users_feed_reply_path(feed)
-            td = link_to_if(feed.user_id == current_user.id, 'Edit privacy', edit_users_feed_path(feed)) {}
+            td = link_to_if(feed.user_id == current_user.id, 'Edit privacy', edit_users_feed_path(feed)) do
+               = link_to 'Favorite', users_feed_feeds_favorites_path(feed)
           - feed.replies.each do |reply|
             tr
               td = '<REPLY> ' << reply.content
