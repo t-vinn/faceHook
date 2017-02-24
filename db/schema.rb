@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170224031506) do
+ActiveRecord::Schema.define(version: 20170224053629) do
 
   create_table "feed_favorites", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id",    null: false
@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 20170224031506) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["feed_id"], name: "index_feed_favorites_on_feed_id", using: :btree
+    t.index ["user_id", "feed_id"], name: "index_feed_favorites_on_user_id_and_feed_id", unique: true, using: :btree
     t.index ["user_id"], name: "index_feed_favorites_on_user_id", using: :btree
   end
 
