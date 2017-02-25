@@ -37,7 +37,7 @@ ul.nav.nav-tabs
             td = feed.feed_favorites.count
           - feed.replies.each do |reply|
             tr
-              td = '<REPLY> ' << reply.content
+              td = '[REPLY]---> ' << reply.content
               td = reply.user.name
               td = reply.created_at
               // Can't reply to replies. Can only reply to feeds.
@@ -82,7 +82,7 @@ ul.nav.nav-tabs
             td = following_feed.feed_favorites.count
           - following_feed.replies.each do |reply|
             tr
-              td = '<REPLY> ' << reply.content
+              td = '[REPLY]---> ' << reply.content
               td = reply.user.name
               td = reply.created_at
               // Can't reply to replies. Can only reply to feeds.
