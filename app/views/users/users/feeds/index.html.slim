@@ -41,10 +41,10 @@ ul.nav.nav-tabs
               td = reply.user.name
               td = reply.created_at
               // Can't reply to replies. Can only reply to feeds.
-              td
+              td *
               - if reply.user_id == current_user.id
                 // Can't like your own reply.
-                td
+                td *
               - elsif reply.reply_favorites.exists?(user_id: current_user.id)
                 td = link_to 'Remove Favorite',
                   users_feed_reply_reply_favorite_path(feed, reply, @reply_favorites_index_by_reply_id[reply.id]),
@@ -92,7 +92,9 @@ ul.nav.nav-tabs
                 td *
               - elsif reply.reply_favorites.exists?(user_id: current_user.id)
                 td = link_to 'Remove Favorite',
-                  users_feed_reply_reply_favorite_path(following_feed, reply, @reply_favorites_index_by_reply_id[reply.id]),
+                  users_feed_reply_reply_favorite_path(following_feed,
+                    reply,
+                    @reply_favorites_index_by_reply_id[reply.id]),
                   method: :delete
               - else
                 td = link_to 'Favorite', users_feed_reply_reply_favorites_path(following_feed, reply),
