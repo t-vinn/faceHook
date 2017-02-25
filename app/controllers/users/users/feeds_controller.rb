@@ -16,6 +16,8 @@ module Users
         )
         @feed_favorites_index_by_feed_id = \
           current_user.feed_favorites.index_by(&:feed_id)
+        @reply_favorites_index_by_reply_id = \
+          current_user.reply_favorites.index_by(&:reply_id)
       end
 
       def create

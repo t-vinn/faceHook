@@ -8,7 +8,9 @@ Rails.application.routes.draw do
   namespace :users do
     resources :follow_relationships, only: [:create, :destroy], module: :users
     resources :feeds, module: :users do
-      resources :replies, only: [:new, :create]
+      resources :replies, only: [:new, :create] do
+        resources :reply_favorites, only: [:create, :destroy]
+      end
       resources :feed_favorites, only: [:create, :destroy]
     end
   end
