@@ -15,6 +15,19 @@ module Users
         end
       end
 
+      def edit
+        @group = Group.find(params[:id])
+      end
+
+      def update
+        @group = Group.find(params[:id])
+        if @group.update(group_params)
+          redirect_to users_groups_path, notice: 'the group name changed'
+        else
+          redirect_to users_groups_path, notice: "Couldn't change group name"
+        end
+      end
+
       private
 
         def group_params
