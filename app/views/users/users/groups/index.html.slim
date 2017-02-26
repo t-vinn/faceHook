@@ -7,20 +7,29 @@ hr
 
 // group create form
 
-= form_for [:groups] do |f|
+= form_for [:users, @group] do |f|
   .field
     = f.label :name, 'グループ名：'
+    = f.text_field :name, size: 15, maxlength: 20
 
   .actions
     = f.submit
 
 hr
-// group select
-
-
+// group select(index)
+table
+  thead
+    tr
+      th GroupName
+      th created date
+  tbody
+    - @groups.each do |group|
+      tr
+        td = group.name
+        td = group.created_at
 
 br
 
 = link_to 'Feeds', users_feeds_path
 br
-= link_to 'Groups', users_groups_path
+= link_to 'Back', root_path
