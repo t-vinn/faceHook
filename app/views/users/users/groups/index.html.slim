@@ -22,11 +22,13 @@ table
     tr
       th GroupName
       th created date
+      th colspan='2'
   tbody
     - @groups.each do |group|
       tr
         td = group.name
         td = group.created_at
+        td = link_to 'Edit', edit_users_group_path(group)
 
 br
 

@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   root 'users/users#index'
   namespace :users do
     resources :follow_relationships, only: [:create, :destroy], module: :users
-    resources :groups, except: [:new], module: :users
+    resources :groups, except: [:new, :destroy], module: :users
     resources :feeds, except: [:new], module: :users do
       resources :replies, only: [:new, :create] do
         resources :reply_favorites, only: [:create, :destroy]
