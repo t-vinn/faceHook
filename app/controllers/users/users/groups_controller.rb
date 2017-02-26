@@ -3,14 +3,14 @@ module Users
     class GroupsController < BaseController
       def index
         @group = Group.new
-        @groups = Group.all 
+        @groups = Group.all
       end
 
       def create
         group = Group.new(group_params)
         if group.save
           redirect_to users_groups_path, notice: 'a new group created!'
-        elsif
+        else
           redirect_to users_groups_path, notice: 'The selected group name has already been taken.'
         end
       end
@@ -23,5 +23,3 @@ module Users
     end
   end
 end
-
-
