@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170226064300) do
+ActiveRecord::Schema.define(version: 20170226074842) do
 
   create_table "feed_favorites", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id",    null: false
@@ -42,6 +42,15 @@ ActiveRecord::Schema.define(version: 20170226064300) do
     t.string   "name",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "groups_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "group_id",   null: false
+    t.integer  "user_id",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_groups_users_on_group_id", using: :btree
+    t.index ["user_id"], name: "index_groups_users_on_user_id", using: :btree
   end
 
   create_table "replies", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -83,6 +92,8 @@ ActiveRecord::Schema.define(version: 20170226064300) do
 
   add_foreign_key "feed_favorites", "feeds"
   add_foreign_key "feed_favorites", "users"
+  add_foreign_key "groups_users", "groups"
+  add_foreign_key "groups_users", "users"
   add_foreign_key "replies", "feeds"
   add_foreign_key "replies", "users"
 end
