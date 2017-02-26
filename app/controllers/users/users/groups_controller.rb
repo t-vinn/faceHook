@@ -35,7 +35,7 @@ module Users
       private
 
         def group_params
-          params.require(:group).permit(:name)
+          params.require(:group).permit(:name, :owner_user_id)
         end
     end
   end
