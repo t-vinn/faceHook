@@ -1,0 +1,26 @@
+h1  グループ
+p
+p
+  | グループを作ってみよう
+
+hr
+
+// group create form
+
+= form_for [:groups] do |f|
+  .field
+    = f.label :name, 'グループ名：'
+
+  .actions
+    = f.submit
+
+hr
+// group select
+
+
+
+br
+
+= link_to 'Feeds', users_feeds_path
+br
+= link_to 'Groups', users_groups_path
