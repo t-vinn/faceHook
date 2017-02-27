@@ -22,4 +22,8 @@ class User < ApplicationRecord
   has_many :reply_favorites, dependent: :destroy
   has_many :groups, through: :groups_users
   has_many :groups_users
+
+  def mutual_followers
+    following_users & follower_users
+  end
 end

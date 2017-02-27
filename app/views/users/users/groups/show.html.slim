@@ -19,6 +19,16 @@ table
 
 hr
 // invite friends to the group
+p まだこのグループに入ってないユーザー
+table
+  thead
+    tr
+      th Name
+  tbody
+    - @invitable_users.each do |i|
+      tr
+        td = i.name
+        // links to invite users to the group
 
 br
 
