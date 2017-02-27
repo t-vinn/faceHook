@@ -15,7 +15,7 @@ hr
     br
     = f.fields_for :groups_users do |g|
       = g.label :user_id, '追加したいユーザーID'
-      = g.number_field :user_id
+      = g.select :user_id, current_user.mutual_followers.pluck(:id)
 
   .actions
     = f.submit

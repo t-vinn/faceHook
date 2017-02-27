@@ -27,7 +27,7 @@ hr
         th Name
         th
     tbody
-      - @invitable_users.each do |i|
+      - @group.invitable_users.each do |i|
         tr
           td = i.name
           // links to invite users to the group

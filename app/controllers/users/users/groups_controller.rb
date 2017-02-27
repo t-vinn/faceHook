@@ -9,8 +9,6 @@ module Users
 
       def show
         @group = Group.find(params[:id])
-        invited_users = User.find(@group.groups_users.pluck(:user_id))
-        @invitable_users = @group.owner_user.mutual_followers - invited_users
       end
 
       def create
