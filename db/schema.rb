@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170208025534) do
+ActiveRecord::Schema.define(version: 20170224114845) do
+
+  create_table "feed_favorites", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "user_id",    null: false
+    t.integer  "feed_id",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["feed_id"], name: "index_feed_favorites_on_feed_id", using: :btree
+    t.index ["user_id", "feed_id"], name: "index_feed_favorites_on_user_id_and_feed_id", unique: true, using: :btree
+    t.index ["user_id"], name: "index_feed_favorites_on_user_id", using: :btree
+  end
 
   create_table "feeds", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id",                          null: false
@@ -26,6 +36,24 @@ ActiveRecord::Schema.define(version: 20170208025534) do
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.index ["follower_user_id", "followee_user_id"], name: "follow_relationship_users_index", unique: true, using: :btree
+  end
+
+  create_table "replies", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "user_id",    null: false
+    t.integer  "feed_id",    null: false
+    t.string   "content",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["feed_id"], name: "index_replies_on_feed_id", using: :btree
+    t.index ["user_id"], name: "index_replies_on_user_id", using: :btree
+  end
+
+  create_table "reply_favorites", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "reply_id",   null: false
+    t.integer  "user_id",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reply_id", "user_id"], name: "index_reply_favorites_on_reply_id_and_user_id", unique: true, using: :btree
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -47,4 +75,8 @@ ActiveRecord::Schema.define(version: 20170208025534) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
+  add_foreign_key "feed_favorites", "feeds"
+  add_foreign_key "feed_favorites", "users"
+  add_foreign_key "replies", "feeds"
+  add_foreign_key "replies", "users"
 end
