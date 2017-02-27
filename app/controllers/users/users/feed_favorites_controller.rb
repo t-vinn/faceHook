@@ -2,7 +2,7 @@ module Users
   module Users
     class FeedFavoritesController < BaseController
       def create
-        feed_favorite = FeedFavorite.new(user_id: current_user.id, feed_id: params[:feed_id])
+        feed_favorite = current_user.feed_favorites.build(feed_id: params[:feed_id])
         if feed_favorite.save
           redirect_to users_feeds_path, notice: 'You liked a feed!'
         else

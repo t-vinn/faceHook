@@ -48,6 +48,16 @@
 	- 不可として、相互フォローのみ招待可能とするか、片側フォローでも可とするか only follow_followed relationship
 - フォローユーザー投稿への切り替えはページ遷移とするか、first viewと同じ画面で切り替える same page
 
+###機能要求の追加部分、まとめた方がわかりやすい部分
+- 編集・削除可能かどうかなどについて
+
+|モデル名|編集|削除|
+|---|---|---|
+|feed|公開度のみ可|不可|
+|reply|不可|不可|
+|feed_favorite|不可（定義的に）|可|
+|reply_favorite|不可（定義的に）|可|
+
 ##見積もり
 まずは基本機能から
 
@@ -176,7 +186,7 @@ influenceをどうやって定義するか
 |---|---|---|---|---|---|
 |user_id||integer||false||
 |content|メッセージ内容|stringか写真||false||
-|privacy|公開度|enum|public|false|public, follower, privateの3つ|
+|privacy|公開度|enum|public|false|share_with_all, share_with_follower, share_with_only_meの3つ|
 
 ###9. group_posts
 
@@ -187,7 +197,7 @@ influenceをどうやって定義するか
 |content|メッセージ内容|stringか写真？||false||
 
 
-###10. group_posts_favorites
+###10. group_post_favorites
 
 |column|説明|type|default|null|備考|
 |---|---|---|---|---|---|
@@ -203,14 +213,14 @@ influenceをどうやって定義するか
 |user_id||integer||false||
 |content|返信内容|stringか写真||false||
 
-###12. feeds_favorites
+###12. feed_favorites
 
 |column|説明|type|default|null|備考|
 |---|---|---|---|---|---|
 |post_id||integer||false||
 |user_id||integer||false||
 
-###13. replies_favorites
+###13. reply_favorites
 個人投稿への返信へのファボ
 
 |column|説明|type|default|null|備考|

@@ -7,11 +7,11 @@ hr
 = form_for [:users, @feed] do |f|
   .field
     = f.label :privacy, '公開度：'
-    = f.radio_button :privacy, 'public_feed'
+    = f.radio_button :privacy, 'share_with_all'
     = f.label :privacy, '公開', value: 0
-    = f.radio_button :privacy, 'follower_only_feed'
+    = f.radio_button :privacy, 'share_with_follower'
     = f.label :privacy, 'フォロワー', value: 1
-    = f.radio_button :privacy, 'private_feed'
+    = f.radio_button :privacy, 'share_with_only_me'
     = f.label :privacy, '非公開', value: 2
     = f.hidden_field :user_id, value: current_user.id
 
