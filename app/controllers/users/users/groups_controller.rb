@@ -9,6 +9,7 @@ module Users
 
       def show
         @group = Group.find(params[:id])
+        @group_post = GroupPost.new
       end
 
       def create

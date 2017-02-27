@@ -3,8 +3,31 @@ p = 'グループ名: ' + @group.name
 p = '作成者: ' + @group.owner_user.name
 
 hr
-// ここにグループ投稿一覧
+// 投稿
+= form_for [:users, @group, @group_post] do |f|
+  .field
+    = f.label :content, 'メッセージ'
+    = f.text_field :content, size: 60, maxlength: 140
+    = f.hidden_field :user_id, value: current_user.id
+    = f.hidden_field :group_id, value: @group.id
 
+  .actions
+    = f.submit
+
+hr
+// ここにグループ投稿一覧
+table
+  thead
+    tr
+      th Message
+      th By
+      th posted at
+  tbody
+    - @group.group_posts.each do |group_post|
+      tr
+        td = group_post.content
+        td = group_post.user.name
+        td = group_post.created_at
 
 hr
 // current members of the group

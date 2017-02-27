@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170226111405) do
+ActiveRecord::Schema.define(version: 20170227101908) do
 
   create_table "feed_favorites", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id",    null: false
@@ -36,6 +36,14 @@ ActiveRecord::Schema.define(version: 20170226111405) do
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.index ["follower_user_id", "followee_user_id"], name: "follow_relationship_users_index", unique: true, using: :btree
+  end
+
+  create_table "group_posts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "user_id",    null: false
+    t.integer  "group_id",   null: false
+    t.string   "content",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "groups", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
