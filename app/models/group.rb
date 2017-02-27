@@ -6,6 +6,6 @@ class Group < ApplicationRecord
   accepts_nested_attributes_for :groups_users
 
   def owner_user
-    User.find(self.owner_user_id)
+    User.find(owner_user_id)
   end
 end
