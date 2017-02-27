@@ -13,7 +13,7 @@ module Users
 
       def create
         group = Group.new(group_params)
-        if group.save!
+        if group.save
           redirect_to users_groups_path, notice: 'a new group created!'
         else
           redirect_to users_groups_path, notice: 'The selected group name has already been taken.'
