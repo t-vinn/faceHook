@@ -24,11 +24,13 @@ table
   thead
     tr
       th Name
+      th
   tbody
     - @invitable_users.each do |i|
       tr
         td = i.name
         // links to invite users to the group
+        td = link_to 'Invite', users_group_groups_users_path(@group, user_id: i.id), method: :post
 
 br
 
