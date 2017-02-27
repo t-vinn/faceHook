@@ -10,6 +10,8 @@ module Users
       def show
         @group = Group.find(params[:id])
         @group_post = GroupPost.new
+        @group_post_favorites_index_by_group_post_id = \
+          current_user.group_post_favorites.index_by(&:group_post_id)
       end
 
       def create

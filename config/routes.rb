@@ -9,7 +9,9 @@ Rails.application.routes.draw do
     resources :follow_relationships, only: [:create, :destroy], module: :users
     resources :groups, except: [:new, :destroy], module: :users do
       resources :groups_users, only: [:create, :destroy]
-      resources :group_posts, only: [:create]
+      resources :group_posts, only: [:create] do
+        resources :group_post_favorites, only: [:create, :destroy]
+      end
     end
     resources :feeds, except: [:new], module: :users do
       resources :replies, only: [:new, :create] do
