@@ -3,6 +3,7 @@ module Users
     class GroupsController < BaseController
       def index
         @group = Group.new
+        @group.groups_users.build
         @groups = Group.all
       end
 
@@ -12,7 +13,7 @@ module Users
 
       def create
         group = Group.new(group_params)
-        if group.save
+        if group.save!
           redirect_to users_groups_path, notice: 'a new group created!'
         else
           redirect_to users_groups_path, notice: 'The selected group name has already been taken.'
@@ -35,7 +36,7 @@ module Users
       private
 
         def group_params
-          params.require(:group).permit(:name, :owner_user_id)
+          params.require(:group).permit(:name, :owner_user_id, groups_users_attributes: [:user_id])
         end
     end
   end
