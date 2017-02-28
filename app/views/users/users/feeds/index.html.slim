@@ -12,6 +12,7 @@ ul.nav.nav-tabs
     table
       thead
         tr
+          th picture
           th message
           th name
           th posted at
@@ -21,6 +22,7 @@ ul.nav.nav-tabs
       tbody
         - @feeds.each do |feed|
           tr
+            td = image_tag feed.picture.url if feed.picture?
             td = feed.content
             td = feed.user.name
             td = feed.created_at
@@ -37,6 +39,7 @@ ul.nav.nav-tabs
             td = feed.feed_favorites.count
           - feed.replies.each do |reply|
             tr
+              td
               td = '[REPLY]---> ' << reply.content
               td = reply.user.name
               td = reply.created_at
@@ -57,6 +60,7 @@ ul.nav.nav-tabs
     table
       thead
         tr
+          th picture
           th message
           th name
           th posted at
@@ -66,6 +70,7 @@ ul.nav.nav-tabs
       tbody
         - @following_feeds.each do |following_feed|
           tr
+            td = image_tag following_feed.picture.url if following_feed.picture?
             td = following_feed.content
             td = following_feed.user.name
             td = following_feed.created_at
@@ -82,6 +87,7 @@ ul.nav.nav-tabs
             td = following_feed.feed_favorites.count
           - following_feed.replies.each do |reply|
             tr
+              td
               td = '[REPLY]---> ' << reply.content
               td = reply.user.name
               td = reply.created_at
