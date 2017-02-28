@@ -22,3 +22,6 @@ vendor/bundle
 *.swo
 
 config/secrets.yml
+
+# Ignore all carrierwave files.
+/public/uploads/*
