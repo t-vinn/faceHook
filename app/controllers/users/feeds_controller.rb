@@ -5,9 +5,9 @@ module Users
       @feed = Feed.new
       # show public feeds, current_user's own feeds, and feeds by users current_user follows
       @feeds = Feed.share_with_all.or(Feed.where(
-        user: current_user
+                                        user: current_user
       )).or(Feed.share_with_follower.where(
-        user: current_user.following_users
+              user: current_user.following_users
       ))
       @following_feeds = Feed.where(
         privacy: [:share_with_all, :share_with_follower],
@@ -43,8 +43,8 @@ module Users
 
     private
 
-    def feed_params
-      params.require(:feed).permit(:user_id, :content, :privacy)
-    end
+      def feed_params
+        params.require(:feed).permit(:user_id, :content, :privacy)
+      end
   end
 end

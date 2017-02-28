@@ -18,8 +18,8 @@ module Users
 
     private
 
-    def follow_relationship_params
-      params.require(:follow_relationship).permit(:follower_user_id, :followee_user_id)
-    end
+      def follow_relationship_params
+        params.require(:follow_relationship).permit(:follower_user_id, :followee_user_id)
+      end
   end
 end

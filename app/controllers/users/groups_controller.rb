@@ -37,8 +37,8 @@ module Users
 
     private
 
-    def group_params
-      params.require(:group).permit(:name, :owner_user_id, groups_users_attributes: [:user_id])
-    end
+      def group_params
+        params.require(:group).permit(:name, :owner_user_id, groups_users_attributes: [:user_id])
+      end
   end
 end
