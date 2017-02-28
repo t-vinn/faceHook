@@ -7,14 +7,12 @@ class Feed < ApplicationRecord
   validates :privacy, presence: true
   has_many :replies
   has_many :feed_favorites
-  validate  :picture_size
+  validate :picture_size
 
-    private
+  private
 
-      # アップロードされた画像のサイズをバリデーションする
-      def picture_size
-        if picture.size > 5.megabytes
-          errors.add(:picture, "should be less than 5MB")
-        end
-      end
+    # validate uploaded picture size
+    def picture_size
+      errors.add(:picture, 'should be less than 5MB') if picture.size > 5.megabytes
+    end
 end
