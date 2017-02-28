@@ -1,5 +1,5 @@
 module Users
-  module Users
+  module Groups
     class GroupPostsController < BaseController
       def create
         group = Group.find(params[:group_id])

@@ -1,5 +1,5 @@
 module Users
-  module Users
+  module Feeds
     class RepliesController < BaseController
       def new
         @feed = Feed.find(params[:feed_id])

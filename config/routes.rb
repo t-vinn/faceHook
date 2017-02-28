@@ -6,18 +6,18 @@ Rails.application.routes.draw do
   }
   root 'users/users#index'
   namespace :users do
-    resources :follow_relationships, only: [:create, :destroy], module: :users
-    resources :groups, except: [:new, :destroy], module: :users do
-      resources :groups_users, only: [:create, :destroy]
-      resources :group_posts, only: [:create] do
-        resources :group_post_favorites, only: [:create, :destroy]
+    resources :follow_relationships, only: [:create, :destroy]
+    resources :groups, except: [:new, :destroy] do
+      resources :groups_users, only: [:create, :destroy], module: :groups
+      resources :group_posts, only: [:create], module: :groups do
+        resources :group_post_favorites, only: [:create, :destroy], module: :group_posts
       end
     end
-    resources :feeds, except: [:new], module: :users do
-      resources :replies, only: [:new, :create] do
-        resources :reply_favorites, only: [:create, :destroy]
+    resources :feeds, except: [:new] do
+      resources :replies, only: [:new, :create], module: :feeds do
+        resources :reply_favorites, only: [:create, :destroy], module: :replies
       end
-      resources :feed_favorites, only: [:create, :destroy]
+      resources :feed_favorites, only: [:create, :destroy], module: :feeds
     end
   end
 
