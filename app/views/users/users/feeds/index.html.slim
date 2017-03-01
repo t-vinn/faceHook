@@ -39,7 +39,7 @@ ul.nav.nav-tabs
             td = feed.feed_favorites.count
           - feed.replies.each do |reply|
             tr
-              td
+              td = image_tag reply.picture.url if reply.picture?
               td = '[REPLY]---> ' << reply.content
               td = reply.user.name
               td = reply.created_at
@@ -87,7 +87,7 @@ ul.nav.nav-tabs
             td = following_feed.feed_favorites.count
           - following_feed.replies.each do |reply|
             tr
-              td
+              td = image_tag reply.picture.url if reply.picture?
               td = '[REPLY]---> ' << reply.content
               td = reply.user.name
               td = reply.created_at

@@ -18,7 +18,7 @@ module Users
       private
 
         def reply_params
-          params.require(:reply).permit(:user_id, :content, :feed_id)
+          params.require(:reply).permit(:user_id, :content, :feed_id, :picture)
         end
     end
   end
