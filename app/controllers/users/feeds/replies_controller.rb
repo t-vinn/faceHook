@@ -1,6 +1,6 @@
 module Users
   module Feeds
-    class RepliesController < BaseController
+    class RepliesController < FeedsController
       def new
         @feed = Feed.find(params[:feed_id])
         @reply = Reply.new

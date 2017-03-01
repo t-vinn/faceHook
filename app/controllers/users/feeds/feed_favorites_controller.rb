@@ -1,6 +1,6 @@
 module Users
   module Feeds
-    class FeedFavoritesController < BaseController
+    class FeedFavoritesController < FeedsController
       def create
         feed_favorite = current_user.feed_favorites.build(feed_id: params[:feed_id])
         if feed_favorite.save

@@ -1,7 +1,7 @@
 module Users
   module Groups
     module GroupPosts
-      class GroupPostFavoritesController < BaseController
+      class GroupPostFavoritesController < GroupPostsController
         def create
           group = Group.find(params[:group_id])
           group_post_favorite = current_user.group_post_favorites.build(
