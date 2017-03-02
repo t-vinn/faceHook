@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170301071242) do
+ActiveRecord::Schema.define(version: 20170302080705) do
 
   create_table "feed_favorites", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id",    null: false
@@ -35,7 +35,6 @@ ActiveRecord::Schema.define(version: 20170301071242) do
     t.integer  "privacy",    limit: 1, default: 0, null: false
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
-    t.string   "picture"
   end
 
   create_table "follow_relationships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
