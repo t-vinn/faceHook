@@ -1,7 +1,7 @@
 class FeedPicture < ApplicationRecord
   belongs_to :feed
   mount_uploader :picture, PictureUploader
-  validates :feed_id, presence: true
+  validates :feed, presence: true
   validates :picture, presence: true
   validate :picture_size
 

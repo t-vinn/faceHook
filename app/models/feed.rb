@@ -6,6 +6,6 @@ class Feed < ApplicationRecord
   validates :privacy, presence: true
   has_many :replies
   has_many :feed_favorites
-  has_many :feed_pictures
+  has_many :feed_pictures, inverse_of: :feed
   accepts_nested_attributes_for :feed_pictures
 end

@@ -12,9 +12,8 @@
     = f.label :privacy, '非公開', value: 2
     = f.hidden_field :user_id, value: current_user.id
 
-    = fields_for :feed_pictures do |fp|
+    = f.fields_for :feed_pictures do |fp|
       = fp.file_field :picture, accept: 'image/jpeg,image/gif,image/png'
 
   .actions
     = f.submit
-
