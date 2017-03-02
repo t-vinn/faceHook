@@ -9,12 +9,14 @@ p
 table
   thead
     tr
+      th Picture
       th Name
       th Born on
       th colspan="3"
   tbody
     - @unfollowing_users.each do |unfollowing_user|
       tr
+        td = image_tag unfollowing_user.picture.url(:thumb) if unfollowing_user.picture.present?
         td = unfollowing_user.name
         td = unfollowing_user.birth_date
         td = link_to 'Follow',
@@ -27,12 +29,14 @@ p
 table
   thead
     tr
+      th picture
       th Name
       th Born on
       th colspan="3"
   tbody
     - @following_users.each do |following_user|
       tr
+        td = image_tag following_user.picture.url(:thumb) if following_user.picture.present?
         td = following_user.name
         td = following_user.birth_date
         td = link_to 'Unfollow',
