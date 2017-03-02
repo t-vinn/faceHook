@@ -1,7 +1,7 @@
 module Users
   module Feeds
     module Replies
-      class ReplyFavoritesController < RepliesController
+      class ReplyFavoritesController < BaseController
         def create
           reply_favorite = current_user.reply_favorites.build(reply_id: params[:reply_id])
           if reply_favorite.save

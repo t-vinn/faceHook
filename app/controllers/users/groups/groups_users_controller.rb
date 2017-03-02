@@ -1,6 +1,6 @@
 module Users
   module Groups
-    class GroupsUsersController < GroupsController
+    class GroupsUsersController < BaseController
       def create
         group = Group.find(params[:group_id])
         groups_user = group.groups_users.build(user_id: params[:user_id])
