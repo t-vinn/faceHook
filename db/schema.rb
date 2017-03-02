@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170302081926) do
+ActiveRecord::Schema.define(version: 20170302083516) do
 
   create_table "feed_favorites", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id",    null: false
@@ -48,6 +48,13 @@ ActiveRecord::Schema.define(version: 20170302081926) do
   create_table "group_post_favorites", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id",       null: false
     t.integer  "group_post_id", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  create_table "group_post_pictures", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "group_post_id", null: false
+    t.string   "picture",       null: false
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
   end

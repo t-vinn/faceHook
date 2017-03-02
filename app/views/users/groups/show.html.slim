@@ -4,13 +4,15 @@ p = '作成者: ' + @group.owner_user.name
 
 hr
 // 投稿
-= form_for [:users, @group, @group_post] do |f|
+= form_for [:users, @group, @group_post], html: { multipart: true } do |f|
   .field
     = f.label :content, 'メッセージ'
     = f.text_field :content, size: 60, maxlength: 140
     = f.hidden_field :user_id, value: current_user.id
     = f.hidden_field :group_id, value: @group.id
-
+    - 3.times do
+      = f.fields_for :group_post_pictures do |gppic|
+        = gppic.file_field :picture, accept: 'image/jpeg,image/gif,image/png'
   .actions
     = f.submit
 
@@ -19,6 +21,7 @@ hr
 table
   thead
     tr
+      th Picture
       th Message
       th By
       th posted at
@@ -27,6 +30,7 @@ table
   tbody
     - @group.group_posts.each do |group_post|
       tr
+        td = image_tag group_post.group_post_pictures.first.picture.url if group_post.group_post_pictures.exists?
         td = group_post.content
         td = group_post.user.name
         td = group_post.created_at
