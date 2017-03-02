@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170302080705) do
+ActiveRecord::Schema.define(version: 20170302081926) do
 
   create_table "feed_favorites", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id",    null: false
@@ -82,7 +82,6 @@ ActiveRecord::Schema.define(version: 20170302080705) do
     t.string   "content",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string   "picture"
     t.index ["feed_id"], name: "index_replies_on_feed_id", using: :btree
     t.index ["user_id"], name: "index_replies_on_user_id", using: :btree
   end
@@ -93,6 +92,13 @@ ActiveRecord::Schema.define(version: 20170302080705) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["reply_id", "user_id"], name: "index_reply_favorites_on_reply_id_and_user_id", unique: true, using: :btree
+  end
+
+  create_table "reply_pictures", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "reply_id",   null: false
+    t.string   "picture",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

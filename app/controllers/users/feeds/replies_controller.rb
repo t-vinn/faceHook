@@ -4,6 +4,7 @@ module Users
       def new
         @feed = Feed.find(params[:feed_id])
         @reply = Reply.new
+        @reply.reply_pictures.build
       end
 
       def create
@@ -18,7 +19,8 @@ module Users
       private
 
         def reply_params
-          params.require(:reply).permit(:user_id, :content, :feed_id, :picture)
+          params.require(:reply).permit(:user_id, :content, :feed_id,
+                                       reply_pictures_attributes: [:picture])
         end
     end
   end
