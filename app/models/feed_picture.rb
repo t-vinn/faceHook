@@ -4,7 +4,7 @@ class FeedPicture < ApplicationRecord
   validates :feed_id, presence: true
   validates :picture, presence: true
   validate :picture_size
-  
+
   private
 
     # validate uploaded picture size

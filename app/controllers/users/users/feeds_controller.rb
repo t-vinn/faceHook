@@ -46,7 +46,8 @@ module Users
       private
 
         def feed_params
-          params.require(:feed).permit(:user_id, :content, :privacy, feed_pictures_attributes: [:picture])
+          params.require(:feed).permit(:user_id, :content, :privacy,
+                                       feed_pictures_attributes: [:picture])
         end
     end
   end
