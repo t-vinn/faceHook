@@ -22,7 +22,7 @@ ul.nav.nav-tabs
       tbody
         - @feeds.each do |feed|
           tr
-            td = image_tag feed.feed_pictures.first.picture if feed.id > 65
+            td = image_tag feed.feed_pictures.first.picture if feed.feed_pictures.exists?
             // image_tag feed.feed_pictures.picture.url if feed.picture?
             td = feed.content
             td = feed.user.name
