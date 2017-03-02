@@ -3,10 +3,10 @@ class PictureUploader < CarrierWave::Uploader::Base
   # include CarrierWave::RMagick
   include CarrierWave::MiniMagick
   version :thumb do
-    process resize_and_pad: [50, 50, background = :transparent, "Center"]
+    process resize_and_pad: [50, 50, _background = :transparent, 'Center']
   end
   version :profile do
-    process resize_and_pad: [50, 50, background = :transparent, "Center"]
+    process resize_and_pad: [50, 50, _background = :transparent, 'Center']
   end
   process resize_to_limit: [200, 200]
 
