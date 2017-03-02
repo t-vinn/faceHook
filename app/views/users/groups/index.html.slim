@@ -1,0 +1,42 @@
+h1  グループ
+p
+p
+  | グループを作ってみよう
+
+hr
+
+// group create form
+
+= form_for [:users, @group] do |f|
+  .field
+    = f.label :name, 'グループ名：'
+    = f.text_field :name, size: 15, maxlength: 20
+    = f.hidden_field :owner_user_id, value: current_user.id
+  .field
+    = f.fields_for :groups_users do |g|
+      = g.label :user_id, 'メンバーを一人追加してください：'
+      = g.select :user_id, options_for_select(current_user.mutual_followers.map { |user| [user.name, user.id] })
+  .actions
+    = f.submit
+
+hr
+// group select(index)
+table
+  thead
+    tr
+      th Groupname
+      th created date
+      th colspan='2'
+  tbody
+    - @groups.each do |group|
+      tr
+        td = group.name
+        td = group.created_at
+        td = link_to 'Show', users_group_path(group)
+        td = link_to_if(group.owner_user_id == current_user.id, 'Edit', edit_users_group_path(group)) {}
+
+br
+
+= link_to 'Feeds', users_feeds_path
+br
+= link_to 'Back', root_path
