@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Users::Users::RepliesControllerTest < ActionDispatch::IntegrationTest
+class GroupPostFavoriteTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

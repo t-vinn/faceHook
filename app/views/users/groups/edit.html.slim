@@ -1,0 +1,13 @@
+h2 Edit Groupname
+p グループ名を変更することができます。
+hr
+p 元のグループ名:
+p = @group.name
+hr
+= form_for [:users, @group] do |f|
+  .field
+    = f.label :name, '新グループ名：'
+    = f.text_field :name, size: 15, maxlength: 20
+
+  .actions
+    = f.submit

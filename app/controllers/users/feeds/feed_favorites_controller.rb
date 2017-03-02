@@ -1,5 +1,5 @@
 module Users
-  module Users
+  module Feeds
     class FeedFavoritesController < BaseController
       def create
         feed_favorite = current_user.feed_favorites.build(feed_id: params[:feed_id])
