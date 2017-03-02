@@ -71,7 +71,7 @@ ul.nav.nav-tabs
       tbody
         - @following_feeds.each do |following_feed|
           tr
-            td = image_tag following_feed.picture.url if following_feed.picture?
+            td = image_tag following_feed.feed_pictures.first.picture if following_feed.feed_pictures.exists?
             td = following_feed.content
             td = following_feed.user.name
             td = following_feed.created_at
