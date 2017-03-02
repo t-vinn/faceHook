@@ -24,8 +24,17 @@ class User < ApplicationRecord
   has_many :groups_users
   has_many :group_posts
   has_many :group_post_favorites
+  mount_uploader :picture, PictureUploader
+  validate :picture_size
 
   def mutual_followers
     following_users & follower_users
   end
+
+  private
+
+    # validate uploaded picture size
+    def picture_size
+      errors.add(:picture, 'should be less than 5MB') if picture.size > 5.megabytes
+    end
 end
