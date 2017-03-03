@@ -18,26 +18,29 @@
         tr
           td = 'Member since: ' << @user.created_at.to_s
     .col-md-7
-      table
-        thead
-          tr
-            th picture
-            th message
-            th posted at
-            th favorite counter
-        tbody
-          - @user.feeds.share_with_all.each do |feed|
+      - unless @user.feeds.share_with_all.present?
+        p = '公開投稿がありません'
+      - else
+        table
+          thead
             tr
-              td = image_tag feed.feed_pictures.first.picture if feed.feed_pictures.exists?
-              td = feed.content
-              td = feed.created_at
-              td = feed.feed_favorites.count
-            - feed.replies.each do |reply|
+              th picture
+              th message
+              th posted at
+              th favorite counter
+          tbody
+            - @user.feeds.share_with_all.each do |feed|
               tr
-                td = image_tag reply.reply_pictures.first.picture.url if reply.reply_pictures.exists?
-                td = "[REPLY by #{reply.user.name}] " << reply.content
-                td = reply.created_at
-                // Can't reply to replies. Can only reply to feeds.
-                td = reply.reply_favorites.count
+                td = image_tag feed.feed_pictures.first.picture if feed.feed_pictures.exists?
+                td = feed.content
+                td = feed.created_at
+                td = feed.feed_favorites.count
+              - feed.replies.each do |reply|
+                tr
+                  td = image_tag reply.reply_pictures.first.picture.url if reply.reply_pictures.exists?
+                  td = "[REPLY by #{reply.user.name}] " << reply.content
+                  td = reply.created_at
+                  // Can't reply to replies. Can only reply to feeds.
+                  td = reply.reply_favorites.count
   .row
     p = link_to 'Back', root_path
