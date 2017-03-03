@@ -18,7 +18,7 @@
         tr
           td = 'Member since: ' << @user.created_at.to_s
     .col-md-7
-      - unless @user.feeds.share_with_all.present?
+      - if @user.feeds.share_with_all.blank?
         p = '公開投稿がありません'
       - else
         table
