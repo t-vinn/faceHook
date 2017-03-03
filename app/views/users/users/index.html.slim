@@ -16,7 +16,7 @@ table
   tbody
     - @unfollowing_users.each do |unfollowing_user|
       tr
-        td = image_tag unfollowing_user.picture.url(:thumb) if unfollowing_user.picture.present?
+        td = image_tag unfollowing_user.picture.url(:thumb)
         td = link_to unfollowing_user.name.to_s, users_user_path(unfollowing_user)
         td = unfollowing_user.birth_date
         td = link_to 'Follow',
@@ -36,7 +36,7 @@ table
   tbody
     - @following_users.each do |following_user|
       tr
-        td = image_tag following_user.picture.url(:thumb) if following_user.picture.present?
+        td = image_tag following_user.picture.url(:thumb)
         td = link_to following_user.name.to_s, users_user_path(following_user)
         td = following_user.birth_date
         td = link_to 'Unfollow',
