@@ -5,9 +5,6 @@ class PictureUploader < CarrierWave::Uploader::Base
   version :thumb do
     process resize_and_pad: [50, 50, _background = :transparent, 'Center']
   end
-  version :profile do
-    process resize_and_pad: [400, 400, _background = :transparent, 'Center']
-  end
   process resize_to_limit: [200, 200]
 
   # Choose what kind of storage to use for this uploader:
