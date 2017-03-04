@@ -54,9 +54,9 @@ table
                     method: :post
               td = reply.reply_favorites.count
         - else
-          td
+          td *
           - if post[:user_id] == current_user.id
-            td
+            td *
           - elsif post.group_post_favorites.exists?(user_id: current_user.id)
             td = link_to 'Remove Favorite',
               users_group_group_post_group_post_favorite_path(post.group,
@@ -170,4 +170,4 @@ hr
 hr
 = link_to 'Back', root_path
 
-p * 返信には返信できないので元の投稿に返信してください。自分の投稿にはファボできません。
+p * フィードの返信やグループ内の投稿には返信できないので、元の投稿に返信してください。種類を問わず自分の投稿にはファボできません。

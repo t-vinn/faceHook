@@ -7,12 +7,12 @@ module Users
       @feeds = Feed.share_with_all.or(Feed.where(user: current_user)).or(
         Feed.share_with_follower.where(user: current_user.following_users)
       )
-      groups = Group.where(
-        owner_user_id: current_user.id
-      ).or(Group.where(
-             id: current_user.groups_users.pluck(:group_id)
-      ))
-      @feeds_or_group_posts = @feeds | GroupPost.where(group_id: groups.pluck(:id))
+      groups_owned_by_current_user = Group.where(owner_user_id: current_user.id)
+      groups_current_user_is_a_member = Group.where(id: current_user.groups_users.pluck(:group_id))
+      groups = groups_owned_by_current_user.or(groups_current_user_is_a_member)
+      @feeds_or_group_posts = (@feeds | GroupPost.where(
+        group_id: groups.pluck(:id)
+      )).sort_by { |post| post['created_at'] }
       @following_feeds = Feed.where(
         privacy: [:share_with_all, :share_with_follower],
         user: current_user.following_users
