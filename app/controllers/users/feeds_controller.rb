@@ -10,13 +10,13 @@ module Users
       groups_owned_by_current_user = Group.where(owner_user_id: current_user.id)
       groups_current_user_is_a_member = Group.where(id: current_user.groups_users.pluck(:group_id))
       groups = groups_owned_by_current_user.or(groups_current_user_is_a_member)
-      @feeds_or_group_posts = (@feeds | GroupPost.where(
-        group_id: groups.pluck(:id)
-      )).sort_by { |post| post['created_at'] }.reverse
+      group_posts = GroupPost.where(group_id: groups.pluck(:id))
+      @feeds_or_group_posts = (@feeds | group_posts).sort_by { |post| post['created_at'] }.reverse
       @following_feeds = Feed.where(
         privacy: [:share_with_all, :share_with_follower],
         user: current_user.following_users
       )
+      @following_feeds_or_group_posts = (@following_feeds | group_posts).sort_by { |post| post['created_at'] }.reverse
       @feed_favorites_index_by_feed_id = \
         current_user.feed_favorites.index_by(&:feed_id)
       @reply_favorites_index_by_reply_id = \

@@ -7,160 +7,128 @@ ul.nav.nav-tabs
   li.nav-item
     a.nav-link href='#following' data-toggle='tab' Following
 
-
-table
-  thead
-    tr
-      th name
-      th content
-      th posted_at
-      th reply
-      th favorite
-      th favorite counter
-  tbody
-    - @feeds_or_group_posts.each do |post|
-      tr
-        td = post.user.name
-        td = post[:content]
-        td = post[:created_at]
-        - if post.is_a?(Feed)
-          td = link_to 'Reply', new_users_feed_reply_path(post)
-          - if post[:user_id] == current_user.id
-            td = link_to 'Edit privacy', edit_users_feed_path(post)
-          - elsif post.feed_favorites.exists?(user_id: current_user.id)
-            td = link_to 'Remove Favorite',
-              users_feed_feed_favorite_path(post, @feed_favorites_index_by_feed_id[post.id]),
-              method: :delete
-          - else
-            td = link_to 'Favorite', users_feed_feed_favorites_path(post),
-                method: :post
-          td = post.feed_favorites.count
-          - post.replies.each do |reply|
-            tr
-              td = reply.user.name
-              td = '[REPLY]---> ' + reply.content.to_s
-              td = reply.created_at
-              // Can't reply to replies. Can only reply to feeds.
-              td *
-              - if reply.user_id == current_user.id
-                // Can't like your own reply.
-                td *
-              - elsif reply.reply_favorites.exists?(user_id: current_user.id)
-                td = link_to 'Remove Favorite',
-                  users_feed_reply_reply_favorite_path(post, reply, @reply_favorites_index_by_reply_id[reply.id]),
-                  method: :delete
-              - else
-                td = link_to 'Favorite', users_feed_reply_reply_favorites_path(post, reply),
-                    method: :post
-              td = reply.reply_favorites.count
-        - else
-          td *
-          - if post[:user_id] == current_user.id
-            td *
-          - elsif post.group_post_favorites.exists?(user_id: current_user.id)
-            td = link_to 'Remove Favorite',
-              users_group_group_post_group_post_favorite_path(post.group,
-                                                              post,
-                                                              @group_post_favorites_index_by_group_post_id[post.id]),
-              method: :delete
-          - else
-            td = link_to 'Favorite', users_group_group_post_group_post_favorites_path(post.group, post),
-                method: :post
-          td = post.group_post_favorites.count
-
 .tab-content
   .tab-pane.active#all
     table
       thead
         tr
-          th message
           th name
-          th posted at
+          th content
+          th posted_at
           th reply
           th favorite
           th favorite counter
       tbody
-        - @feeds.each do |feed|
+        - @feeds_or_group_posts.each do |post|
           tr
-            td = feed.content
-            td = feed.user.name
-            td = feed.created_at
-            td = link_to 'Reply', new_users_feed_reply_path(feed)
-            - if feed.user_id == current_user.id
-              td = link_to 'Edit privacy', edit_users_feed_path(feed)
-            - elsif feed.feed_favorites.exists?(user_id: current_user.id)
-              td = link_to 'Remove Favorite',
-                users_feed_feed_favorite_path(feed, @feed_favorites_index_by_feed_id[feed.id]),
-                method: :delete
-            - else
-              td = link_to 'Favorite', users_feed_feed_favorites_path(feed),
-                  method: :post
-            td = feed.feed_favorites.count
-          - feed.replies.each do |reply|
-            tr
-              td = '[REPLY]---> ' << reply.content
-              td = reply.user.name
-              td = reply.created_at
-              // Can't reply to replies. Can only reply to feeds.
-              td *
-              - if reply.user_id == current_user.id
-                // Can't like your own reply.
-                td *
-              - elsif reply.reply_favorites.exists?(user_id: current_user.id)
+            td = post.user.name
+            td = post[:content]
+            td = post[:created_at]
+            - if post.is_a?(Feed)
+              td = link_to 'Reply', new_users_feed_reply_path(post)
+              - if post[:user_id] == current_user.id
+                td = link_to 'Edit privacy', edit_users_feed_path(post)
+              - elsif post.feed_favorites.exists?(user_id: current_user.id)
                 td = link_to 'Remove Favorite',
-                  users_feed_reply_reply_favorite_path(feed, reply, @reply_favorites_index_by_reply_id[reply.id]),
+                  users_feed_feed_favorite_path(post, @feed_favorites_index_by_feed_id[post.id]),
                   method: :delete
               - else
-                td = link_to 'Favorite', users_feed_reply_reply_favorites_path(feed, reply),
+                td = link_to 'Favorite', users_feed_feed_favorites_path(post),
                     method: :post
-              td = reply.reply_favorites.count
+              td = post.feed_favorites.count
+              - post.replies.each do |reply|
+                tr
+                  td = reply.user.name
+                  td = '[REPLY]---> ' + reply.content.to_s
+                  td = reply.created_at
+                  // Can't reply to replies. Can only reply to feeds.
+                  td *
+                  - if reply.user_id == current_user.id
+                    // Can't like your own reply.
+                    td *
+                  - elsif reply.reply_favorites.exists?(user_id: current_user.id)
+                    td = link_to 'Remove Favorite',
+                      users_feed_reply_reply_favorite_path(post, reply, @reply_favorites_index_by_reply_id[reply.id]),
+                      method: :delete
+                  - else
+                    td = link_to 'Favorite', users_feed_reply_reply_favorites_path(post, reply),
+                        method: :post
+                  td = reply.reply_favorites.count
+            - else
+              td *
+              - if post[:user_id] == current_user.id
+                td *
+              - elsif post.group_post_favorites.exists?(user_id: current_user.id)
+                td = link_to 'Remove Favorite',
+                  users_group_group_post_group_post_favorite_path(post.group,
+                                                                  post,
+                                                                  @group_post_favorites_index_by_group_post_id[post.id]),
+                  method: :delete
+              - else
+                td = link_to 'Favorite', users_group_group_post_group_post_favorites_path(post.group, post),
+                    method: :post
+              td = post.group_post_favorites.count
+
   .tab-pane#following
     table
       thead
         tr
-          th message
           th name
-          th posted at
+          th content
+          th posted_at
           th reply
           th favorite
           th favorite counter
       tbody
-        - @following_feeds.each do |following_feed|
+        - @following_feeds_or_group_posts.each do |post|
           tr
-            td = following_feed.content
-            td = following_feed.user.name
-            td = following_feed.created_at
-            td = link_to 'Reply', new_users_feed_reply_path(following_feed)
-            - if following_feed.user_id == current_user.id
-              td = link_to 'Edit privacy', edit_users_feed_path(following_feed)
-            - elsif following_feed.feed_favorites.exists?(user_id: current_user.id)
-              td = link_to 'Remove Favorite',
-                users_feed_feed_favorite_path(following_feed, @feed_favorites_index_by_feed_id[following_feed.id]),
-                method: :delete
-            - else
-              td = link_to 'Favorite', users_feed_feed_favorites_path(following_feed),
-                  method: :post
-            td = following_feed.feed_favorites.count
-          - following_feed.replies.each do |reply|
-            tr
-              td = '[REPLY]---> ' << reply.content
-              td = reply.user.name
-              td = reply.created_at
-              // Can't reply to replies. Can only reply to feeds.
-              td *
-              - if reply.user_id == current_user.id
-                // Can't like your own reply.
-                td *
-              - elsif reply.reply_favorites.exists?(user_id: current_user.id)
+            td = post.user.name
+            td = post[:content]
+            td = post[:created_at]
+            - if post.is_a?(Feed)
+              td = link_to 'Reply', new_users_feed_reply_path(post)
+              - if post[:user_id] == current_user.id
+                td = link_to 'Edit privacy', edit_users_feed_path(post)
+              - elsif post.feed_favorites.exists?(user_id: current_user.id)
                 td = link_to 'Remove Favorite',
-                  users_feed_reply_reply_favorite_path(following_feed,
-                    reply,
-                    @reply_favorites_index_by_reply_id[reply.id]),
+                  users_feed_feed_favorite_path(post, @feed_favorites_index_by_feed_id[post.id]),
                   method: :delete
               - else
-                td = link_to 'Favorite', users_feed_reply_reply_favorites_path(following_feed, reply),
+                td = link_to 'Favorite', users_feed_feed_favorites_path(post),
                     method: :post
-              td = reply.reply_favorites.count
+              td = post.feed_favorites.count
+              - post.replies.each do |reply|
+                tr
+                  td = reply.user.name
+                  td = '[REPLY]---> ' + reply.content.to_s
+                  td = reply.created_at
+                  // Can't reply to replies. Can only reply to feeds.
+                  td *
+                  - if reply.user_id == current_user.id
+                    // Can't like your own reply.
+                    td *
+                  - elsif reply.reply_favorites.exists?(user_id: current_user.id)
+                    td = link_to 'Remove Favorite',
+                      users_feed_reply_reply_favorite_path(post, reply, @reply_favorites_index_by_reply_id[reply.id]),
+                      method: :delete
+                  - else
+                    td = link_to 'Favorite', users_feed_reply_reply_favorites_path(post, reply),
+                        method: :post
+                  td = reply.reply_favorites.count
+            - else
+              td *
+              - if post[:user_id] == current_user.id
+                td *
+              - elsif post.group_post_favorites.exists?(user_id: current_user.id)
+                td = link_to 'Remove Favorite',
+                  users_group_group_post_group_post_favorite_path(post.group,
+                                                                  post,
+                                                                  @group_post_favorites_index_by_group_post_id[post.id]),
+                  method: :delete
+              - else
+                td = link_to 'Favorite', users_group_group_post_group_post_favorites_path(post.group, post),
+                    method: :post
+              td = post.group_post_favorites.count
 
   br
 hr
