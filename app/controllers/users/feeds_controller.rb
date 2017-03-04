@@ -20,7 +20,9 @@ module Users
     end
 
     def create
-      if Feed.create!(feed_params)
+      @feed = Feed.new(feed_params)
+      if @feed.save
+        UserMailer.feed_creation(@feed).deliver
         redirect_to users_feeds_path, notice: 'a new feed created'
       else
         redirect_to users_feeds_path, notice: 'your message is too short or long!'
