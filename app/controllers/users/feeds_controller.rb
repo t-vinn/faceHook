@@ -9,6 +9,8 @@ module Users
       )).or(Feed.share_with_follower.where(
               user: current_user.following_users
       ))
+      groups = Group.where(owner_user_id: current_user.id).or(Group.where(id: current_user.groups_users.pluck(:group_id)))
+      @feeds_or_group_posts = @feeds | GroupPost.where(group_id: groups.pluck(:id))
       @following_feeds = Feed.where(
         privacy: [:share_with_all, :share_with_follower],
         user: current_user.following_users
@@ -17,6 +19,8 @@ module Users
         current_user.feed_favorites.index_by(&:feed_id)
       @reply_favorites_index_by_reply_id = \
         current_user.reply_favorites.index_by(&:reply_id)
+      @group_post_favorites_index_by_group_post_id = \
+        current_user.group_post_favorites.index_by(&:group_post_id)
     end
 
     def create
