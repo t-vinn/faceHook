@@ -4,12 +4,14 @@ module Users
     def index
       @feed = Feed.new
       # show public feeds, current_user's own feeds, and feeds by users current_user follows
-      @feeds = Feed.share_with_all.or(Feed.where(
-                                        user: current_user
-      )).or(Feed.share_with_follower.where(
-              user: current_user.following_users
+      @feeds = Feed.share_with_all.or(Feed.where(user: current_user)).or(
+        Feed.share_with_follower.where(user: current_user.following_users)
+      )
+      groups = Group.where(
+        owner_user_id: current_user.id
+      ).or(Group.where(
+             id: current_user.groups_users.pluck(:group_id)
       ))
-      groups = Group.where(owner_user_id: current_user.id).or(Group.where(id: current_user.groups_users.pluck(:group_id)))
       @feeds_or_group_posts = @feeds | GroupPost.where(group_id: groups.pluck(:id))
       @following_feeds = Feed.where(
         privacy: [:share_with_all, :share_with_follower],
