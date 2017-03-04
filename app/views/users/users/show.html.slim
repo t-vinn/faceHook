@@ -8,15 +8,15 @@
           td = image_tag(@user.picture.url, class: 'img-responsive')
         / if @user.picture.present?
         tr
-          td = '名前: ' << @user.name
+          td = '名前: ' + @user.name
         tr
-          td = @user.following_users.length.to_s << '人フォロー、フォロワー' << @user.follower_users.length.to_s << '人'
+          td = @user.following_users.length.to_s + '人フォロー、フォロワー' + @user.follower_users.length.to_s + '人'
         tr
-          td = 'Born on: ' << @user.birth_date.to_s if @user.birth_date.present?
+          td = 'Born on: ' + @user.birth_date.to_s if @user.birth_date.present?
         tr
-          / td = '趣味: ' << @user.hobby if @user.hobby.present?
+          / td = '趣味: ' + @user.hobby.to_s if @user.hobby.present?
         tr
-          td = 'Member since: ' << @user.created_at.to_s
+          td = 'Member since: ' + @user.created_at.to_s
     .col-md-7
       - if @user.feeds.share_with_all.blank?
         p = '公開投稿がありません'
@@ -38,7 +38,7 @@
               - feed.replies.each do |reply|
                 tr
                   td = image_tag reply.reply_pictures.first.picture.url if reply.reply_pictures.exists?
-                  td = "[REPLY by #{reply.user.name}] " << reply.content
+                  td = "[REPLY by #{reply.user.name}] " + reply.content
                   td = reply.created_at
                   // Can't reply to replies. Can only reply to feeds.
                   td = reply.reply_favorites.count
