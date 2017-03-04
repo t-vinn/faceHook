@@ -12,7 +12,7 @@ module Users
       groups = groups_owned_by_current_user.or(groups_current_user_is_a_member)
       @feeds_or_group_posts = (@feeds | GroupPost.where(
         group_id: groups.pluck(:id)
-      )).sort_by { |post| post['created_at'] }
+      )).sort_by { |post| post['created_at'] }.reverse
       @following_feeds = Feed.where(
         privacy: [:share_with_all, :share_with_follower],
         user: current_user.following_users
