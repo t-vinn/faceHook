@@ -7,9 +7,7 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-def ENV.update
-  YAML.load_file('config/secrets.yml')[Rails.env] if File.exist?('config/secrets.yml')
-end
+ENV.update YAML.load_file('config/secrets.yml')[Rails.env]
 
 module Facebook
   class Application < Rails::Application
