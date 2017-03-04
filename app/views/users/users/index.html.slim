@@ -78,17 +78,17 @@ p
           table
             thead
               tr
-                th name
-                th content
-                th posted_at
-                th reply
-                th favorite
-                th favorite counter
+                th.col-md-1 name
+                th.col-md-4 content
+                th.col-md-1 posted_at
+                th.col-md-1 reply
+                th.col-md-1 favorite
+                th.col-md-1 favorite counter
             tbody
               - @following_feeds_or_group_posts.each do |post|
                 tr
                   td = post.user.name
-                  td = post[:content]
+                  td style="word-break:break-all;" = post[:content]
                   td = post[:created_at]
                   - if post.is_a?(Feed)
                     td = link_to 'Reply', new_users_feed_reply_path(post)
