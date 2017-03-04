@@ -4,8 +4,7 @@ p
 .container-fluid
   .row
     .col-md-9
-      h3 個人投稿
-      //個人の投稿には公開・フォロワーのみ・非公開の3つがある。
+      h3 タイムライン
 
       ul.nav.nav-tabs
         li.nav-item
@@ -54,7 +53,8 @@ p
                           td *
                         - elsif reply.reply_favorites.exists?(user_id: current_user.id)
                           td = link_to 'Remove Favorite',
-                            users_feed_reply_reply_favorite_path(post, reply, @reply_favorites_index_by_reply_id[reply.id]),
+                            users_feed_reply_reply_favorite_path(post, reply,
+                              @reply_favorites_index_by_reply_id[reply.id]),
                             method: :delete
                         - else
                           td = link_to 'Favorite', users_feed_reply_reply_favorites_path(post, reply),
@@ -66,9 +66,8 @@ p
                       td *
                     - elsif post.group_post_favorites.exists?(user_id: current_user.id)
                       td = link_to 'Remove Favorite',
-                        users_group_group_post_group_post_favorite_path(post.group,
-                                                                        post,
-                                                                        @group_post_favorites_index_by_group_post_id[post.id]),
+                        users_group_group_post_group_post_favorite_path(post.group, post,
+                          @group_post_favorites_index_by_group_post_id[post.id]),
                         method: :delete
                     - else
                       td = link_to 'Favorite', users_group_group_post_group_post_favorites_path(post.group, post),
@@ -115,7 +114,8 @@ p
                           td *
                         - elsif reply.reply_favorites.exists?(user_id: current_user.id)
                           td = link_to 'Remove Favorite',
-                            users_feed_reply_reply_favorite_path(post, reply, @reply_favorites_index_by_reply_id[reply.id]),
+                            users_feed_reply_reply_favorite_path(post, reply,
+                              @reply_favorites_index_by_reply_id[reply.id]),
                             method: :delete
                         - else
                           td = link_to 'Favorite', users_feed_reply_reply_favorites_path(post, reply),
@@ -127,9 +127,8 @@ p
                       td *
                     - elsif post.group_post_favorites.exists?(user_id: current_user.id)
                       td = link_to 'Remove Favorite',
-                        users_group_group_post_group_post_favorite_path(post.group,
-                                                                        post,
-                                                                        @group_post_favorites_index_by_group_post_id[post.id]),
+                        users_group_group_post_group_post_favorite_path(post.group, post,
+                          @group_post_favorites_index_by_group_post_id[post.id]),
                         method: :delete
                     - else
                       td = link_to 'Favorite', users_group_group_post_group_post_favorites_path(post.group, post),
@@ -189,8 +188,5 @@ p
                 method: :delete,
                 data: { confirm: 'Unfollow this person?' }
 
-br
-
-= link_to 'Feeds', users_feeds_path
 br
 = link_to 'Groups', users_groups_path

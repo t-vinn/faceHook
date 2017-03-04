@@ -60,9 +60,8 @@ ul.nav.nav-tabs
                 td *
               - elsif post.group_post_favorites.exists?(user_id: current_user.id)
                 td = link_to 'Remove Favorite',
-                  users_group_group_post_group_post_favorite_path(post.group,
-                                                                  post,
-                                                                  @group_post_favorites_index_by_group_post_id[post.id]),
+                  users_group_group_post_group_post_favorite_path(post.group, post,
+                    @group_post_favorites_index_by_group_post_id[post.id]),
                   method: :delete
               - else
                 td = link_to 'Favorite', users_group_group_post_group_post_favorites_path(post.group, post),
@@ -121,9 +120,8 @@ ul.nav.nav-tabs
                 td *
               - elsif post.group_post_favorites.exists?(user_id: current_user.id)
                 td = link_to 'Remove Favorite',
-                  users_group_group_post_group_post_favorite_path(post.group,
-                                                                  post,
-                                                                  @group_post_favorites_index_by_group_post_id[post.id]),
+                  users_group_group_post_group_post_favorite_path(post.group, post,
+                    @group_post_favorites_index_by_group_post_id[post.id]),
                   method: :delete
               - else
                 td = link_to 'Favorite', users_group_group_post_group_post_favorites_path(post.group, post),
