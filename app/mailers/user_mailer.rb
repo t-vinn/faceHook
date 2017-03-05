@@ -8,4 +8,11 @@ class UserMailer < ApplicationMailer
     @sent_feed = feed
     mail to: @sent_feed.user.email, subject: 'A new feed posted'
   end
+
+  def reply_creation(reply)
+    @sent_reply = reply
+    mail to: [@sent_reply.user.email, @sent_reply.feed.user.email] | \
+             User.find(@sent_reply.feed.replies.pluck(:user_id).uniq).pluck(:email),
+         subject: 'A new reply posted'
+  end
 end
