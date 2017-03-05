@@ -22,6 +22,12 @@ class UserMailer < ApplicationMailer
          subject: 'A new reply posted'
   end
 
+  def reply_favorite_creation(reply_favorite)
+    @reply_favorite = reply_favorite
+    mail to: [reply_favorite.user.email, reply_favorite.reply.user.email],
+         subject: 'A reply liked'
+  end
+
   def group_post_creation(group_post)
     @sent_group_post = group_post
     mail to: User.find(@sent_group_post.group.groups_users.pluck(:user_id).uniq) \
