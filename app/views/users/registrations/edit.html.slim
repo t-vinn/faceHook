@@ -43,6 +43,10 @@ h2
     = f.label :birth_date
     br
     = f.date_field :birth_date
+  .field
+    = f.label :notification_allowed, 'メールでの通知をオンにする場合はチェック'
+    br
+    = f.check_box :notification_allowed, {}, '1', '0'
   .actions
     = f.submit 'Update'
 h3

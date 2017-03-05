@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   validates :name, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
+  validates :notification_allowed, inclusion: { in: [true, false] }
 
   has_many :active_relationships,
            class_name: 'FollowRelationship',
