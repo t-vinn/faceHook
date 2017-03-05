@@ -9,13 +9,15 @@ p
 table
   thead
     tr
+      th Picture
       th Name
       th Born on
       th colspan="3"
   tbody
     - @unfollowing_users.each do |unfollowing_user|
       tr
-        td = unfollowing_user.name
+        td = image_tag unfollowing_user.picture.url(:thumb)
+        td = link_to unfollowing_user.name.to_s, users_user_path(unfollowing_user)
         td = unfollowing_user.birth_date
         td = link_to 'Follow',
           users_follow_relationships_path(followee_user_id: unfollowing_user.id),
@@ -27,13 +29,15 @@ p
 table
   thead
     tr
+      th picture
       th Name
       th Born on
       th colspan="3"
   tbody
     - @following_users.each do |following_user|
       tr
-        td = following_user.name
+        td = image_tag following_user.picture.url(:thumb)
+        td = link_to following_user.name.to_s, users_user_path(following_user)
         td = following_user.birth_date
         td = link_to 'Unfollow',
           users_follow_relationship_path(@follow_relationships_index_by_followee_user_id[following_user.id]),

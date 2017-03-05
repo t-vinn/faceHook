@@ -8,5 +8,9 @@ module Users
       @follow_relationships_index_by_followee_user_id = \
         current_user.active_relationships.index_by(&:followee_user_id)
     end
+
+    def show
+      @user = User.find(params[:id])
+    end
   end
 end

@@ -12,6 +12,7 @@ ul.nav.nav-tabs
     table
       thead
         tr
+          th picture
           th message
           th name
           th posted at
@@ -21,6 +22,8 @@ ul.nav.nav-tabs
       tbody
         - @feeds.each do |feed|
           tr
+            td = image_tag feed.feed_pictures.first.picture if feed.feed_pictures.exists?
+            // image_tag feed.feed_pictures.picture.url if feed.picture?
             td = feed.content
             td = feed.user.name
             td = feed.created_at
@@ -37,7 +40,8 @@ ul.nav.nav-tabs
             td = feed.feed_favorites.count
           - feed.replies.each do |reply|
             tr
-              td = '[REPLY]---> ' << reply.content
+              td = image_tag reply.reply_pictures.first.picture.url if reply.reply_pictures.exists?
+              td = '[REPLY]---> ' + reply.content
               td = reply.user.name
               td = reply.created_at
               // Can't reply to replies. Can only reply to feeds.
@@ -57,6 +61,7 @@ ul.nav.nav-tabs
     table
       thead
         tr
+          th picture
           th message
           th name
           th posted at
@@ -66,6 +71,7 @@ ul.nav.nav-tabs
       tbody
         - @following_feeds.each do |following_feed|
           tr
+            td = image_tag following_feed.feed_pictures.first.picture if following_feed.feed_pictures.exists?
             td = following_feed.content
             td = following_feed.user.name
             td = following_feed.created_at
@@ -82,7 +88,8 @@ ul.nav.nav-tabs
             td = following_feed.feed_favorites.count
           - following_feed.replies.each do |reply|
             tr
-              td = '[REPLY]---> ' << reply.content
+              td = image_tag reply.reply_pictures.first.picture.url if reply.reply_pictures.exists?
+              td = '[REPLY]---> ' + reply.content
               td = reply.user.name
               td = reply.created_at
               // Can't reply to replies. Can only reply to feeds.

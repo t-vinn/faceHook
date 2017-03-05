@@ -82,3 +82,9 @@ gem 'compass-rails'
 
 # font-awesome
 gem 'font-awesome-rails'
+
+# upload pictures: carrierwave
+gem 'carrierwave'
+
+# resize pictures
+gem 'mini_magick'

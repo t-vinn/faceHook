@@ -3,6 +3,7 @@ module Users
   class FeedsController < BaseController
     def index
       @feed = Feed.new
+      @feed.feed_pictures.build
       # show public feeds, current_user's own feeds, and feeds by users current_user follows
       @feeds = Feed.share_with_all.or(Feed.where(
                                         user: current_user
@@ -44,7 +45,8 @@ module Users
     private
 
       def feed_params
-        params.require(:feed).permit(:user_id, :content, :privacy)
+        params.require(:feed).permit(:user_id, :content, :privacy,
+                                     feed_pictures_attributes: [:picture])
       end
   end
 end

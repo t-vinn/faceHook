@@ -1,0 +1,46 @@
+.container-fluid
+  .row
+    .col-md-5
+      h1 プロフィール
+      h3 = @user.name + 'さんのプロフィール'
+      table
+        tr
+          td = image_tag(@user.picture.url, class: 'img-responsive')
+        / if @user.picture.present?
+        tr
+          td = '名前: ' + @user.name
+        tr
+          td = @user.following_users.length.to_s + '人フォロー、フォロワー' + @user.follower_users.length.to_s + '人'
+        tr
+          td = 'Born on: ' + @user.birth_date.to_s if @user.birth_date.present?
+        tr
+          / td = '趣味: ' + @user.hobby.to_s if @user.hobby.present?
+        tr
+          td = 'Member since: ' + @user.created_at.to_s
+    .col-md-7
+      - if @user.feeds.share_with_all.blank?
+        p = '公開投稿がありません'
+      - else
+        table
+          thead
+            tr
+              th picture
+              th message
+              th posted at
+              th favorite counter
+          tbody
+            - @user.feeds.share_with_all.each do |feed|
+              tr
+                td = image_tag feed.feed_pictures.first.picture if feed.feed_pictures.exists?
+                td = feed.content
+                td = feed.created_at
+                td = feed.feed_favorites.count
+              - feed.replies.each do |reply|
+                tr
+                  td = image_tag reply.reply_pictures.first.picture.url if reply.reply_pictures.exists?
+                  td = "[REPLY by #{reply.user.name}] " + reply.content
+                  td = reply.created_at
+                  // Can't reply to replies. Can only reply to feeds.
+                  td = reply.reply_favorites.count
+  .row
+    p = link_to 'Back', root_path
