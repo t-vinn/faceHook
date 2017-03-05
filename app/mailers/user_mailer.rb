@@ -15,4 +15,10 @@ class UserMailer < ApplicationMailer
              User.find(@sent_reply.feed.replies.pluck(:user_id).uniq).pluck(:email),
          subject: 'A new reply posted'
   end
+
+  def group_post_creation(group_post)
+    @sent_group_post = group_post
+    mail to: User.find(@sent_group_post.group.groups_users.pluck(:user_id).uniq).pluck(:email).push(@sent_group_post.group.owner_user.email),
+         subject: 'A new group post created'
+  end
 end
