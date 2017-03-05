@@ -22,4 +22,11 @@ class UserMailer < ApplicationMailer
       .pluck(:email).push(@sent_group_post.group.owner_user.email),
          subject: 'A new group post created'
   end
+
+  def group_post_favorite_creation(group_post_favorite)
+    @group_post_favorite = group_post_favorite
+    mail to: User.find(@group_post_favorite.group_post.group.groups_users.pluck(:user_id).uniq) \
+      .pluck(:email).push(@group_post_favorite.group_post.group.owner_user.email),
+         subject: 'A group post liked'
+  end
 end

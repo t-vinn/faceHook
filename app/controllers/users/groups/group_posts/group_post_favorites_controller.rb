@@ -1,3 +1,4 @@
+# rubocop: disable Metrics/AbcSize
 module Users
   module Groups
     module GroupPosts
@@ -8,6 +9,7 @@ module Users
             group_post_id: params[:group_post_id]
           )
           if group_post_favorite.save
+            UserMailer.group_post_favorite_creation(group_post_favorite).deliver
             redirect_to users_group_path(group), notice: 'You liked a post!'
           else
             redirect_to users_group_path(group), notice: 'FAIL. Try again.'
