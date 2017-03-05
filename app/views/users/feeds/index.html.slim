@@ -41,7 +41,7 @@ ul.nav.nav-tabs
           - feed.replies.each do |reply|
             tr
               td = image_tag reply.reply_pictures.first.picture.url if reply.reply_pictures.exists?
-              td = '[REPLY]---> ' << reply.content
+              td = '[REPLY]---> ' + reply.content
               td = reply.user.name
               td = reply.created_at
               // Can't reply to replies. Can only reply to feeds.
@@ -89,7 +89,7 @@ ul.nav.nav-tabs
           - following_feed.replies.each do |reply|
             tr
               td = image_tag reply.reply_pictures.first.picture.url if reply.reply_pictures.exists?
-              td = '[REPLY]---> ' << reply.content
+              td = '[REPLY]---> ' + reply.content
               td = reply.user.name
               td = reply.created_at
               // Can't reply to replies. Can only reply to feeds.
