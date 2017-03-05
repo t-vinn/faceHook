@@ -12,39 +12,40 @@ class UserMailer < ApplicationMailer
 
   def feed_favorite_creation(feed_favorite)
     @feed_favorite = feed_favorite
-    mail to: ([feed_favorite.user, feed_favorite.feed.user] & \
-              User.where(notification_allowed: true)).pluck(:email),
-         subject: 'A feed liked'
+    receiving_users = [feed_favorite.user, feed_favorite.feed.user] & \
+                      User.where(notification_allowed: true)
+    mail to: receiving_users.pluck(:email), subject: 'A feed liked' if receiving_users.present?
   end
 
   def reply_creation(reply)
     @sent_reply = reply
-    mail to: (([@sent_reply.user, @sent_reply.feed.user] | \
-              User.find(@sent_reply.feed.replies.pluck(:user_id).uniq)) &
-              User.where(notification_allowed: true)).pluck(:email),
-         subject: 'A new reply posted'
+    receiving_users = (User.where(notification_allowed: true) &
+      [@sent_reply.user, @sent_reply.feed.user] | \
+      User.find(@sent_reply.feed.replies.pluck(:user_id).uniq))
+    mail to: receiving_users.pluck(:email), subject: 'A new reply posted' \
+      if receiving_users.present?
   end
 
   def reply_favorite_creation(reply_favorite)
     @reply_favorite = reply_favorite
-    mail to: ([reply_favorite.user, reply_favorite.reply.user] &
-              User.where(notification_allowed: true)).pluck(:email),
-         subject: 'A reply liked'
+    receiving_users = ([reply_favorite.user, reply_favorite.reply.user] &
+      User.where(notification_allowed: true))
+    mail to: receiving_users.pluck(:email), subject: 'A reply liked' if receiving_users.present?
   end
 
   def group_post_creation(group_post)
     @sent_group_post = group_post
-    mail to: (User.find(@sent_group_post.group.groups_users.pluck(:user_id).uniq) \
-              .push(@sent_group_post.group.owner_user) &
-              User.where(notification_allowed: true)).pluck(:email),
-         subject: 'A new group post created'
+    receiving_users = (User.find(@sent_group_post.group.groups_users.pluck(:user_id).uniq) \
+      .push(@sent_group_post.group.owner_user) & User.where(notification_allowed: true))
+    mail to: receiving_users.pluck(:email), subject: 'A new group post created' \
+      if receiving_users.present?
   end
 
   def group_post_favorite_creation(group_post_favorite)
     @group_post_favorite = group_post_favorite
-    mail to: (User.find(@group_post_favorite.group_post.group.groups_users.pluck(:user_id).uniq) \
-              .push(@group_post_favorite.group_post.group.owner_user) &
-              User.where(notification_allowed: true)).pluck(:email),
-         subject: 'A group post liked'
+    receiving_users = (User.find(@group_post_favorite.group_post.group.groups_users.pluck(:user_id).uniq) \
+      .push(@group_post_favorite.group_post.group.owner_user) & User.where(notification_allowed: true))
+    mail to: receiving_users.pluck(:email), subject: 'A group post liked' \
+      if receiving_users.present?
   end
 end
