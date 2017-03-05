@@ -9,6 +9,12 @@ class UserMailer < ApplicationMailer
     mail to: @sent_feed.user.email, subject: 'A new feed posted'
   end
 
+  def feed_favorite_creation(feed_favorite)
+    @feed_favorite = feed_favorite
+    mail to: [feed_favorite.user.email, feed_favorite.feed.user.email],
+         subject: 'A feed liked'
+  end
+
   def reply_creation(reply)
     @sent_reply = reply
     mail to: [@sent_reply.user.email, @sent_reply.feed.user.email] | \
