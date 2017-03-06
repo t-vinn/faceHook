@@ -12,9 +12,10 @@ ActiveAdmin.register Feed do
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
+  #
+  menu parent: 'Feed'
   actions :all, except: [:new, :create]
   permit_params :content, :privacy
-
   form feed: 'Edit feed' do |f|
     inputs 'Details' do
       li "Created by #{f.object.user.name}"

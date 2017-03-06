@@ -11,6 +11,7 @@ ActiveAdmin.register Group do
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
+  menu parent: 'Group'
   actions :all, except: [:new, :create, :edit, :update]
   show do |f|
     attributes_table do
