@@ -14,7 +14,7 @@ Rails.application.routes.draw do
         resources :group_post_favorites, only: [:create, :destroy], module: :group_posts
       end
     end
-    resources :feeds, except: [:new] do
+    resources :feeds, only: [:create, :edit, :update] do
       resources :replies, only: [:new, :create], module: :feeds do
         resources :reply_favorites, only: [:create, :destroy], module: :replies
       end
