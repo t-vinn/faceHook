@@ -9,8 +9,7 @@ class UserMailer < ApplicationMailer
   # receiving_users: possible_receivers who also set the notification on
   def feed_creation(feed)
     @sent_feed = feed
-    mail to: @sent_feed.user.email, subject: 'A new feed posted' \
-      if @sent_feed.user.notification_allowed == 1
+    mail to: feed.user.email, subject: 'A new feed posted' if feed.user.notification_allowed == true
   end
 
   def feed_favorite_creation(feed_favorite)
@@ -22,9 +21,9 @@ class UserMailer < ApplicationMailer
 
   def reply_creation(reply)
     @sent_reply = reply
-    receiving_users = (User.where(notification_allowed: true) &
-      [@sent_reply.user, @sent_reply.feed.user] | \
-      User.find(@sent_reply.feed.replies.pluck(:user_id).uniq))
+    possible_receivers = [@sent_reply.user, @sent_reply.feed.user] | \
+                         User.find(@sent_reply.feed.replies.pluck(:user_id).uniq)
+    receiving_users =  possible_receivers & User.where(notification_allowed: true)
     mail to: receiving_users.pluck(:email), subject: 'A new reply posted' \
       if receiving_users.present?
   end
@@ -47,7 +46,7 @@ class UserMailer < ApplicationMailer
   def group_post_favorite_creation(group_post_favorite)
     @group_post_favorite = group_post_favorite
     possible_receivers = User.find(@group_post_favorite.group_post.group.groups_users \
-      .pluck(:user_id).uniq.push(@group_post_favorite.group_post.group.owner_user))
+      .pluck(:user_id).uniq.push(@group_post_favorite.group_post.group.owner_user[:user_id]))
     receiving_users =  possible_receivers & User.where(notification_allowed: true)
     mail to: receiving_users.pluck(:email), subject: 'A group post liked' \
       if receiving_users.present?
