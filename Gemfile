@@ -88,3 +88,7 @@ gem 'carrierwave'
 
 # resize pictures
 gem 'mini_magick'
+
+# activeadmin, Rails5
+gem 'activeadmin', github: 'activeadmin'
+gem 'inherited_resources', git: 'https://github.com/activeadmin/inherited_resources'
