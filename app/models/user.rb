@@ -14,16 +14,16 @@ class User < ApplicationRecord
   has_many :passive_relationships,
            class_name: 'FollowRelationship',
            foreign_key: 'followee_user_id', dependent: :destroy
-  has_many :following_users, through: :active_relationships, source: :followee_user
-  has_many :follower_users, through: :passive_relationships, source: :follower_user
+  has_many :following_users, through: :active_relationships, source: :followee_user, dependent: :destroy
+  has_many :follower_users, through: :passive_relationships, source: :follower_user, dependent: :destroy
   has_many :feeds, dependent: :destroy
   has_many :replies, dependent: :destroy
   has_many :feed_favorites, dependent: :destroy
   has_many :reply_favorites, dependent: :destroy
-  has_many :groups, through: :groups_users
-  has_many :groups_users
-  has_many :group_posts
-  has_many :group_post_favorites
+  has_many :groups, through: :groups_users, dependent: :destroy
+  has_many :groups_users, dependent: :destroy
+  has_many :group_posts, dependent: :destroy
+  has_many :group_post_favorites, dependent: :destroy
   mount_uploader :picture, PictureUploader
   validate :picture_size
 
