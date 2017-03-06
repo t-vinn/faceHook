@@ -1,16 +1,17 @@
+# rubocop: disable Metrics/BlockLength
 ActiveAdmin.register Feed do
-# See permitted parameters documentation:
-# https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-#
-# permit_params :list, :of, :attributes, :on, :model
-#
-# or
-#
-# permit_params do
-#   permitted = [:permitted, :attributes]
-#   permitted << :other if params[:action] == 'create' && current_user.admin?
-#   permitted
-# end
+  # See permitted parameters documentation:
+  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
+  #
+  # permit_params :list, :of, :attributes, :on, :model
+  #
+  # or
+  #
+  # permit_params do
+  #   permitted = [:permitted, :attributes]
+  #   permitted << :other if params[:action] == 'create' && current_user.admin?
+  #   permitted
+  # end
   actions :all, except: [:new, :create]
   permit_params :content, :privacy
 
@@ -31,7 +32,7 @@ ActiveAdmin.register Feed do
       row :privacy
       row :created_at
       row :updated_at
-      panel "FeedFavorites" do
+      panel 'FeedFavorites' do
         table_for f.feed_favorites do
           column :user_id
         end
