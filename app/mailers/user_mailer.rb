@@ -1,9 +1,12 @@
+# rubocop: disable Metrics/AbcSize
 class UserMailer < ApplicationMailer
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
   #
   #   en.user_mailer.feed_creation.subject
   #
+  # possible_receivers : users who notification emails will be sent to because of the action
+  # receiving_users: possible_receivers who also set the notification on
   def feed_creation(feed)
     @sent_feed = feed
     mail to: @sent_feed.user.email, subject: 'A new feed posted' \
@@ -43,8 +46,9 @@ class UserMailer < ApplicationMailer
 
   def group_post_favorite_creation(group_post_favorite)
     @group_post_favorite = group_post_favorite
-    receiving_users = (User.find(@group_post_favorite.group_post.group.groups_users.pluck(:user_id).uniq) \
-      .push(@group_post_favorite.group_post.group.owner_user) & User.where(notification_allowed: true))
+    possible_receivers = User.find(@group_post_favorite.group_post.group.groups_users \
+      .pluck(:user_id).uniq.push(@group_post_favorite.group_post.group.owner_user))
+    receiving_users =  possible_receivers & User.where(notification_allowed: true)
     mail to: receiving_users.pluck(:email), subject: 'A group post liked' \
       if receiving_users.present?
   end
