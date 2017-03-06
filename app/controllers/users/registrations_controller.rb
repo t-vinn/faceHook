@@ -11,7 +11,7 @@ module Users
     def account_update_params
       devise_parameter_sanitizer.permit(
         :account_update,
-        keys: [:name, :password, :password_confirmation, :current_password, :birth_date]
+        keys: [:name, :password, :password_confirmation, :current_password, :birth_date, :picture]
       )
       super
     end

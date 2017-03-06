@@ -8,6 +8,7 @@ module Users
       @follow_relationships_index_by_followee_user_id = \
         current_user.active_relationships.index_by(&:followee_user_id)
       @feed = Feed.new
+      @feed.feed_pictures.build
       # show public feeds, current_user's own feeds, and feeds by users current_user follows
       feeds = Feed.share_with_all.or(Feed.where(user: current_user)).or(
         Feed.share_with_follower.where(user: current_user.following_users)
@@ -28,6 +29,10 @@ module Users
       @reply_favorites_index_by_reply_id = current_user.reply_favorites.index_by(&:reply_id)
       @group_post_favorites_index_by_group_post_id = \
         current_user.group_post_favorites.index_by(&:group_post_id)
+    end
+
+    def show
+      @user = User.find(params[:id])
     end
   end
 end

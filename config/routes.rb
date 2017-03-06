@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   }
   root 'users/users#index'
   namespace :users do
+    resources :users, only: [:index, :show]
     resources :follow_relationships, only: [:create, :destroy]
     resources :groups, except: [:new, :destroy] do
       resources :groups_users, only: [:create, :destroy], module: :groups

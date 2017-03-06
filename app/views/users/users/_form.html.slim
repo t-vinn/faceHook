@@ -1,4 +1,4 @@
-= form_for [:users, feed] do |f|
+= form_for [:users, feed], html: { multipart: true } do |f|
   .field
     = f.label :content, '投稿内容：'
     = f.text_field :content, size: 60, maxlength: 140
@@ -12,6 +12,8 @@
     = f.label :privacy, '非公開', value: 2
     = f.hidden_field :user_id, value: current_user.id
 
+    - 3.times do
+      = f.fields_for :feed_pictures do |fp|
+        = fp.file_field :picture, accept: 'image/jpeg,image/gif,image/png'
   .actions
     = f.submit
-
