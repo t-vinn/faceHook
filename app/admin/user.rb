@@ -11,4 +11,5 @@ ActiveAdmin.register User do
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
+  actions :all, except: [:edit, :update]
 end
