@@ -13,8 +13,8 @@ module Users
     end
 
     def update
-      @feed = Feed.find(params[:id])
-      if @feed.update(feed_params)
+      feed = Feed.find(params[:id])
+      if feed.update(feed_params)
         redirect_to root_path, notice: 'the privacy of your feed revised'
       else
         flash.now[:alert] = "We couldn't update the privacy."
