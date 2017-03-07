@@ -1,9 +1,9 @@
 module Users
   class FeedsController < BaseController
     def create
-      @feed = Feed.new(feed_params)
-      if @feed.save
-        UserMailer.feed_creation(@feed).deliver
+      feed = Feed.new(feed_params)
+      if feed.save
+        UserMailer.feed_creation(feed).deliver
         redirect_to root_path, notice: 'a new feed created'
       else
         redirect_to root_path, notice: 'your message is too short or long!'
