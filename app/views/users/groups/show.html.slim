@@ -28,7 +28,7 @@ table
       th favorite
       th favorite counter
   tbody
-    - @group.group_posts.each do |group_post|
+    - @group.group_posts.sort_by(&:created_at).reverse_each do |group_post|
       tr
         td = image_tag group_post.group_post_pictures.first.picture.url if group_post.group_post_pictures.exists?
         td = group_post.content
