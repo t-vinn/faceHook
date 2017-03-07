@@ -14,6 +14,7 @@ module Users
                                 @group.owner_user != current_user
       @group_post = GroupPost.new
       @group_post.group_post_pictures.build
+      @group_posts = @group.group_posts.sort_by(&:created_at).reverse
       @group_post_favorites_index_by_group_post_id = \
         current_user.group_post_favorites.index_by(&:group_post_id)
     end
