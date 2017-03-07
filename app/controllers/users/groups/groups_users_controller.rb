@@ -10,6 +10,16 @@ module Users
           redirect_to users_group_path(group), notice: 'Failed. Try again.'
         end
       end
+
+      def destroy
+        group = Group.find(params[:group_id])
+        groups_user = GroupsUser.find(params[:id])
+        if groups_user.destroy
+          redirect_to users_group_path(group), notice: 'A member deleted from the group'
+        else
+          redirect_to users_group_path(group), notice: 'Failed. Try again.'
+        end
+      end
     end
   end
 end
