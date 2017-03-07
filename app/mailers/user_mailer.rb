@@ -35,17 +35,17 @@ class UserMailer < ApplicationMailer
 
   def group_post_creation(group_post)
     @sent_group_post = group_post
+    g = group_post.group
     receiving_users = User.where(notification_allowed: true) &
-                      User.find(group_post.group.groups_users.pluck(:user_id)) \
-                      .push(group_post.group.owner_user)
+                      User.find(g.groups_users.pluck(:user_id)).push(g.owner_user)
     mail to: receiving_users.pluck(:email), subject: 'A new group post created' \
       if receiving_users.present?
   end
 
   def group_post_favorite_creation(group_post_favorite)
     @group_post_favorite = group_post_favorite
-    possible_receivers = User.find(group_post_favorite.group_post.group.groups_users \
-      .pluck(:user_id)).push(group_post_favorite.group_post.group.owner_user)
+    gp = group_post_favorite.group_post
+    possible_receivers = [group_post_favorite.user, gp.user, gp.group.owner_user]
     receiving_users =  possible_receivers & User.where(notification_allowed: true)
     mail to: receiving_users.pluck(:email), subject: 'A group post liked' \
       if receiving_users.present?
