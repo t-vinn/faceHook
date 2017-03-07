@@ -5,15 +5,15 @@ module Users
         feed_favorite = current_user.feed_favorites.build(feed_id: params[:feed_id])
         if feed_favorite.save
           UserMailer.feed_favorite_creation(feed_favorite).deliver
-          redirect_to users_feeds_path, notice: 'You liked a feed!'
+          redirect_to root_path, notice: 'You liked a feed!'
         else
-          redirect_to users_feeds_path, notice: 'FAIL. Try again.'
+          redirect_to root_path, notice: 'FAIL. Try again.'
         end
       end
 
       def destroy
         if FeedFavorite.find(params[:id]).destroy
-          redirect_to users_feeds_path, notice: 'Your favorite deleted.'
+          redirect_to root_path, notice: 'Your favorite deleted.'
         else
           flash.now[:notice] = 'An error occured and faceHook failed to delete your follow.'
         end

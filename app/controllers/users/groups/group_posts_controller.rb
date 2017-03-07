@@ -15,7 +15,8 @@ module Users
       private
 
         def group_post_params
-          params.require(:group_post).permit(:user_id, :group_id, :content)
+          params.require(:group_post).permit(:user_id, :group_id, :content,
+                                             group_post_pictures_attributes: [:picture])
         end
     end
   end
