@@ -28,8 +28,8 @@ module Users
     end
 
     def update
-      @group = Group.find(params[:id])
-      if @group.update(params.require(:group).permit(:name))
+      group = Group.find(params[:id])
+      if group.update(params.require(:group).permit(:name))
         redirect_to users_groups_path, notice: 'the group name changed'
       else
         redirect_to users_groups_path, notice: "Couldn't change group name"
