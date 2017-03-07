@@ -4,7 +4,7 @@ module Users
       def create
         feed_favorite = current_user.feed_favorites.build(feed_id: params[:feed_id])
         if feed_favorite.save
-          UserMailer.feed_favorite_creation(feed_favorite).deliver
+          UserMailer.feed_favorite_creation(feed_favorite).deliver_later
           redirect_to root_path, notice: 'You liked a feed!'
         else
           redirect_to root_path, notice: 'FAIL. Try again.'

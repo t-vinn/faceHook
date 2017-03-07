@@ -3,7 +3,7 @@ module Users
     def create
       feed = Feed.new(feed_params)
       if feed.save
-        UserMailer.feed_creation(feed).deliver
+        UserMailer.feed_creation(feed).deliver_later
         redirect_to root_path, notice: 'a new feed created'
       else
         redirect_to root_path, notice: 'your message is too short or long!'
