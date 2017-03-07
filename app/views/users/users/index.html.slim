@@ -30,7 +30,7 @@ p
                 - if post.is_a?(Feed)
                   td = image_tag post.feed_pictures.first.picture if post.feed_pictures.exists?
                   td = post.user.name
-                  td style="word-break:break-all;" = post[:content]
+                  td style="word-break:break-word;" = post[:content]
                   td = post[:created_at]
                   td = link_to 'Reply', new_users_feed_reply_path(post)
                   - if post[:user_id] == current_user.id
@@ -66,7 +66,7 @@ p
                 - else # post == group_post
                   td = image_tag post.group_post_pictures.first.picture if post.group_post_pictures.exists?
                   td = post.user.name
-                  td style="word-break:break-all;" = post[:content]
+                  td style="word-break:break-word;" = post[:content]
                   td = post[:created_at]
                   td *
                   - if post[:user_id] == current_user.id
@@ -98,7 +98,7 @@ p
                 - if post.is_a?(Feed)
                   td = image_tag post.feed_pictures.first.picture if post.feed_pictures.exists?
                   td = post.user.name
-                  td style="word-break:break-all;" = post[:content]
+                  td style="word-break:break-word;" = post[:content]
                   td = post[:created_at]
                   td = link_to 'Reply', new_users_feed_reply_path(post)
                   - if post[:user_id] == current_user.id
@@ -134,7 +134,7 @@ p
                 - else # post == group_post
                   td = image_tag post.group_post_pictures.first.picture if post.group_post_pictures.exists?
                   td = post.user.name
-                  td style="word-break:break-all;" = post[:content]
+                  td style="word-break:break-word;" = post[:content]
                   td = post[:created_at]
                   td *
                   - if post[:user_id] == current_user.id
