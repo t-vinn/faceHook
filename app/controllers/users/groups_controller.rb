@@ -3,11 +3,13 @@ module Users
     def index
       @group = Group.new
       @group.groups_users.build
-      @groups = Group.all
+      @groups = (Group.find(current_user.groups_users.pluck(:group_id)) | \
+                 Group.where(owner_user_id: current_user.id)).sort_by(&:created_at).reverse
     end
 
     def show
       @group = Group.find(params[:id])
+      @not_a_member_condition = (current_user.groups_users & @group.groups_users).blank? && @group.owner_user != current_user
       @group_post = GroupPost.new
       @group_post.group_post_pictures.build
       @group_post_favorites_index_by_group_post_id = \

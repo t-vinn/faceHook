@@ -28,7 +28,7 @@ table
       th created date
       th colspan='2'
   tbody
-    - @groups.sort_by(&:created_at).reverse_each do |group|
+    - @groups.each do |group|
       tr
         td = group.name
         td = group.created_at
