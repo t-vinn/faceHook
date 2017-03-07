@@ -1,3 +1,4 @@
+# rubocop: disable Metrics/AbcSize
 module Users
   class GroupsController < BaseController
     def index
@@ -9,7 +10,8 @@ module Users
 
     def show
       @group = Group.find(params[:id])
-      @not_a_member_condition = (current_user.groups_users & @group.groups_users).blank? && @group.owner_user != current_user
+      @not_a_member_condition = (current_user.groups_users & @group.groups_users).blank? && \
+                                @group.owner_user != current_user
       @group_post = GroupPost.new
       @group_post.group_post_pictures.build
       @group_post_favorites_index_by_group_post_id = \
