@@ -14,4 +14,8 @@ class Group < ApplicationRecord
     invited_users = User.find(groups_users.pluck(:user_id))
     owner_user.mutual_followers - invited_users
   end
+
+  def members
+    User.find(groups_users.pluck(:user_id)).push(owner_user)
+  end
 end

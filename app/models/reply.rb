@@ -7,4 +7,8 @@ class Reply < ApplicationRecord
   has_many :reply_favorites
   has_many :reply_pictures, inverse_of: :reply
   accepts_nested_attributes_for :reply_pictures
+
+  def related_users
+    User.find(feed.replies.pluck(:user_id)).push(feed.user)
+  end
 end
