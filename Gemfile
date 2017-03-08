@@ -88,3 +88,6 @@ gem 'carrierwave'
 
 # resize pictures
 gem 'mini_magick'
+
+# for file uploads
+gem 'jquery-turbolinks'
