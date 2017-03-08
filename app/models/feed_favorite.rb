@@ -5,6 +5,6 @@ class FeedFavorite < ApplicationRecord
   validates :feed_id, presence: true
 
   def related_users
-   [user, feed.user]
+    [user, feed.user]
   end
 end

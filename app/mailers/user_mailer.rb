@@ -20,7 +20,7 @@ class UserMailer < ApplicationMailer
 
   def reply_creation(reply)
     @sent_reply = reply
-    receiving_users =  reply.related_users & User.where(notification_allowed: true)
+    receiving_users = reply.related_users & User.where(notification_allowed: true)
     mail to: receiving_users.pluck(:email), subject: 'A new reply posted' \
       if receiving_users.present?
   end
