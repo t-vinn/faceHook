@@ -1,0 +1,6 @@
+p = 'Hi!'
+br
+p = "The group " + @groups_user.group.name + " in our FaceHook now has a new member " + @groups_user.user.name + "!"
+br
+p = "Please check the link below to check what's going on in the group."
+p = link_to 'Go to the group', users_group_url(@groups_user.group)

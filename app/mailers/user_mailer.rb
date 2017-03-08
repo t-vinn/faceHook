@@ -47,4 +47,17 @@ class UserMailer < ApplicationMailer
     mail to: receiving_users.pluck(:email), subject: 'A group post liked' \
       if receiving_users.present?
   end
+
+  def group_invitation(groups_user)
+    @groups_user = groups_user
+    mail to: groups_user.user.email, subject: "You're invited to a new group"
+  end
+
+  def group_new_member(groups_user)
+    @groups_user = groups_user
+    receiving_users = (groups_user.group.members - [groups_user.user]) & \
+                      User.where(notification_allowed: true)
+    mail to: receiving_users.pluck(:email), subject: 'A new member invited to the group' \
+      if receiving_users.present?
+  end
 end
