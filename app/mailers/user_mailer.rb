@@ -48,6 +48,12 @@ class UserMailer < ApplicationMailer
       if receiving_users.present?
   end
 
+  def group_creation(group)
+    @group = group
+    mail to: group.owner_user.email, subject: 'Created a new group' \
+      if group.owner_user.notification_allowed == true
+  end
+
   def group_invitation(groups_user)
     @groups_user = groups_user
     mail to: groups_user.user.email, subject: "You're invited to a new group"
