@@ -34,7 +34,7 @@ class UserMailer < ApplicationMailer
 
   def group_post_creation(group_post)
     @sent_group_post = group_post
-    receiving_users = User.where(notification_allowed: true) & group_post.group.members
+    receiving_users = User.where(notification_allowed: true) & group_post.group.users
     mail to: receiving_users.pluck(:email), subject: 'A new group post created' \
       if receiving_users.present?
   end
@@ -61,7 +61,7 @@ class UserMailer < ApplicationMailer
 
   def group_new_member(groups_user)
     @groups_user = groups_user
-    receiving_users = (groups_user.group.members - [groups_user.user]) & \
+    receiving_users = (groups_user.group.users - [groups_user.user]) & \
                       User.where(notification_allowed: true)
     mail to: receiving_users.pluck(:email), subject: 'A new member invited to the group' \
       if receiving_users.present?
