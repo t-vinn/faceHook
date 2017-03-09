@@ -4,15 +4,16 @@ p = '作成者: ' + @group.owner_user.name
 
 hr
 // 投稿
-= form_for [:users, @group, @group_post], html: { multipart: true } do |f|
+= nested_form_for [:users, @group, @group_post], html: { multipart: true } do |f|
   .field
     = f.label :content, 'メッセージ'
     = f.text_field :content, size: 60, maxlength: 140
     = f.hidden_field :user_id, value: current_user.id
     = f.hidden_field :group_id, value: @group.id
-    - 3.times do
-      = f.fields_for :group_post_pictures do |gppic|
-        = gppic.file_field :picture, accept: 'image/jpeg,image/gif,image/png'
+    = f.fields_for :group_post_pictures do |gppic|
+      = gppic.file_field :picture, accept: 'image/jpeg,image/gif,image/png'
+      = gppic.link_to_remove 'Remove this picture'
+    = f.link_to_add 'Add a picture', :group_post_pictures
   .actions
     = f.submit
 

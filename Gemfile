@@ -91,3 +91,6 @@ gem 'mini_magick'
 
 # for file uploads
 gem 'jquery-turbolinks'
+
+# for nested_form
+gem 'nested_form'

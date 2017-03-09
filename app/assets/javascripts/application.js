@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery_nested_form
 //= require jquery.turbolinks
 //= require turbolinks
 //= require bootstrap-sprockets-custom
