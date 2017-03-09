@@ -1,4 +1,4 @@
-= form_for [:users, feed], html: { multipart: true } do |f|
+= nested_form_for [:users, feed], html: { multipart: true } do |f|
   .field
     = f.label :content, '投稿内容：'
     = f.text_field :content, size: 60, maxlength: 140
@@ -11,9 +11,9 @@
     = f.radio_button :privacy, 'share_with_only_me'
     = f.label :privacy, '非公開', value: 2
     = f.hidden_field :user_id, value: current_user.id
-
-    - 3.times do
-      = f.fields_for :feed_pictures do |fp|
-        = fp.file_field :picture, accept: 'image/jpeg,image/gif,image/png'
+    = f.fields_for :feed_pictures do |fp|
+      = fp.file_field :picture, accept: 'image/jpeg,image/gif,image/png'
+      = fp.link_to_remove 'Remove this picture'
+    p = f.link_to_add 'Add a picture', :feed_pictures
   .actions
     = f.submit

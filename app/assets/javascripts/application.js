@@ -16,4 +16,4 @@
 //= require jquery.turbolinks
 //= require turbolinks
 //= require bootstrap-sprockets-custom
-//= require_tree .
+//= require users/shared/picture_form

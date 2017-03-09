@@ -7,5 +7,5 @@ class Feed < ApplicationRecord
   has_many :replies
   has_many :feed_favorites
   has_many :feed_pictures, inverse_of: :feed
-  accepts_nested_attributes_for :feed_pictures, limit: 3
+  accepts_nested_attributes_for :feed_pictures
 end
