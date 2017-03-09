@@ -37,7 +37,7 @@ module Users
       if group.update(group_update_params)
         redirect_to users_groups_path, notice: 'The group name changed'
       else
-        redirect_to edit_users_group_path(group), notice: "New name already used"
+        redirect_to edit_users_group_path(group), notice: 'New name already used'
       end
     end
 
