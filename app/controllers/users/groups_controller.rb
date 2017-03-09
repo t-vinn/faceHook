@@ -4,8 +4,7 @@ module Users
     def index
       @group = Group.new
       @group.groups_users.build
-      @groups = (Group.find(current_user.groups_users.pluck(:group_id)) | \
-                 Group.where(owner_user_id: current_user.id)).sort_by(&:created_at).reverse
+      @groups = current_user.groups.sort_by(&:created_at).reverse
     end
 
     def show
