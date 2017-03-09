@@ -9,6 +9,6 @@ class Reply < ApplicationRecord
   accepts_nested_attributes_for :reply_pictures
 
   def related_users
-    User.find(feed.replies.pluck(:user_id)).push(feed.user)
+    feed.replies.map(&:user).push(feed.user).uniq
   end
 end
