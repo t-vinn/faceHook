@@ -7,7 +7,7 @@ module Users
         groups_user = group.groups_users.build(user_id: params[:user_id])
         if groups_user.save
           UserMailer.group_invitation(groups_user).deliver_later
-          UserMailer.group_new_member(groups_user).deliver_now
+          UserMailer.group_new_member(groups_user).deliver_later
           redirect_to users_group_path(group), notice: 'New member added to the group'
         else
           redirect_to users_group_path(group), notice: 'Failed. Try again.'
