@@ -27,6 +27,7 @@ class User < ApplicationRecord
   has_many :group_post_favorites
   mount_uploader :picture, PictureUploader
   validate :picture_size
+  scope :notifiable, -> { where(notification_allowed: true) }
 
   def mutual_followers
     following_users & follower_users

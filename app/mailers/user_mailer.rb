@@ -13,28 +13,26 @@ class UserMailer < ApplicationMailer
 
   def feed_favorite_creation(feed_favorite)
     @feed_favorite = feed_favorite
-    receiving_users = feed_favorite.related_users & \
-                      User.where(notification_allowed: true)
+    receiving_users = feed_favorite.related_users & User.notifiable
     mail to: receiving_users.pluck(:email), subject: 'A feed liked' if receiving_users.present?
   end
 
   def reply_creation(reply)
     @sent_reply = reply
-    receiving_users = reply.related_users & User.where(notification_allowed: true)
+    receiving_users = reply.related_users & User.notifiable
     mail to: receiving_users.pluck(:email), subject: 'A new reply posted' \
       if receiving_users.present?
   end
 
   def reply_favorite_creation(reply_favorite)
     @reply_favorite = reply_favorite
-    receiving_users = reply_favorite.related_users &
-                      User.where(notification_allowed: true)
+    receiving_users = reply_favorite.related_users & User.notifiable
     mail to: receiving_users.pluck(:email), subject: 'A reply liked' if receiving_users.present?
   end
 
   def group_post_creation(group_post)
     @sent_group_post = group_post
-    receiving_users = User.where(notification_allowed: true) & group_post.group.users
+    receiving_users = User.notifiable & group_post.group.users
     mail to: receiving_users.pluck(:email), subject: 'A new group post created' \
       if receiving_users.present?
   end
@@ -43,7 +41,7 @@ class UserMailer < ApplicationMailer
     @group_post_favorite = group_post_favorite
     gp = group_post_favorite.group_post
     possible_receivers = group_post_favorite.related_users.push(gp.group.owner_user)
-    receiving_users =  possible_receivers & User.where(notification_allowed: true)
+    receiving_users =  possible_receivers & User.notifiable
     mail to: receiving_users.pluck(:email), subject: 'A group post liked' \
       if receiving_users.present?
   end
@@ -61,8 +59,7 @@ class UserMailer < ApplicationMailer
 
   def group_new_member(groups_user)
     @groups_user = groups_user
-    receiving_users = (groups_user.group.users - [groups_user.user]) & \
-                      User.where(notification_allowed: true)
+    receiving_users = (groups_user.group.users - [groups_user.user]) & User.notifiable
     mail to: receiving_users.pluck(:email), subject: 'A new member invited to the group' \
       if receiving_users.present?
   end
