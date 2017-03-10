@@ -1,10 +1,10 @@
-h1   トップページ
+h1 FaceHook
 p
 
 .container-fluid
   .row
     .col-md-7
-      h3 タイムライン
+      h3 TIMELINE
 
       ul.nav.nav-tabs
         li.nav-item
@@ -27,26 +27,31 @@ p
                   td.col-md-6 colspan='4'
                 tr
                   td.col-md-2
-                  td.col-md=1
+                  td.col-md-1
                   td.col-md-2
                   td.col-md-1
               = render @posts
             = paginate @posts
 
         .tab-pane#following
-          table#following_posts
-            thead
-              tr
-                th.col-md-2 picture
-                th.col-md-1 name
-                th.col-md-3 content
-                th.col-md-1 posted_at
-                th.col-md-1 reply
-                th.col-md-1 favorite
-                th.col-md-1 favorite counter
-            tbody.page
+          #following_posts
+            table.page.table
+              thead.hide
+                tr
+                  td.col-md-1 rowspan='4'
+                  td.col-md-1
+                  td.col-md-5 colspan='3'
+                tr
+                  td.col-md-6 colspan='4'
+                tr
+                  td.col-md-6 colspan='4'
+                tr
+                  td.col-md-2
+                  td.col-md-1
+                  td.col-md-2
+                  td.col-md-1
               = render @following_posts
-          = paginate @following_posts
+            = paginate @following_posts
 
         br
       hr
@@ -62,7 +67,7 @@ p
 
     .col-md-5
       p
-        | ユーザーをフォローしてfaceHookをさらに使いこなそう！
+        | follow other users and explore the world with faceHook!
 
       hr
       p
