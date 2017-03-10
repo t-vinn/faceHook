@@ -4,7 +4,7 @@ tbody.post
     td = link_to feed.user.name, users_user_path(feed.user)
     td colspan='2' = time_ago_in_words(feed.created_at) + ' ago'
   tr
-    td colspan='4' style="word-break:break-all;" = feed.content
+    td colspan='4' style="word-break:break-word;" = feed.content
   tr
     td colspan='4' = image_tag feed.feed_pictures.first.picture if feed.feed_pictures.exists?
   tr
@@ -26,7 +26,7 @@ tbody.post
         td = link_to reply.user.name, users_user_path(reply.user)
         td colspan='2' = time_ago_in_words(reply.created_at) + ' ago'
       tr
-        td colspan='4' = '[REPLY]---> ' + reply.content
+        td colspan='4' style="word-break:break-word;" = '[REPLY]---> ' + reply.content
       tr
         td colspan='4' = image_tag reply.reply_pictures.first.picture.url if reply.reply_pictures.exists?
       tr
