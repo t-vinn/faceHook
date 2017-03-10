@@ -89,8 +89,9 @@ gem 'carrierwave'
 # resize pictures
 gem 'mini_magick'
 
-# for file uploads
+# for file uploads & paginations
 gem 'jquery-turbolinks'
+gem 'kaminari'
 
 # for nested_form
 gem 'nested_form'

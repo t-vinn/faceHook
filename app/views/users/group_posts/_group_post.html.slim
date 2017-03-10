@@ -1,0 +1,17 @@
+tr.post
+  td = image_tag group_post.group_post_pictures.first.picture if group_post.group_post_pictures.exists?
+  td = group_post.user.name
+  td style="word-break:break-all;" = group_post[:content]
+  td = group_post[:created_at]
+  td *
+  - if group_post[:user_id] == current_user.id
+    td *
+  - elsif group_post.group_post_favorites.exists?(user_id: current_user.id)
+    td = link_to 'Remove Favorite',
+      users_group_group_post_group_post_favorite_path(group_post.group, group_post,
+        @group_post_favorites_index_by_group_post_id[group_post.id]),
+      method: :delete
+  - else
+    td = link_to 'Favorite', users_group_group_post_group_post_favorites_path(group_post.group, group_post),
+        method: :post
+  td = group_post.group_post_favorites.count

@@ -17,8 +17,9 @@ module Users
       groups_current_user_is_a_member = Group.where(id: current_user.groups_users.pluck(:group_id))
       groups = groups_owned_by_current_user.or(groups_current_user_is_a_member)
       group_posts = GroupPost.where(group_id: groups.pluck(:id))
-      @feeds_or_group_posts = \
+      feeds_or_group_posts = \
         (feeds | group_posts).sort_by { |post| post['created_at'] }.reverse
+      @posts = Kaminari.paginate_array(feeds_or_group_posts).page(params[:page])
       following_feeds = Feed.where(
         privacy: [:share_with_all, :share_with_follower],
         user: current_user.following_users
