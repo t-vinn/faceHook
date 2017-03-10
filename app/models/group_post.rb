@@ -6,5 +6,5 @@ class GroupPost < ApplicationRecord
   validates :content, presence: true, length: { in: 1..140 }
   has_many :group_post_favorites
   has_many :group_post_pictures, inverse_of: :group_post
-  accepts_nested_attributes_for :group_post_pictures, limit: 3
+  accepts_nested_attributes_for :group_post_pictures, allow_destroy: true, reject_if: :all_blank
 end
