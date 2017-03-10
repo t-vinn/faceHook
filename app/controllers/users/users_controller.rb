@@ -24,8 +24,9 @@ module Users
         privacy: [:share_with_all, :share_with_follower],
         user: current_user.following_users
       )
-      @following_feeds_or_group_posts = \
+      following_feeds_or_group_posts = \
         (following_feeds | group_posts).sort_by { |post| post['created_at'] }.reverse
+      @following_posts = Kaminari.paginate_array(following_feeds_or_group_posts).page(params[:page])
       @feed_favorites_index_by_feed_id = current_user.feed_favorites.index_by(&:feed_id)
       @reply_favorites_index_by_reply_id = current_user.reply_favorites.index_by(&:reply_id)
       @group_post_favorites_index_by_group_post_id = \
