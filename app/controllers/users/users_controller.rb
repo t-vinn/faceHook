@@ -35,6 +35,9 @@ module Users
 
     def show
       @user = User.find(params[:id])
+      @feeds = Kaminari.paginate_array(@user.feeds.share_with_all).page(params[:page])
+      @feed_favorites_index_by_feed_id = current_user.feed_favorites.index_by(&:feed_id)
+      @reply_favorites_index_by_reply_id = current_user.reply_favorites.index_by(&:reply_id)
     end
   end
 end

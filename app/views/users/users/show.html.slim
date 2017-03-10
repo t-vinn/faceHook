@@ -21,26 +21,24 @@
       - if @user.feeds.share_with_all.blank?
         p = '公開投稿がありません'
       - else
-        table
-          thead
-            tr
-              th picture
-              th message
-              th posted at
-              th favorite counter
-          tbody
-            - @user.feeds.share_with_all.each do |feed|
+        #feeds
+          table.page.table
+            thead.hidden
               tr
-                td = image_tag feed.feed_pictures.first.picture if feed.feed_pictures.exists?
-                td = feed.content
-                td = feed.created_at
-                td = feed.feed_favorites.count
-              - feed.replies.each do |reply|
-                tr
-                  td = image_tag reply.reply_pictures.first.picture.url if reply.reply_pictures.exists?
-                  td = "[REPLY by #{reply.user.name}] " + reply.content
-                  td = reply.created_at
-                  // Can't reply to replies. Can only reply to feeds.
-                  td = reply.reply_favorites.count
+                td.col-md-1 rowspan='4'
+                td.col-md-1
+                td.col-md-5 colspan='3'
+              tr
+                td.col-md-6 colspan='4'
+              tr
+                td.col-md-6 colspan='4'
+              tr
+                td.col-md-2
+                td.col-md-1
+                td.col-md-2
+                td.col-md-1
+            = render @feeds
+          = paginate @feeds
+
   .row
     p = link_to 'Back', root_path
