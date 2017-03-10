@@ -1,65 +1,73 @@
-h1  グループ詳細
-p = 'グループ名: ' + @group.name
-p = '作成者: ' + @group.owner_user.name
+.container-fluid
+  .row
+    .col-md-7
+      // ここにグループ投稿一覧
+      #group_posts
+        table.page.table
+          thead.hide
+            tr
+              td.col-md-1 rowspan='4'
+              td.col-md-1
+              td.col-md-5 colspan='2'
+            tr
+              td.col-md-6 colspan='4'
+            tr
+              td.col-md-6 colspan='4'
+            tr
+              td.col-md-3 colspan='2'
+              td.col-md-2
+              td.col-md-1
+          = render @group_posts
+        = paginate @group_posts
 
-hr
-// 投稿
-= nested_form_for [:users, @group, @group_post], html: { multipart: true } do |f|
-  .field
-    = f.label :content, 'メッセージ'
-    = f.text_field :content, size: 60, maxlength: 140
-    = f.hidden_field :user_id, value: current_user.id
-    = f.hidden_field :group_id, value: @group.id
-    = f.fields_for :group_post_pictures do |g|
-      = g.file_field :picture, accept: 'image/jpeg,image/gif,image/png'
-      = g.link_to_remove 'Remove this picture'
-    p = f.link_to_add 'Add a picture', :group_post_pictures
-  .actions
-    = f.submit
+    .col-md-5
+      h1  グループ詳細
+      p = 'グループ名: ' + @group.name
+      p = '作成者: ' + @group.owner_user.name
 
-hr
-// ここにグループ投稿一覧
-table#group_posts
-  thead
-    tr
-      th Picture
-      th Message
-      th By
-      th posted at
-      th favorite
-      th favorite counter
-  tbody.page
-    = render @group_posts
-  = paginate @group_posts
+      hr
+      // 投稿
+      = nested_form_for [:users, @group, @group_post], html: { multipart: true } do |f|
+        .field
+          = f.label :content, 'メッセージ'
+          = f.text_field :content, size: 60, maxlength: 140
+          = f.hidden_field :user_id, value: current_user.id
+          = f.hidden_field :group_id, value: @group.id
+          = f.fields_for :group_post_pictures do |g|
+            = g.file_field :picture, accept: 'image/jpeg,image/gif,image/png'
+            = g.link_to_remove 'Remove this picture'
+          p = f.link_to_add 'Add a picture', :group_post_pictures
+        .actions
+          = f.submit
 
-hr
-// current members of the group
-table
-  thead
-    tr
-      th Member
-  tbody
-    - @group.groups_users.each do |groups_user|
-      tr
-        td = groups_user.user.name
+      // current members of the group
+      table
+        thead
+          tr
+            th Member
+        tbody
+          - @group.groups_users.each do |groups_user|
+            tr
+              td = groups_user.user.name
 
-hr
-// invite friends to the group
-- if @group.owner_user == current_user
-  p まだこのグループに入ってないユーザー
-  table
-    thead
-      tr
-        th Name
-        th
-    tbody
-      - @group.invitable_users.each do |i|
-        tr
-          td = i.name
-          // links to invite users to the group
-          td = link_to 'Invite', users_group_groups_users_path(@group, user_id: i.id), method: :post
-
-br
-= link_to 'Back', users_groups_path
-br
-= link_to 'Home', root_path
+      hr
+      // invite friends to the group
+      - if @group.owner_user == current_user
+        p まだこのグループに入ってないユーザー
+        table
+          thead
+            tr
+              th Name
+              th
+          tbody
+            - @group.invitable_users.each do |i|
+              tr
+                td = i.name
+                // links to invite users to the group
+                td = link_to 'Invite', users_group_groups_users_path(@group, user_id: i.id), method: :post
+  .row
+    .col-md-12
+      br
+      = link_to 'Back', users_groups_path
+      br
+      = link_to 'Home', root_path
