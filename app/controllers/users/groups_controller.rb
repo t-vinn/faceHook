@@ -1,3 +1,4 @@
+# rubocop: disable Metrics/AbcSize
 module Users
   class GroupsController < BaseController
     def index
