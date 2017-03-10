@@ -1,6 +1,6 @@
 = nested_form_for [:users, :feed, @reply], html: { multipart: true } do |f|
   .field
-    = f.label :content, '投稿内容：'
+    = f.label :content, 'Content：'
     = f.text_field :content, size: 60, maxlength: 140
     = f.hidden_field :user_id, value: current_user.id
     = f.hidden_field :feed_id, value: @feed.id

@@ -1,15 +1,15 @@
 = nested_form_for [:users, feed], html: { multipart: true } do |f|
   .field
-    = f.label :content, '投稿内容：'
+    = f.label :content, 'Content：'
     = f.text_field :content, size: 60, maxlength: 140
     br
-    = f.label :privacy, '公開度：'
+    = f.label :privacy, 'Privacy：'
     = f.radio_button :privacy, 'share_with_all'
-    = f.label :privacy, '公開', value: 0
+    = f.label :privacy, 'public', value: 0
     = f.radio_button :privacy, 'share_with_follower'
-    = f.label :privacy, 'フォロワー', value: 1
+    = f.label :privacy, 'follower_only', value: 1
     = f.radio_button :privacy, 'share_with_only_me'
-    = f.label :privacy, '非公開', value: 2
+    = f.label :privacy, 'private', value: 2
     = f.hidden_field :user_id, value: current_user.id
     = f.fields_for :feed_pictures do |fp|
       = fp.file_field :picture, accept: 'image/jpeg,image/gif,image/png'

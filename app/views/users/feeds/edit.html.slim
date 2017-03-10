@@ -1,18 +1,18 @@
 h2 Edit Privacy
-p 公開度のみ変更することができます。
+p You can only change the privacy of your feed.
 hr
-p 元のコメント内容:
+p The original content:
 p = @feed.content
 hr
 = form_for [:users, @feed] do |f|
   .field
-    = f.label :privacy, '公開度：'
+    = f.label :privacy, 'Privacy：'
     = f.radio_button :privacy, 'share_with_all'
-    = f.label :privacy, '公開', value: 0
+    = f.label :privacy, 'public', value: 0
     = f.radio_button :privacy, 'share_with_follower'
-    = f.label :privacy, 'フォロワー', value: 1
+    = f.label :privacy, 'follower only', value: 1
     = f.radio_button :privacy, 'share_with_only_me'
-    = f.label :privacy, '非公開', value: 2
+    = f.label :privacy, 'private', value: 2
     = f.hidden_field :user_id, value: current_user.id
 
   .actions

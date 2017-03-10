@@ -16,7 +16,7 @@ p
         .tab-pane.active#all
           #posts
             table.page.table
-              thead.hide
+              thead.hidden
                 tr
                   td.col-md-1 rowspan='4'
                   td.col-md-1
@@ -36,7 +36,7 @@ p
         .tab-pane#following
           #following_posts
             table.page.table
-              thead.hide
+              thead.hidden
                 tr
                   td.col-md-1 rowspan='4'
                   td.col-md-1
@@ -61,8 +61,7 @@ p
       hr
       = link_to 'Back', root_path
 
-      p * フィードの返信やグループ内の投稿には返信できないので、元の投稿に返信してください。種類を問わず自分の投稿にはファボできません。
-
+      p * You can only reply to a feed. Also, you cannot like your own feeds, replies, or group posts.
 
 
     .col-md-5
@@ -71,7 +70,7 @@ p
 
       hr
       p
-        | まだフォローしてないユーザー
+        | users you're not following yet
       table
         thead
           tr
@@ -90,8 +89,9 @@ p
                 method: :post,
                 data: { confirm: 'Follow this person?' }
 
+      hr
       p
-        | フォロー済ユーザー
+        | users you're following
       table
         thead
           tr
