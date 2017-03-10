@@ -20,7 +20,7 @@ module Users
 
         def reply_params
           params.require(:reply).permit(:user_id, :content, :feed_id,
-                                        reply_pictures_attributes: [:picture])
+                                        reply_pictures_attributes: [:id, :picture, :_destroy])
         end
     end
   end
