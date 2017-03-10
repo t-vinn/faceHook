@@ -3,7 +3,7 @@ p
 
 .container-fluid
   .row
-    .col-md-10
+    .col-md-7
       h3 タイムライン
 
       ul.nav.nav-tabs
@@ -14,19 +14,24 @@ p
 
       .tab-content
         .tab-pane.active#all
-          table#posts
-            thead
-              tr
-                th.col-md-2 picture
-                th.col-md-1 name
-                th.col-md-3 content
-                th.col-md-1 posted_at
-                th.col-md-1 reply
-                th.col-md-1 favorite
-                th.col-md-1 favorite counter
-            tbody.page
+          #posts
+            table.page.table
+              thead.hide
+                tr
+                  td.col-md-1 rowspan='4'
+                  td.col-md-1
+                  td.col-md-5 colspan='3'
+                tr
+                  td.col-md-6 colspan='4'
+                tr
+                  td.col-md-6 colspan='4'
+                tr
+                  td.col-md-2
+                  td.col-md=1
+                  td.col-md-2
+                  td.col-md-1
               = render @posts
-          = paginate @posts
+            = paginate @posts
 
         .tab-pane#following
           table#following_posts
@@ -55,7 +60,7 @@ p
 
 
 
-    .col-md-2
+    .col-md-5
       p
         | ユーザーをフォローしてfaceHookをさらに使いこなそう！
 
