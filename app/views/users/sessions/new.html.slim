@@ -25,9 +25,9 @@
       = render 'devise/shared/links'
 
     .col-md-7
-      h3 公開投稿一覧
+      h3 All public feeds
       #public_feeds
-        table.page.table
+        table.page.table.tbodyhover
           thead.hidden
             tr
               td.col-md-1 rowspan='4'
@@ -42,31 +42,5 @@
               td.col-md-1
               td.col-md-2
               td.col-md-1
-          - @public_feeds.each do |feed|
-            tbody.post
-              tr
-                td rowspan='4' = image_tag feed.user.picture.url(:thumb)
-                td = link_to feed.user.name, users_user_path(feed.user)
-                td colspan='2' = time_ago_in_words(feed.created_at) + ' ago'
-              tr
-                td colspan='4' style="word-break:break-word;" = feed.content
-              tr
-                td colspan='4' = image_tag feed.feed_pictures.first.picture if feed.feed_pictures.exists?
-              tr
-                td Replies:
-                td = feed.replies.count
-                td Favorites:
-                td = feed.feed_favorites.count
-                - feed.replies.each do |reply|
-                  tr
-                    td rowspan='4'
-                    td = link_to reply.user.name, users_user_path(reply.user)
-                    td colspan='2' = time_ago_in_words(reply.created_at) + ' ago'
-                  tr
-                    td colspan='4' style="word-break:break-word;" = '[REPLY]---> ' + reply.content
-                  tr
-                    td colspan='4' = image_tag reply.reply_pictures.first.picture.url if reply.reply_pictures.exists?
-                  tr
-                    td colspan = '2'
-                    td Favorites:
-                    td = reply.reply_favorites.count
+          = render partial: '/users/feeds/before_login_feed.html.slim', collection: @public_feeds, as: :feed
+        = paginate @public_feeds
