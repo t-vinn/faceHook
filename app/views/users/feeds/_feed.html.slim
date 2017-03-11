@@ -2,7 +2,7 @@ tbody.post
   tr
     td rowspan='4' = image_tag feed.user.picture.url(:thumb)
     td = link_to feed.user.name, users_user_path(feed.user)
-    td colspan='2' = time_ago_in_words(feed.created_at) + ' ago'
+    td colspan='3' = time_ago_in_words(feed.created_at) + ' ago'
   tr
     td colspan='4' style="word-break:break-word;" = feed.content
   tr
@@ -24,7 +24,7 @@ tbody.post
       tr
         td rowspan='4'
         td = link_to reply.user.name, users_user_path(reply.user)
-        td colspan='2' = time_ago_in_words(reply.created_at) + ' ago'
+        td colspan='3' = time_ago_in_words(reply.created_at) + ' ago'
       tr
         td colspan='4' style="word-break:break-word;" = '[REPLY]---> ' + reply.content
       tr
