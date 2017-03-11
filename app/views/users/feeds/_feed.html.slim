@@ -6,7 +6,7 @@ tbody.post
   tr
     td colspan='4' style="word-break:break-word;" = feed.content
   tr
-    td colspan='4' = image_tag feed.feed_pictures.first.picture if feed.feed_pictures.exists?
+    td.picture colspan='4' = image_tag feed.feed_pictures.first.picture if feed.feed_pictures.exists?
   tr
     td = link_to 'Reply', new_users_feed_reply_path(feed)
     td = feed.replies.count
@@ -28,7 +28,7 @@ tbody.post
       tr
         td colspan='4' style="word-break:break-word;" = '[REPLY]---> ' + reply.content
       tr
-        td colspan='4' = image_tag reply.reply_pictures.first.picture.url if reply.reply_pictures.exists?
+        td.picture colspan='4' = image_tag reply.reply_pictures.first.picture.url if reply.reply_pictures.exists?
       tr
         // Can't reply to replies. Can only reply to feeds.
         td colspan = '2'
