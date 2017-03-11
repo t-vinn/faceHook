@@ -99,7 +99,6 @@ gem 'nested_form'
 # for bootstrap_form
 gem 'bootstrap_form'
 
-
 source 'https://rails-assets.org' do
-    gem 'rails-assets-bootstrap-fileinput', '~> 2.5.0'
+  gem 'rails-assets-bootstrap-fileinput', '~> 2.5.0'
 end
