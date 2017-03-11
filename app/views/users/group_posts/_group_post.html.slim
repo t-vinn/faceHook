@@ -6,7 +6,8 @@ tbody.post
   tr
     td colspan='4' style="word-break:break-word;" = group_post.content
   tr
-    td.picture colspan='4' = image_tag group_post.group_post_pictures.first.picture if group_post.group_post_pictures.exists?
+    td.picture colspan='4' = image_tag group_post.group_post_pictures.first.picture if \
+      group_post.group_post_pictures.exists?
   tr
     td colspan='2'
     - if group_post[:user_id] == current_user.id
