@@ -45,6 +45,11 @@
                 td = i.name
                 // links to invite users to the group
                 td = link_to 'Invite', users_group_groups_users_path(@group, user_id: i.id), method: :post
+      br
+      = link_to 'Back', users_groups_path
+      br
+      = link_to 'Home', root_path
+
     .col-md-7
       // ここにグループ投稿一覧
       #group_posts
@@ -64,10 +69,3 @@
               td.col-md-1
           = render @group_posts
         = paginate @group_posts
-
-  .row
-    .col-md-12
-      br
-      = link_to 'Back', users_groups_path
-      br
-      = link_to 'Home', root_path
