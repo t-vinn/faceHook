@@ -16,5 +16,6 @@
 //= require jquery.turbolinks
 //= require jquery.infinitescroll
 //= require turbolinks
+//= require bootstrap-fileinput
 //= require bootstrap-sprockets-custom
 //= require_tree .

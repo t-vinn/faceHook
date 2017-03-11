@@ -7,7 +7,7 @@
       = f.radio_button :privacy, 2, label: 'private', inline: true
     = f.hidden_field :user_id, value: current_user.id
     = f.fields_for :feed_pictures do |fp|
-      = fp.file_field :picture, accept: 'image/jpeg,image/gif,image/png', label: ' '
+      = fp.file_field :picture, accept: 'image/jpeg,image/gif,image/png', class: 'picture_upload'
       = fp.link_to_remove 'Remove this picture'
     = f.link_to_add 'Add a picture', :feed_pictures
   .actions
