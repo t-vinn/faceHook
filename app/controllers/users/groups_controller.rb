@@ -3,7 +3,8 @@ module Users
     def index
       @group = Group.new
       @group.groups_users.build
-      @groups = Group.all
+      groups = Group.all.sort_by(&:created_at).reverse
+      @groups = Kaminari.paginate_array(groups).page(params[:page])
     end
 
     def show

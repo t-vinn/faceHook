@@ -1,25 +1,5 @@
 .container-fluid
   .row
-    .col-md-7
-      // ここにグループ投稿一覧
-      #group_posts
-        table.page.table.tbodyhover
-          thead.hidden
-            tr
-              td.col-md-1 rowspan='4'
-              td.col-md-1
-              td.col-md-5 colspan='3'
-            tr
-              td.col-md-6 colspan='4'
-            tr
-              td.col-md-6 colspan='4'
-            tr
-              td.col-md-3 colspan='2'
-              td.col-md-2
-              td.col-md-1
-          = render @group_posts
-        = paginate @group_posts
-
     .col-md-5
       h1  グループ詳細
       p = 'グループ名: ' + @group.name
@@ -65,6 +45,26 @@
                 td = i.name
                 // links to invite users to the group
                 td = link_to 'Invite', users_group_groups_users_path(@group, user_id: i.id), method: :post
+    .col-md-7
+      // ここにグループ投稿一覧
+      #group_posts
+        table.page.table.tbodyhover
+          thead.hidden
+            tr
+              td.col-md-1 rowspan='4'
+              td.col-md-1
+              td.col-md-5 colspan='3'
+            tr
+              td.col-md-6 colspan='4'
+            tr
+              td.col-md-6 colspan='4'
+            tr
+              td.col-md-3 colspan='2'
+              td.col-md-2
+              td.col-md-1
+          = render @group_posts
+        = paginate @group_posts
+
   .row
     .col-md-12
       br
