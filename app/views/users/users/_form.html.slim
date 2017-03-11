@@ -2,9 +2,9 @@
   .field
     = f.text_field :content, size: 60, maxlength: 140
     = f.form_group :privacy, label: { text: 'Privacy ' } do
-      = f.radio_button :privacy, 0, label: 'public', inline: true
-      = f.radio_button :privacy, 1, label: 'follower_only', inline: true
-      = f.radio_button :privacy, 2, label: 'private', inline: true
+      = f.radio_button :privacy, 'share_with_all', label: 'public', inline: true
+      = f.radio_button :privacy, 'share_with_follower', label: 'follower_only', inline: true
+      = f.radio_button :privacy, 'share_with_only_me', label: 'private', inline: true
     = f.hidden_field :user_id, value: current_user.id
     = f.fields_for :feed_pictures do |fp|
       = fp.file_field :picture, accept: 'image/jpeg,image/gif,image/png', class: 'picture_upload'

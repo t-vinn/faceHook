@@ -20,9 +20,6 @@ $(document).ready ->
     removeClass: 'btn btn-warning'
     removeIcon: ''
     removeLabel: ' cancel'
-    uploadClass: 'btn btn-success fileinput-upload-button'
-    uploadIcon: '<i class="fa fa-upload"></i>'
-    uploadLabel: ' import'
     allowedFileExtensions: ['jpeg', 'gif', 'png']
     msgValidationError: '''
     <span class="text-danger">
