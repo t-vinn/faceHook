@@ -95,3 +95,6 @@ gem 'kaminari'
 
 # for nested_form
 gem 'nested_form'
+
+# for bootstrap_form
+gem 'bootstrap_form'

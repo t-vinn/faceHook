@@ -4,7 +4,7 @@ hr
 p The original content:
 p = @feed.content
 hr
-= form_for [:users, @feed] do |f|
+= bootstrap_form_for [:users, @feed] do |f|
   .field
     = f.label :privacy, 'Privacy：'
     = f.radio_button :privacy, 'share_with_all'
