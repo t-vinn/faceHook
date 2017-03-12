@@ -1,3 +1,4 @@
+# rubocop: disable Metrics/AbcSize
 module Users
   module Feeds
     module Replies
