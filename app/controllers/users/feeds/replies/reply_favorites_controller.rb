@@ -3,11 +3,16 @@ module Users
     module Replies
       class ReplyFavoritesController < BaseController
         def create
-          reply_favorite = current_user.reply_favorites.build(reply_id: params[:reply_id])
-          if reply_favorite.save
-            redirect_to root_path, notice: 'You liked a reply!'
-          else
-            redirect_to root_path, notice: 'FAIL. Try again.'
+          feed = Feed.find(params[:feed_id])
+          unless feed.privacy == 'share_with_only_me' ||
+                 feed.privacy == 'share_with_follower' &&
+                 current_user.following_users.exclude?(feed.user)
+            reply_favorite = current_user.reply_favorites.build(reply_id: params[:reply_id])
+            if reply_favorite.save
+              redirect_to root_path, notice: 'You liked a reply!'
+            else
+              redirect_to root_path, notice: 'FAIL. Try again.'
+            end
           end
         end
 
