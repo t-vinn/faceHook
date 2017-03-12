@@ -8,10 +8,14 @@ module Users
 
     def show
       @group = Group.find(params[:id])
-      @group_post = GroupPost.new
-      @group_post.group_post_pictures.build
-      @group_post_favorites_index_by_group_post_id = \
-        current_user.group_post_favorites.index_by(&:group_post_id)
+      if @group.users.exclude?(current_user)
+        render file: 'public/404.html', status: :not_found, layout: false
+      else
+        @group_post = GroupPost.new
+        @group_post.group_post_pictures.build
+        @group_post_favorites_index_by_group_post_id = \
+          current_user.group_post_favorites.index_by(&:group_post_id)
+      end
     end
 
     def create
