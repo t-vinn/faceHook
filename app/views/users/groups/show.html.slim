@@ -7,10 +7,9 @@
 
       hr
       // 投稿
-      = nested_form_for [:users, @group, @group_post], html: { multipart: true } do |f|
+      = bootstrap_nested_form_for [:users, @group, @group_post], html: { multipart: true } do |f|
         .field
-          = f.label :content, 'メッセージ'
-          = f.text_field :content, size: 60, maxlength: 140
+          = f.text_field :content, size: 60, maxlength: 140, label: 'Message'
           = f.hidden_field :user_id, value: current_user.id
           = f.hidden_field :group_id, value: @group.id
           = f.fields_for :group_post_pictures do |g|
@@ -18,40 +17,43 @@
             = g.link_to_remove 'Remove this picture'
           p = f.link_to_add 'Add a picture', :group_post_pictures
         .actions
-          = f.submit
+          = f.primary
 
+      hr
       // current members of the group
-      table
+      p Current members
+      table.table.table-hover
         thead
           tr
-            th Member
+            th Picture
+            th Name
         tbody
           - @group.groups_users.each do |groups_user|
             tr
-              td = groups_user.user.name
+              td = image_tag groups_user.user.picture.url(:thumb)
+              td = link_to groups_user.user.name, users_user_path(groups_user.user)
 
       hr
       // invite friends to the group
       - if @group.owner_user == current_user
-        p まだこのグループに入ってないユーザー
-        table
+        p Users you can invite to this group
+        table.table.table-hover
           thead
             tr
+              th Picture
               th Name
               th
           tbody
             - @group.invitable_users.each do |i|
               tr
-                td = i.name
+                td = image_tag i.picture.url(:thumb)
+                td = link_to i.name, users_user_path(i)
                 // links to invite users to the group
                 td = link_to 'Invite', users_group_groups_users_path(@group, user_id: i.id), method: :post
-      br
-      = link_to 'Back', users_groups_path
-      br
-      = link_to 'Home', root_path
 
     .col-md-7
       // ここにグループ投稿一覧
+      p = 'まだ投稿がありません。' if @group_posts.empty?
       #group_posts
         table.page.table.tbodyhover
           thead.hidden
