@@ -39,8 +39,8 @@
           i
             |  Your current profile picture
         .field
-          = f.file_field :picture, accept: 'image/jpeg,image/gif,image/png',
-            label: 'Profile picture', class: 'picture_upload'
+          = f.file_field :picture, accept: 'image/jpeg,image/gif,image/png', class: 'picture_upload',
+            label: 'Profile picture'
         .actions
           = f.primary 'Update'
       h3
