@@ -6,7 +6,10 @@ tbody.post
   tr
     td colspan='4' style="word-break:break-word;" = feed.content
   tr
-    td colspan='4' = image_tag feed.feed_pictures.first.picture if feed.feed_pictures.exists?
+    td.picture colspan='4'
+      - if feed.feed_pictures.exists?
+        - feed.feed_pictures.each do |p|
+          = image_tag p.picture
   tr
     td Replies:
     td = feed.replies.count
