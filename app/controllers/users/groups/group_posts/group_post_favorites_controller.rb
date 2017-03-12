@@ -1,16 +1,19 @@
+# rubocop: disable Metrics/AbcSize
 module Users
   module Groups
     module GroupPosts
       class GroupPostFavoritesController < BaseController
         def create
           group = Group.find(params[:group_id])
-          group_post_favorite = current_user.group_post_favorites.build(
-            group_post_id: params[:group_post_id]
-          )
-          if group_post_favorite.save
-            redirect_to users_group_path(group), notice: 'You liked a post!'
-          else
-            redirect_to users_group_path(group), notice: 'FAIL. Try again.'
+          unless group.users.exclude?(current_user)
+            group_post_favorite = current_user.group_post_favorites.build(
+              group_post_id: params[:group_post_id]
+            )
+            if group_post_favorite.save
+              redirect_to users_group_path(group), notice: 'You liked a post!'
+            else
+              redirect_to users_group_path(group), notice: 'FAIL. Try again.'
+            end
           end
         end
 
