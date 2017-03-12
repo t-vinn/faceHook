@@ -4,6 +4,8 @@ header
       .col-md-12
         - if user_signed_in?
           .navbar-right
+            button.btn.btn-default = link_to 'Home ', root_path
+            button.btn.btn-default = link_to 'Group ', users_groups_path
             button.btn.btn-default = link_to 'Edit your profile ', edit_user_registration_path
             button.btn.btn-default = link_to 'Log out', destroy_user_session_path, method: :delete
         - else
