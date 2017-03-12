@@ -20,23 +20,15 @@
         .actions
           = f.primary
 
-      br
-      = link_to 'Back', root_path
-
     .col-md-7
       // group select(index)
       p Let's enjoy group chats !
-      table.table.table-hover
+      table.table.table-hover#groups
         thead
           tr
             th Group name
             th created date
             th
-        tbody
-          - @groups.each do |group|
-            tr
-              td = link_to group.name, users_group_path(group)
-              td = time_ago_in_words(group.created_at) + ' ago'
-              td = link_to_if(group.owner_user_id == current_user.id, 'Edit', edit_users_group_path(group)) {}
-
-
+        tbody.page
+          = render @groups
+        = paginate @groups
