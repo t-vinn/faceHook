@@ -17,6 +17,8 @@ module Users
     def create
       group = Group.new(group_params)
       if group.save
+        UserMailer.group_invitation(group.groups_users.first).deliver_later
+        UserMailer.group_creation(group).deliver_later
         redirect_to users_groups_path, notice: 'a new group created!'
       else
         redirect_to users_groups_path, notice: 'The selected group name has already been taken.'
