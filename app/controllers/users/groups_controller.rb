@@ -1,9 +1,10 @@
+# rubocop: disable Metrics/AbcSize
 module Users
   class GroupsController < BaseController
     def index
       @group = Group.new
       @group.groups_users.build
-      @groups = Group.all
+      @groups = current_user.groups.sort_by(&:created_at).reverse
     end
 
     def show
@@ -11,13 +12,16 @@ module Users
       @group_posts = Kaminari.paginate_array(@group.group_posts).page(params[:page])
       @group_post = GroupPost.new
       @group_post.group_post_pictures.build
+      @group_posts = @group.group_posts.sort_by(&:created_at).reverse
       @group_post_favorites_index_by_group_post_id = \
         current_user.group_post_favorites.index_by(&:group_post_id)
     end
 
     def create
-      group = Group.new(group_params)
+      group = Group.new(group_create_params)
       if group.save
+        UserMailer.group_invitation(group.groups_users.first).deliver_later
+        UserMailer.group_creation(group).deliver_later
         redirect_to users_groups_path, notice: 'a new group created!'
       else
         redirect_to users_groups_path, notice: 'The selected group name has already been taken.'
@@ -29,18 +33,22 @@ module Users
     end
 
     def update
-      @group = Group.find(params[:id])
-      if @group.update(params.require(:group).permit(:name))
-        redirect_to users_groups_path, notice: 'the group name changed'
+      group = Group.find(params[:id])
+      if group.update(group_update_params)
+        redirect_to users_groups_path, notice: 'The group name changed'
       else
-        redirect_to users_groups_path, notice: "Couldn't change group name"
+        redirect_to edit_users_group_path(group), notice: 'New name already used'
       end
     end
 
     private
 
-      def group_params
+      def group_create_params
         params.require(:group).permit(:name, :owner_user_id, groups_users_attributes: [:user_id])
+      end
+
+      def group_update_params
+        params.require(:group).permit(:name)
       end
   end
 end

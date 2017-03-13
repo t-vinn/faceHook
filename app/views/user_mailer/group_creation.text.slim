@@ -1,0 +1,7 @@
+= 'Hi, ' + @group.owner_user.name + ' !'
+=
+= "You've just created a group " + @group.name + ' in our FaceHook, inviting ' + \
+  @group.groups_users.first.user.name + ' as a second member.'
+=
+= "Please check the link below to check what's going on in the group."
+= link_to 'Go to the group', users_group_url(@group)

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .container-fluid
   .row
     .col-md-7
@@ -45,10 +46,15 @@
         thead
           tr
             th Member
+            th
         tbody
           - @group.groups_users.each do |groups_user|
             tr
               td = groups_user.user.name
+              - if @group.owner_user == current_user
+              td = link_to 'Delete', users_group_groups_user_path(@group, groups_user), method: :delete,
+                data: { confirm: 'Are you sure you want to delete this member ?' }
+
 
       hr
       // invite friends to the group

@@ -95,3 +95,7 @@ gem 'kaminari'
 
 # for nested_form
 gem 'nested_form'
+
+# mailer: Asynchronous processing
+gem 'daemons'
+gem 'delayed_job_active_record'
