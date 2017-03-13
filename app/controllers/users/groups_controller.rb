@@ -9,10 +9,10 @@ module Users
 
     def show
       @group = Group.find(params[:id])
-      @group_posts = Kaminari.paginate_array(@group.group_posts).page(params[:page])
+      group_posts = @group.group_posts.sort_by(&:created_at).reverse
+      @group_posts = Kaminari.paginate_array(group_posts).page(params[:page])
       @group_post = GroupPost.new
       @group_post.group_post_pictures.build
-      @group_posts = @group.group_posts.sort_by(&:created_at).reverse
       @group_post_favorites_index_by_group_post_id = \
         current_user.group_post_favorites.index_by(&:group_post_id)
     end
