@@ -92,3 +92,6 @@ gem 'mini_magick'
 # mailer: Asynchronous processing
 gem 'delayed_job_active_record'
 gem 'daemons'
+
+# redis
+gem 'redis'
