@@ -10,8 +10,11 @@ class Group < ApplicationRecord
     User.find(owner_user_id)
   end
 
+  def invited_users
+    User.find(groups_users.pluck(:user_id))
+  end
+
   def invitable_users
-    invited_users = User.find(groups_users.pluck(:user_id))
     owner_user.mutual_followers - invited_users
   end
 end

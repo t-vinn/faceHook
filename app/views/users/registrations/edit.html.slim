@@ -44,6 +44,10 @@ h2
     br
     = f.date_field :birth_date
   .field
+    = f.label :notification_allowed, 'メールでの通知をオンにする場合はチェック'
+    br
+    = f.check_box :notification_allowed, {}, '1', '0'
+  .field
     = f.label :picture, 'Profile Picture'
     = f.file_field :picture, accept: 'image/jpeg,image/gif,image/png'
   .actions
