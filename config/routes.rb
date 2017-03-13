@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     resources :follow_relationships, only: [:create, :destroy]
     resources :groups, except: [:new, :destroy] do
       resources :groups_users, only: [:create, :destroy], module: :groups
-      resources :group_posts, only: [:create], module: :groups do
+      resources :group_posts, only: [:create, :destroy], module: :groups do
         resources :group_post_favorites, only: [:create, :destroy], module: :group_posts
       end
     end
