@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
+  include ApplicationHelper
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
@@ -31,6 +32,23 @@ class User < ApplicationRecord
 
   def mutual_followers
     following_users & follower_users
+  end
+
+  def recommended_user_ids
+    user_ids = User.all.ids - [id]
+    # similarities = {}
+    user_ids.each do |ui|
+      # similarities[id] = cos_similarity(self.id, id)
+      REDIS.zadd 'similarities', cos_similarity(id, ui), ui
+    end
+    # sorted = Hash[similarities.sort_by{|k, v| -v}]
+    # top_ten = Hash[*sorted.to_a.shift(10).flatten!]
+    # top_ten.keys
+    REDIS.zrevrangebyscore 'similarities', 1, 0, limit: [0, 10]
+  end
+
+  def self.redis
+    @redis ||= Redis.new
   end
 
   private
