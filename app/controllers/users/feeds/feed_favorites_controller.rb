@@ -4,7 +4,9 @@ module Users
     class FeedFavoritesController < BaseController
       def create
         feed = Feed.find(params[:feed_id])
-        unless feed.not_repliable_by_current_user(current_user)
+        if feed.not_repliable_by_current_user(current_user) || feed.user == current_user
+          render file: 'public/404.html', status: :not_found, layout: false
+        else
           feed_favorite = current_user.feed_favorites.build(feed_id: params[:feed_id])
           if feed_favorite.save
             redirect_to root_path, notice: 'You liked a feed!'
