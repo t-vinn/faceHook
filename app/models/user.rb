@@ -38,7 +38,7 @@ class User < ApplicationRecord
     user_ids = User.all.ids - [id]
     # similarities = {}
     user_ids.each do |ui|
-      # similarities[id] = cos_similarity(self.id, id)
+      # similarities[ui] = cos_similarity(id, ui)
       REDIS.zadd 'similarities', cos_similarity(id, ui), ui
     end
     # sorted = Hash[similarities.sort_by{|k, v| -v}]
