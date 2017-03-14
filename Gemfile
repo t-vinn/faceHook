@@ -96,6 +96,10 @@ gem 'kaminari'
 # for nested_form
 gem 'nested_form'
 
+# activeadmin, Rails5
+gem 'activeadmin', github: 'activeadmin'
+gem 'inherited_resources', git: 'https://github.com/activeadmin/inherited_resources'
+
 # mailer: Asynchronous processing
 gem 'daemons'
 gem 'delayed_job_active_record'
