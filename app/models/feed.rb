@@ -7,5 +7,5 @@ class Feed < ApplicationRecord
   has_many :replies, dependent: :destroy
   has_many :feed_favorites, dependent: :destroy
   has_many :feed_pictures, inverse_of: :feed, dependent: :destroy
-  accepts_nested_attributes_for :feed_pictures
+  accepts_nested_attributes_for :feed_pictures, allow_destroy: true, reject_if: :all_blank
 end
