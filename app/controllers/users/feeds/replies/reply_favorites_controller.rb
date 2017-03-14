@@ -5,9 +5,7 @@ module Users
       class ReplyFavoritesController < BaseController
         def create
           feed = Feed.find(params[:feed_id])
-          unless feed.privacy == 'share_with_only_me' ||
-                 feed.privacy == 'share_with_follower' &&
-                 current_user.following_users.exclude?(feed.user)
+          unless feed.not_repliable_by_current_user(current_user)
             reply_favorite = current_user.reply_favorites.build(reply_id: params[:reply_id])
             if reply_favorite.save
               redirect_to root_path, notice: 'You liked a reply!'

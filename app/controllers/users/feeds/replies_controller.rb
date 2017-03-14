@@ -4,9 +4,7 @@ module Users
     class RepliesController < BaseController
       def new
         feed = Feed.find(params[:feed_id])
-        if feed.privacy == 'share_with_only_me' ||
-           feed.privacy == 'share_with_follower' &&
-           current_user.following_users.exclude?(feed.user)
+        if feed.not_repliable_by_current_user(current_user)
           render file: 'public/404.html', status: :not_found, layout: false
         else
           @feed = Feed.find(params[:feed_id])
@@ -17,9 +15,7 @@ module Users
 
       def create
         feed = Feed.find(params[:feed_id])
-        unless feed.privacy == 'share_with_only_me' ||
-               feed.privacy == 'share_with_follower' &&
-               current_user.following_users.exclude?(feed.user)
+        unless feed.not_repliable_by_current_user(current_user)
           reply = Reply.new(reply_params)
           if reply.save
             redirect_to root_path, notice: 'You successfully replied to a comment!'

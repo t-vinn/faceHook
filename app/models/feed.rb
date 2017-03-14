@@ -8,4 +8,9 @@ class Feed < ApplicationRecord
   has_many :feed_favorites
   has_many :feed_pictures, inverse_of: :feed
   accepts_nested_attributes_for :feed_pictures
+
+  def not_repliable_by_current_user(current_user)
+    privacy == 'share_with_only_me' || \
+      privacy == 'share_with_follower' && current_user.following_users.exclude?(user)
+  end
 end

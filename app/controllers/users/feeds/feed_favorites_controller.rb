@@ -4,9 +4,7 @@ module Users
     class FeedFavoritesController < BaseController
       def create
         feed = Feed.find(params[:feed_id])
-        unless feed.privacy == 'share_with_only_me' ||
-               feed.privacy == 'share_with_follower' &&
-               current_user.following_users.exclude?(feed.user)
+        unless feed.not_repliable_by_current_user(current_user)
           feed_favorite = current_user.feed_favorites.build(feed_id: params[:feed_id])
           if feed_favorite.save
             redirect_to root_path, notice: 'You liked a feed!'
