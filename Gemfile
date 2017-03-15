@@ -102,3 +102,11 @@ gem 'bootstrap_form'
 source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap-fileinput', '~> 2.5.0'
 end
+
+# activeadmin, Rails5
+gem 'activeadmin', github: 'activeadmin'
+gem 'inherited_resources', git: 'https://github.com/activeadmin/inherited_resources'
+
+# mailer: Asynchronous processing
+gem 'daemons'
+gem 'delayed_job_active_record'

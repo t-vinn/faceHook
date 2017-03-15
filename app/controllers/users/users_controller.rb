@@ -18,14 +18,14 @@ module Users
       groups = groups_owned_by_current_user.or(groups_current_user_is_a_member)
       group_posts = GroupPost.where(group_id: groups.pluck(:id))
       feeds_or_group_posts = \
-        (feeds | group_posts).sort_by { |post| post['created_at'] }.reverse
+        (feeds | group_posts).sort_by(&:created_at).reverse
       @posts = Kaminari.paginate_array(feeds_or_group_posts).page(params[:page])
       following_feeds = Feed.where(
         privacy: [:share_with_all, :share_with_follower],
         user: current_user.following_users
       )
       following_feeds_or_group_posts = \
-        (following_feeds | group_posts).sort_by { |post| post['created_at'] }.reverse
+        (following_feeds | group_posts).sort_by(&:created_at).reverse
       @following_posts = Kaminari.paginate_array(following_feeds_or_group_posts).page(params[:page])
       @feed_favorites_index_by_feed_id = current_user.feed_favorites.index_by(&:feed_id)
       @reply_favorites_index_by_reply_id = current_user.reply_favorites.index_by(&:reply_id)

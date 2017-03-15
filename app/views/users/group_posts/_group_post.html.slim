@@ -12,7 +12,7 @@ tbody.post
           = image_tag p.picture
   tr
     td colspan='2'
-    - if group_post[:user_id] == current_user.id
+    - if group_post.user_id == current_user.id
       td *
     - elsif group_post.group_post_favorites.exists?(user_id: current_user.id)
       td = link_to 'Remove Favorite',

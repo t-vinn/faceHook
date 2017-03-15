@@ -1,0 +1,9 @@
+= 'Hi!'
+=
+= @sent_reply.user.name + \
+  ' has just succeeded in making a reply to a feed in our FaceHook. The reply message was'
+= @sent_reply.content
+=
+= 'to the feed'
+= @sent_reply.feed.content
+= 'by ' + @sent_reply.feed.user.name + '.'

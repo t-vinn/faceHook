@@ -27,11 +27,15 @@
           tr
             th Picture
             th Name
+            th
         tbody
           - @group.groups_users.each do |groups_user|
             tr
               td = image_tag groups_user.user.picture.url(:thumb)
               td = link_to groups_user.user.name, users_user_path(groups_user.user)
+              - if @group.owner_user == current_user
+              td = link_to 'Delete', users_group_groups_user_path(@group, groups_user), method: :delete,
+                data: { confirm: 'Are you sure you want to delete this member ?' }
 
       hr
       // invite friends to the group

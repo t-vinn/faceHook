@@ -1,18 +1,30 @@
+# rubocop: disable Metrics/AbcSize
 module Users
   module Feeds
     class RepliesController < BaseController
       def new
-        @feed = Feed.find(params[:feed_id])
-        @reply = Reply.new
-        @reply.reply_pictures.build
+        feed = Feed.find(params[:feed_id])
+        if feed.repliable_by?(current_user)
+          @feed = Feed.find(params[:feed_id])
+          @reply = Reply.new
+          @reply.reply_pictures.build
+        else
+          render_404
+        end
       end
 
       def create
-        reply = Reply.new(reply_params)
-        if reply.save
-          redirect_to root_path, notice: 'You successfully replied to a comment!'
+        feed = Feed.find(params[:feed_id])
+        if feed.repliable_by?(current_user)
+          reply = Reply.new(reply_params)
+          if reply.save
+            UserMailer.reply_creation(reply).deliver_later
+            redirect_to root_path, notice: 'You successfully replied to a comment!'
+          else
+            redirect_to new_users_feed_reply_path, notice: 'Your message is too short or long!'
+          end
         else
-          redirect_to new_users_feed_reply_path, notice: 'Your message is too short or long!'
+          render_404
         end
       end
 

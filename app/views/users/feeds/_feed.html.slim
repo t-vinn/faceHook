@@ -13,7 +13,7 @@ tbody.post
   tr
     td = link_to 'Reply', new_users_feed_reply_path(feed)
     td = feed.replies.count
-    - if feed[:user_id] == current_user.id
+    - if feed.user_id == current_user.id
       td = link_to 'Edit privacy', edit_users_feed_path(feed)
     - elsif feed.feed_favorites.exists?(user_id: current_user.id)
       td = link_to 'Remove Favorite',
