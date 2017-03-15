@@ -11,6 +11,7 @@ module Users
           else
             reply_favorite = current_user.reply_favorites.build(reply_id: params[:reply_id])
             if reply_favorite.save
+              UserMailer.reply_favorite_creation(reply_favorite).deliver_later
               redirect_to root_path, notice: 'You liked a reply!'
             else
               redirect_to root_path, notice: 'FAIL. Try again.'

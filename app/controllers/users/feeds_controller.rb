@@ -1,7 +1,9 @@
 module Users
   class FeedsController < BaseController
     def create
-      if Feed.create!(feed_params)
+      feed = Feed.new(feed_params)
+      if feed.save
+        UserMailer.feed_creation(feed).deliver_later
         redirect_to root_path, notice: 'a new feed created'
       else
         redirect_to root_path, notice: 'your message is too short or long!'
@@ -13,8 +15,8 @@ module Users
     end
 
     def update
-      @feed = Feed.find(params[:id])
-      if @feed.update(feed_params)
+      feed = Feed.find(params[:id])
+      if feed.update(feed_params)
         redirect_to root_path, notice: 'the privacy of your feed revised'
       else
         flash.now[:alert] = "We couldn't update the privacy."
@@ -26,7 +28,7 @@ module Users
 
       def feed_params
         params.require(:feed).permit(:user_id, :content, :privacy,
-                                     feed_pictures_attributes: [:picture])
+                                     feed_pictures_attributes: [:id, :picture, :_destroy])
       end
   end
 end

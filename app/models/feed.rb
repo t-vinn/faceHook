@@ -4,10 +4,10 @@ class Feed < ApplicationRecord
   validates :user_id, presence: true
   validates :content, presence: true, length: { in: 1..140 }
   validates :privacy, presence: true
-  has_many :replies
-  has_many :feed_favorites
-  has_many :feed_pictures, inverse_of: :feed
-  accepts_nested_attributes_for :feed_pictures
+  has_many :replies, dependent: :destroy
+  has_many :feed_favorites, dependent: :destroy
+  has_many :feed_pictures, inverse_of: :feed, dependent: :destroy
+  accepts_nested_attributes_for :feed_pictures, allow_destroy: true, reject_if: :all_blank
 
   def not_repliable_by_current_user(current_user)
     privacy == 'share_with_only_me' || \

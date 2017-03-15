@@ -1,10 +1,10 @@
-h1   トップページ
+h1 FaceHook
 p
 
 .container-fluid
   .row
-    .col-md-10
-      h3 タイムライン
+    .col-md-7
+      h3 TIMELINE
 
       ul.nav.nav-tabs
         li.nav-item
@@ -14,140 +14,44 @@ p
 
       .tab-content
         .tab-pane.active#all
-          table
-            thead
-              tr
-                th.col-md-2 picture
-                th.col-md-1 name
-                th.col-md-3 content
-                th.col-md-1 posted_at
-                th.col-md-1 reply
-                th.col-md-1 favorite
-                th.col-md-1 favorite counter
-            tbody
-              - @feeds_or_group_posts.each do |post|
+          #posts
+            table.page.table
+              thead.hidden
                 tr
-                - if post.is_a?(Feed)
-                  td = image_tag post.feed_pictures.first.picture if post.feed_pictures.exists?
-                  td = post.user.name
-                  td style="word-break:break-all;" = post[:content]
-                  td = post[:created_at]
-                  td = link_to 'Reply', new_users_feed_reply_path(post)
-                  - if post[:user_id] == current_user.id
-                    td = link_to 'Edit privacy', edit_users_feed_path(post)
-                  - elsif post.feed_favorites.exists?(user_id: current_user.id)
-                    td = link_to 'Remove Favorite',
-                      users_feed_feed_favorite_path(post, @feed_favorites_index_by_feed_id[post.id]),
-                      method: :delete
-                  - else
-                    td = link_to 'Favorite', users_feed_feed_favorites_path(post),
-                        method: :post
-                  td = post.feed_favorites.count
-                  - post.replies.each do |reply|
-                    tr
-                      td = image_tag reply.reply_pictures.first.picture.url if reply.reply_pictures.exists?
-                      td = reply.user.name
-                      td = '[REPLY]---> ' + reply.content.to_s
-                      td = reply.created_at
-                      // Can't reply to replies. Can only reply to feeds.
-                      td *
-                      - if reply.user_id == current_user.id
-                        // Can't like your own reply.
-                        td *
-                      - elsif reply.reply_favorites.exists?(user_id: current_user.id)
-                        td = link_to 'Remove Favorite',
-                          users_feed_reply_reply_favorite_path(post, reply,
-                            @reply_favorites_index_by_reply_id[reply.id]),
-                          method: :delete
-                      - else
-                        td = link_to 'Favorite', users_feed_reply_reply_favorites_path(post, reply),
-                            method: :post
-                      td = reply.reply_favorites.count
-                - else # post == group_post
-                  td = image_tag post.group_post_pictures.first.picture if post.group_post_pictures.exists?
-                  td = post.user.name
-                  td style="word-break:break-all;" = post[:content]
-                  td = post[:created_at]
-                  td *
-                  - if post[:user_id] == current_user.id
-                    td *
-                  - elsif post.group_post_favorites.exists?(user_id: current_user.id)
-                    td = link_to 'Remove Favorite',
-                      users_group_group_post_group_post_favorite_path(post.group, post,
-                        @group_post_favorites_index_by_group_post_id[post.id]),
-                      method: :delete
-                  - else
-                    td = link_to 'Favorite', users_group_group_post_group_post_favorites_path(post.group, post),
-                        method: :post
-                  td = post.group_post_favorites.count
+                  td.col-md-1 rowspan='4'
+                  td.col-md-1
+                  td.col-md-5 colspan='3'
+                tr
+                  td.col-md-6 colspan='4'
+                tr
+                  td.col-md-6 colspan='4'
+                tr
+                  td.col-md-2
+                  td.col-md-1
+                  td.col-md-2
+                  td.col-md-1
+              = render @posts
+            = paginate @posts
 
         .tab-pane#following
-          table
-            thead
-              tr
-                th.col-md-2 picture
-                th.col-md-1 name
-                th.col-md-3 content
-                th.col-md-1 posted_at
-                th.col-md-1 reply
-                th.col-md-1 favorite
-                th.col-md-1 favorite counter
-            tbody
-              - @following_feeds_or_group_posts.each do |post|
+          #following_posts
+            table.page.table
+              thead.hidden
                 tr
-                - if post.is_a?(Feed)
-                  td = image_tag post.feed_pictures.first.picture if post.feed_pictures.exists?
-                  td = post.user.name
-                  td style="word-break:break-all;" = post[:content]
-                  td = post[:created_at]
-                  td = link_to 'Reply', new_users_feed_reply_path(post)
-                  - if post[:user_id] == current_user.id
-                    td = link_to 'Edit privacy', edit_users_feed_path(post)
-                  - elsif post.feed_favorites.exists?(user_id: current_user.id)
-                    td = link_to 'Remove Favorite',
-                      users_feed_feed_favorite_path(post, @feed_favorites_index_by_feed_id[post.id]),
-                      method: :delete
-                  - else
-                    td = link_to 'Favorite', users_feed_feed_favorites_path(post),
-                        method: :post
-                  td = post.feed_favorites.count
-                  - post.replies.each do |reply|
-                    tr
-                      td = image_tag reply.reply_pictures.first.picture.url if reply.reply_pictures.exists?
-                      td = reply.user.name
-                      td = '[REPLY]---> ' + reply.content.to_s
-                      td = reply.created_at
-                      // Can't reply to replies. Can only reply to feeds.
-                      td *
-                      - if reply.user_id == current_user.id
-                        // Can't like your own reply.
-                        td *
-                      - elsif reply.reply_favorites.exists?(user_id: current_user.id)
-                        td = link_to 'Remove Favorite',
-                          users_feed_reply_reply_favorite_path(post, reply,
-                            @reply_favorites_index_by_reply_id[reply.id]),
-                          method: :delete
-                      - else
-                        td = link_to 'Favorite', users_feed_reply_reply_favorites_path(post, reply),
-                            method: :post
-                      td = reply.reply_favorites.count
-                - else # post == group_post
-                  td = image_tag post.group_post_pictures.first.picture if post.group_post_pictures.exists?
-                  td = post.user.name
-                  td style="word-break:break-all;" = post[:content]
-                  td = post[:created_at]
-                  td *
-                  - if post[:user_id] == current_user.id
-                    td *
-                  - elsif post.group_post_favorites.exists?(user_id: current_user.id)
-                    td = link_to 'Remove Favorite',
-                      users_group_group_post_group_post_favorite_path(post.group, post,
-                        @group_post_favorites_index_by_group_post_id[post.id]),
-                      method: :delete
-                  - else
-                    td = link_to 'Favorite', users_group_group_post_group_post_favorites_path(post.group, post),
-                        method: :post
-                  td = post.group_post_favorites.count
+                  td.col-md-1 rowspan='4'
+                  td.col-md-1
+                  td.col-md-5 colspan='3'
+                tr
+                  td.col-md-6 colspan='4'
+                tr
+                  td.col-md-6 colspan='4'
+                tr
+                  td.col-md-2
+                  td.col-md-1
+                  td.col-md-2
+                  td.col-md-1
+              = render @following_posts
+            = paginate @following_posts
 
         br
       hr
@@ -157,17 +61,16 @@ p
       hr
       = link_to 'Back', root_path
 
-      p * フィードの返信やグループ内の投稿には返信できないので、元の投稿に返信してください。種類を問わず自分の投稿にはファボできません。
+      p * You can only reply to a feed. Also, you cannot like your own feeds, replies, or group posts.
 
 
-
-    .col-md-2
+    .col-md-5
       p
-        | ユーザーをフォローしてfaceHookをさらに使いこなそう！
+        | follow other users and explore the world with faceHook!
 
       hr
       p
-        | まだフォローしてないユーザー
+        | users you're not following yet
       table
         thead
           tr
@@ -183,11 +86,11 @@ p
               td = unfollowing_user.birth_date
               td = link_to 'Follow',
                 users_follow_relationships_path(followee_user_id: unfollowing_user.id),
-                method: :post,
-                data: { confirm: 'Follow this person?' }
+                method: :post
 
+      hr
       p
-        | フォロー済ユーザー
+        | users you're following
       table
         thead
           tr
@@ -206,5 +109,6 @@ p
                 method: :delete,
                 data: { confirm: 'Unfollow this person?' }
 
-br
-= link_to 'Groups', users_groups_path
+  .row
+    .col-md-12
+      = link_to 'Groups', users_groups_path

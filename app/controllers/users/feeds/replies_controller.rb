@@ -1,3 +1,4 @@
+# rubocop: disable Metrics/AbcSize
 module Users
   module Feeds
     class RepliesController < BaseController
@@ -19,6 +20,7 @@ module Users
         else
           reply = Reply.new(reply_params)
           if reply.save
+            UserMailer.reply_creation(reply).deliver_later
             redirect_to root_path, notice: 'You successfully replied to a comment!'
           else
             redirect_to new_users_feed_reply_path, notice: 'Your message is too short or long!'
@@ -30,7 +32,7 @@ module Users
 
         def reply_params
           params.require(:reply).permit(:user_id, :content, :feed_id,
-                                        reply_pictures_attributes: [:picture])
+                                        reply_pictures_attributes: [:id, :picture, :_destroy])
         end
     end
   end

@@ -1,12 +1,12 @@
-= form_for [:users, :feed, @reply], html: { multipart: true } do |f|
+= nested_form_for [:users, :feed, @reply], html: { multipart: true } do |f|
   .field
-    = f.label :content, '投稿内容：'
+    = f.label :content, 'Content：'
     = f.text_field :content, size: 60, maxlength: 140
     = f.hidden_field :user_id, value: current_user.id
     = f.hidden_field :feed_id, value: @feed.id
-    - 3.times do
-      = f.fields_for :reply_pictures do |rpic|
-        = rpic.file_field :picture, accept: 'image/jpeg,image/gif,image/png'
-
+    = f.fields_for :reply_pictures do |g|
+      = g.file_field :picture, accept: 'image/jpeg,image/gif,image/png'
+      = g.link_to_remove 'Remove this picture'
+    p = f.link_to_add 'add another picture', :reply_pictures
   .actions
     = f.submit
