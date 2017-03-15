@@ -11,6 +11,6 @@ class Feed < ApplicationRecord
 
   def repliable_by?(current_user)
     privacy == 'share_with_all' || \
-      privacy == 'share_with_follower' && current_user.following_users.include?(user)
+    privacy == 'share_with_follower' && current_user.following_users.include?(user)
   end
 end
