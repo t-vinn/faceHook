@@ -36,15 +36,15 @@ class User < ApplicationRecord
 
   def recommended_user_ids
     user_ids = User.all.ids - [id]
-    similarities = {}
+    # similarities = {}
     user_ids.each do |ui|
-      similarities[ui] = cos_similarity(id, ui)
-      # REDIS.zadd 'similarities', cos_similarity(id, ui), ui
+      # similarities[ui] = cos_similarity(id, ui)
+      REDIS.zadd 'similarities', cos_similarity(id, ui), ui
     end
-    sorted = Hash[similarities.sort_by{|k, v| -v}]
-    top_ten = Hash[*sorted.to_a.shift(10).flatten!]
-    top_ten.keys
-    # REDIS.zrevrangebyscore 'similarities', 1, 0, limit: [0, 10]
+    # sorted = Hash[similarities.sort_by{|k, v| -v}]
+    # top_ten = Hash[*sorted.to_a.shift(10).flatten!]
+    # top_ten.keys
+    REDIS.zrevrangebyscore 'similarities', 1, 0, limit: [0, 10]
   end
 
   def self.redis
