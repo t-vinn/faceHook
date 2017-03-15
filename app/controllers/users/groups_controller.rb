@@ -8,8 +8,8 @@ module Users
     end
 
     def show
-      @group = Group.find(params[:id])
-      group_posts = @group.group_posts.sort_by(&:created_at).reverse
+      @group = Group.includes(groups_users: :user).find(params[:id])
+      group_posts = @group.group_posts.includes(:user).sort_by(&:created_at).reverse
       @group_posts = Kaminari.paginate_array(group_posts).page(params[:page])
       @group_post = GroupPost.new
       @group_post.group_post_pictures.build

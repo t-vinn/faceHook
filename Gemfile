@@ -63,6 +63,9 @@ group :development do
   gem 'hirb'
   gem 'hirb-unicode'
   gem 'web-console', '>= 3.3.0'
+
+  # find n+1 problem
+  gem 'bullet'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
