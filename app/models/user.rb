@@ -1,3 +1,4 @@
+# rubocop: disable AbcSize
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -41,7 +42,7 @@ class User < ApplicationRecord
       similarities[ui] = cos_similarity(id, ui)
       # REDIS.zadd 'similarities', cos_similarity(id, ui), ui
     end
-    sorted = Hash[similarities.sort_by{|k, v| -v}]
+    sorted = Hash[similarities.sort_by { |_k, v| -v }]
     top_ten = Hash[*sorted.to_a.shift(10).flatten!]
     top_ten.keys
     # REDIS.zrevrangebyscore 'similarities', 1, 0, limit: [0, 10]
