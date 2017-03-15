@@ -6,9 +6,7 @@ module Users
         def create
           feed = Feed.find(params[:feed_id])
           reply = Reply.find(params[:reply_id])
-          if feed.not_repliable_by_current_user(current_user) || reply.user == current_user
-            render_404
-          else
+          if feed.repliable_by?(current_user) && reply.user != current_user
             reply_favorite = current_user.reply_favorites.build(reply_id: params[:reply_id])
             if reply_favorite.save
               UserMailer.reply_favorite_creation(reply_favorite).deliver_later
@@ -16,6 +14,8 @@ module Users
             else
               redirect_to root_path, notice: 'FAIL. Try again.'
             end
+          else
+            render_404
           end
         end
 

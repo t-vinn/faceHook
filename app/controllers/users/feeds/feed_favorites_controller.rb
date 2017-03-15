@@ -4,9 +4,7 @@ module Users
     class FeedFavoritesController < BaseController
       def create
         feed = Feed.find(params[:feed_id])
-        if feed.not_repliable_by_current_user(current_user) || feed.user == current_user
-          render_404
-        else
+        if feed.repliable_by?(current_user) && feed.user != current_user
           feed_favorite = current_user.feed_favorites.build(feed_id: params[:feed_id])
           if feed_favorite.save
             UserMailer.feed_favorite_creation(feed_favorite).deliver_later
@@ -14,6 +12,8 @@ module Users
           else
             redirect_to root_path, notice: 'FAIL. Try again.'
           end
+        else
+          render_404
         end
       end
 

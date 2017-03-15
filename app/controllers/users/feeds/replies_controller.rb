@@ -4,20 +4,18 @@ module Users
     class RepliesController < BaseController
       def new
         feed = Feed.find(params[:feed_id])
-        if feed.not_repliable_by_current_user(current_user)
-          render_404
-        else
+        if feed.repliable_by?(current_user)
           @feed = Feed.find(params[:feed_id])
           @reply = Reply.new
           @reply.reply_pictures.build
+        else
+          render_404
         end
       end
 
       def create
         feed = Feed.find(params[:feed_id])
-        if feed.not_repliable_by_current_user(current_user)
-          render_404
-        else
+        if feed.repliable_by?(current_user)
           reply = Reply.new(reply_params)
           if reply.save
             UserMailer.reply_creation(reply).deliver_later
@@ -25,6 +23,8 @@ module Users
           else
             redirect_to new_users_feed_reply_path, notice: 'Your message is too short or long!'
           end
+        else
+          render_404
         end
       end
 
