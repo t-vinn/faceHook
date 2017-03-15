@@ -25,7 +25,7 @@ module ApplicationHelper
     if a * b == 0
       0
     else
-      inner_product / (a * b)
+      inner_product / (a * b) .to_f
     end
   end
 end
