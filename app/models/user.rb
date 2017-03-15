@@ -35,6 +35,10 @@ class User < ApplicationRecord
     following_users & follower_users
   end
 
+  def follow?(followee_user)
+    followee_user.in?(user.following_users)
+  end
+
   private
 
     # validate uploaded picture size
