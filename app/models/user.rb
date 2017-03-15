@@ -35,7 +35,7 @@ class User < ApplicationRecord
     following_users & follower_users
   end
 
-  def follow?(followee_user)
+  def following?(followee_user)
     followee_user.in?(user.following_users)
   end
 
