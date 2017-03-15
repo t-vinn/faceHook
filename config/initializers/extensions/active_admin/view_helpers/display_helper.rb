@@ -17,8 +17,7 @@ module ActiveAdmin
             if object.version_exists?(:thumb) && object.thumb.file.exists?
               content_tag(:p,
                           image_tag(object.url(:thumb)),
-                          class: 'attachment_wrap attachment_img'
-                         )
+                          class: 'attachment_wrap attachment_img')
             else
               link_to object.file.identifier, object.url
             end
@@ -29,8 +28,7 @@ module ActiveAdmin
       def pretty_jsonb_format(object)
         if object.class.ancestors.include?(Hash)
           content_tag(:pre,
-                      JSON.pretty_generate(object).gsub(':', ' =>')
-                     )
+                      JSON.pretty_generate(object).gsub(':', ' =>'))
         end
       end
     end

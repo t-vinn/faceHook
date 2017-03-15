@@ -5,7 +5,7 @@ module Users
       def new
         feed = Feed.find(params[:feed_id])
         if feed.not_repliable_by_current_user(current_user)
-          render file: 'public/404.html', status: :not_found, layout: false
+          render_404
         else
           @feed = Feed.find(params[:feed_id])
           @reply = Reply.new
@@ -16,7 +16,7 @@ module Users
       def create
         feed = Feed.find(params[:feed_id])
         if feed.not_repliable_by_current_user(current_user)
-          render file: 'public/404.html', status: :not_found, layout: false
+          render_404
         else
           reply = Reply.new(reply_params)
           if reply.save

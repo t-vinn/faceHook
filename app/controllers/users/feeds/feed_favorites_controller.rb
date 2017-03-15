@@ -5,7 +5,7 @@ module Users
       def create
         feed = Feed.find(params[:feed_id])
         if feed.not_repliable_by_current_user(current_user) || feed.user == current_user
-          render file: 'public/404.html', status: :not_found, layout: false
+          render_404
         else
           feed_favorite = current_user.feed_favorites.build(feed_id: params[:feed_id])
           if feed_favorite.save

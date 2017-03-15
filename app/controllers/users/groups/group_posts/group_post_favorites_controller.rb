@@ -5,7 +5,9 @@ module Users
       class GroupPostFavoritesController < BaseController
         def create
           group = Group.find(params[:group_id])
-          unless group.users.exclude?(current_user)
+          if group.users.exclude?(current_user)
+            render_404
+          else
             group_post_favorite = current_user.group_post_favorites.build(
               group_post_id: params[:group_post_id]
             )

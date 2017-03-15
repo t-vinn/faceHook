@@ -10,7 +10,7 @@ module Users
     def show
       @group = Group.find(params[:id])
       if @group.users.exclude?(current_user)
-        render file: 'public/404.html', status: :not_found, layout: false
+        render_404
       else
         @group_post = GroupPost.new
         @group_post.group_post_pictures.build
