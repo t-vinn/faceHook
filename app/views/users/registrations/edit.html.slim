@@ -42,7 +42,8 @@
           = f.file_field :picture, accept: 'image/jpeg,image/gif,image/png', class: 'picture_upload',
             label: 'Profile picture'
         .field
-          = f.check_box :notification_allowed, label: 'check if you want to receive emails upon replies, likes to your posts'
+          = f.check_box :notification_allowed,
+            label: 'check if you want to receive emails upon replies, likes to your posts'
         .actions
           = f.primary 'Update'
       h3
@@ -54,4 +55,3 @@
           data: { confirm: 'Are you sure?' },
           method: :delete,
           class: 'btn btn-primary'
-        
