@@ -13,7 +13,7 @@
           = f.hidden_field :user_id, value: current_user.id
           = f.hidden_field :group_id, value: @group.id
           = f.fields_for :group_post_pictures do |g|
-            = g.file_field :picture, accept: 'image/jpeg,image/gif,image/png'
+            = g.file_field :picture, accept: 'image/jpeg,image/gif,image/png', class: 'picture_upload'
             = g.link_to_remove 'Remove this picture'
           p = f.link_to_add 'Add a picture', :group_post_pictures
         .actions

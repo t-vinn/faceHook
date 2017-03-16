@@ -1,17 +1,5 @@
 $ ->
   if $('body').attr('id').match(/users-/)
-    $("#posts .page").infinitescroll
-      navSelector: "nav.pagination" # selector for the paged navigation (it will be hidden)
-      nextSelector: "nav.pagination a[rel=next]" # selector for the NEXT link (to page 2)
-      itemSelector: "#posts tbody.post" # selector for all items you'll retrieve
-    $("#following_posts .page").infinitescroll
-      navSelector: "nav.pagination" # selector for the paged navigation (it will be hidden)
-      nextSelector: "nav.pagination a[rel=next]" # selector for the NEXT link (to page 2)
-      itemSelector: "#following_posts tbody.post" # selector for all items you'll retrieve
-    $("#feeds .page").infinitescroll
-      navSelector: "nav.pagination" # selector for the paged navigation (it will be hidden)
-      nextSelector: "nav.pagination a[rel=next]" # selector for the NEXT link (to page 2)
-      itemSelector: "#feeds tbody.post" # selector for all items you'll retrieve
     $('.picture_upload').fileinput
       showPreview: true
       maxFileCount: 1
@@ -27,6 +15,20 @@ $ ->
       <i class="fa fa-warning"></i> You can upload jpeg, gif, or png files only.
       </span>
       '''
+  if $('body').attr('id').match(/users-index/)
+    $("#posts .page").infinitescroll
+      navSelector: "nav.pagination" # selector for the paged navigation (it will be hidden)
+      nextSelector: "nav.pagination a[rel=next]" # selector for the NEXT link (to page 2)
+      itemSelector: "#posts tbody.post" # selector for all items you'll retrieve
+    $("#following_posts .page").infinitescroll
+      navSelector: "nav.pagination" # selector for the paged navigation (it will be hidden)
+      nextSelector: "nav.pagination a[rel=next]" # selector for the NEXT link (to page 2)
+      itemSelector: "#following_posts tbody.post" # selector for all items you'll retrieve
+  else if $('body').attr('id').match(/users-show/)
+    $("#feeds .page").infinitescroll
+      navSelector: "nav.pagination" # selector for the paged navigation (it will be hidden)
+      nextSelector: "nav.pagination a[rel=next]" # selector for the NEXT link (to page 2)
+      itemSelector: "#feeds tbody.post" # selector for all items you'll retrieve
 
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
