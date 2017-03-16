@@ -61,4 +61,10 @@ RSpec.configure do |config|
   # Use the following instead if you are on Devise >= 4.1.1
   config.include Devise::TestHelpers, type: :controller
   config.extend ControllerMacros, type: :controller
+  require 'rails-controller-testing'
+  [:controller, :view, :request].each do |type|
+    config.include ::Rails::Controller::Testing::TestProcess, :type => type
+    config.include ::Rails::Controller::Testing::TemplateAssertions, :type => type
+    config.include ::Rails::Controller::Testing::Integration, :type => type
+  end
 end

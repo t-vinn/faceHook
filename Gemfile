@@ -79,6 +79,7 @@ group :test do
   gem 'selenium-webdriver'
   gem 'spring-commands-rspec'
   gem 'shoulda-matchers'
+  gem 'rails-controller-testing', require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

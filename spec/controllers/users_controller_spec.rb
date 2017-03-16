@@ -48,15 +48,18 @@ RSpec.describe Users::UsersController, type: :controller do
   end
 
   describe 'GET #show' do
+    before(:each) do
+      testuser = create(:user)
+    end
+
     it 'assigns the requested user to @user' do
-      user = create(:user)
-      get :show, id: user
-      expect(assigns(:user)).to eq user
+      get :show, id: testuser
+      expect(assigns(:user)).to eq testuser
     end
 
     it 'assigns the requested feeds to @feeds' do
       feeds = create(:feeds)
-      get :show, id: user
+      get :show, id: testuser
       expect(assigns(:feeds)).to eq feeds
     end
 
@@ -73,7 +76,8 @@ RSpec.describe Users::UsersController, type: :controller do
     end
 
     it 'renders the :show template' do
-      get :show, id: user
+      testuser = create(:user)
+      get :show, id: testuser
       expect(response).to render_template :show
     end
   end
