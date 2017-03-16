@@ -1,20 +1,16 @@
-require "rails_helper"
+require 'rails_helper'
 
-RSpec.describe Users::UsersController, type: :controller  do
+RSpec.describe Users::UsersController, type: :controller do
   login_user
 
   describe 'GET #index' do
-
     it 'assigns the requested users to @following_users' do
-
     end
 
     it 'assigns the requested users to @unfollowing_users' do
-
     end
 
     it 'assigns the requested active_relationships to @follow_relationships_index_by_followee_user_id' do
-
     end
 
     it 'assigns the requested feed to @feed' do
@@ -22,11 +18,9 @@ RSpec.describe Users::UsersController, type: :controller  do
     end
 
     it 'assigns the requested feeds or group_posts to @posts' do
-
     end
 
     it 'assigns the requested feeds or group_posts to @following_feeds_or_group_posts' do
-
     end
 
     it 'assigns the requested feed_favorites to @feed_favorites_index_by_feed_id' do
@@ -34,7 +28,7 @@ RSpec.describe Users::UsersController, type: :controller  do
       get :show, id: user
       expect(assigns(:feed_favorites_index_by_feed_id)).to eq feed_favorites_index_by_feed_id
     end
-    
+
     it 'assigns the requested reply_favorites to @reply_favorites_index_by_reply_id' do
       reply_favorites_index_by_reply_id = create(:reply_favorites_index_by_reply_id)
       get :show, id: user
@@ -54,7 +48,6 @@ RSpec.describe Users::UsersController, type: :controller  do
   end
 
   describe 'GET #show' do
-
     it 'assigns the requested user to @user' do
       user = create(:user)
       get :show, id: user
@@ -84,5 +77,4 @@ RSpec.describe Users::UsersController, type: :controller  do
       expect(response).to render_template :show
     end
   end
-
 end
