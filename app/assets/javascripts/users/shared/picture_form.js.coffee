@@ -4,6 +4,16 @@ $ ->
 
   toggleAddLink = ->
     $addLink.toggle(fieldsCount <= maxFieldsCount)
+    $('.picture_upload').fileinput
+      showPreview: true
+      maxFileCount: 1
+      browseClass: 'btn btn-info fileinput-browse-button'
+      browseIcon: ''
+      browseLabel: ' select files'
+      removeClass: 'btn btn-warning'
+      removeIcon: ''
+      removeLabel: ' cancel'
+      allowedFileExtensions: ['jpeg', 'gif', 'png']
 
   $(document).on 'nested:fieldAdded', ->
     fieldsCount += 1

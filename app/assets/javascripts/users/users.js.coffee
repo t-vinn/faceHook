@@ -10,11 +10,7 @@ $ ->
       removeIcon: ''
       removeLabel: ' cancel'
       allowedFileExtensions: ['jpeg', 'gif', 'png']
-      msgValidationError: '''
-      <span class="text-danger">
-      <i class="fa fa-warning"></i> You can upload jpeg, gif, or png files only.
-      </span>
-      '''
+
   if $('body').attr('id').match(/users-index/)
     $("#posts .page").infinitescroll
       navSelector: "nav.pagination" # selector for the paged navigation (it will be hidden)
