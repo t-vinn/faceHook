@@ -10,8 +10,9 @@ example_id                                          | status | run_time        |
 ./spec/controllers/users_controller_spec.rb[1:1:8]  | failed | 0.00147 seconds |
 ./spec/controllers/users_controller_spec.rb[1:1:9]  | failed | 0.01159 seconds |
 ./spec/controllers/users_controller_spec.rb[1:1:10] | failed | 0.00138 seconds |
-./spec/controllers/users_controller_spec.rb[1:2:1]  | failed | 0.49801 seconds |
-./spec/controllers/users_controller_spec.rb[1:2:2]  | failed | 0.20661 seconds |
-./spec/controllers/users_controller_spec.rb[1:2:3]  | failed | 0.2679 seconds  |
-./spec/controllers/users_controller_spec.rb[1:2:4]  | failed | 0.1913 seconds  |
-./spec/controllers/users_controller_spec.rb[1:2:5]  | passed | 0.49083 seconds |
+./spec/controllers/users_controller_spec.rb[1:2:1]  | passed | 0.17634 seconds |
+./spec/controllers/users_controller_spec.rb[1:2:2]  | passed | 0.4524 seconds  |
+./spec/controllers/users_controller_spec.rb[1:2:3]  | failed | 0.17377 seconds |
+./spec/controllers/users_controller_spec.rb[1:2:4]  | failed | 0.2936 seconds  |
+./spec/controllers/users_controller_spec.rb[1:2:5]  | passed | 0.40612 seconds |
+./spec/controllers/users_controller_spec.rb[1:2:6]  | passed | 0.2369 seconds  |

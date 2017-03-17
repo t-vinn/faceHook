@@ -48,36 +48,44 @@ RSpec.describe Users::UsersController, type: :controller do
   end
 
   describe 'GET #show' do
-    before(:each) do
-      testuser = create(:user)
+    let!(:feeds)  {
+      [
+        create(:feed),
+        create(:feed),
+        create(:feed)
+      ]
+    }
+    before do
+      @user = create(:user)
+      get :show, params: { id: @user }
     end
 
     it 'assigns the requested user to @user' do
-      get :show, id: testuser
-      expect(assigns(:user)).to eq testuser
+      expect(assigns(:user)).to eq @user
     end
 
     it 'assigns the requested feeds to @feeds' do
-      feeds = create(:feeds)
-      get :show, id: testuser
-      expect(assigns(:feeds)).to eq feeds
+      expect(feeds).to match_array([feeds[0], feeds[1], feeds[2]]) 
     end
 
     it 'assigns the requested feed_favorites to @feed_favorites_index_by_feed_id' do
-      feed_favorites_index_by_feed_id = create(:feed_favorites_index_by_feed_id)
-      get :show, id: user
-      expect(assigns(:feed_favorites_index_by_feed_id)).to eq feed_favorites_index_by_feed_id
+      @feed_fav_1 = create(:feed_favorite, feed_id: 10, user_id: 20)
+      @feed_fav_2 = create(:feed_favorite, feed_id: 19, user_id: 20)
+      expect(assigns(:feed_favorites_index_by_feed_id)).to match_array([@feed_fav_1, @feed_fav_2])
     end
 
     it 'assigns the requested reply_favorites to @reply_favorites_index_by_reply_id' do
-      reply_favorites_index_by_reply_id = create(:reply_favorites_index_by_reply_id)
-      get :show, id: user
-      expect(assigns(:reply_favorites_index_by_reply_id)).to eq reply_favorites_index_by_reply_id
+      @rep_fav_1 = create(:reply_favorite, reply_id: 10, user_id: 20)
+      @rep_fav_2 = create(:reply_favorite, reply_id: 19, user_id: 20)
+      expect(assigns(:reply_favorites_index_by_reply_id)).to match_array([@rep_fav_1, @rep_fav_2])
+    end
+
+    it 'returns 200' do
+      expect(response.status).to eq 200
     end
 
     it 'renders the :show template' do
       testuser = create(:user)
-      get :show, id: testuser
       expect(response).to render_template :show
     end
   end
