@@ -1,32 +1,40 @@
-h2
-  | Log in
-= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-  .field
-    = f.label :email
-    br
-    = f.email_field :email, autofocus: true
-  .field
-    = f.label :password
-    br
-    = f.password_field :password, autocomplete: 'off'
-  - if devise_mapping.rememberable?
-    .field
-      = f.check_box :remember_me
-      = f.label :remember_me
-  .actions
-    = f.submit 'Log in'
-= render 'devise/shared/links'
+.container-fluid
+  .row
+    .col-md-12
+      h1 FaceHook
+      p
+  .row
+    .col-md-5
+      h2
+        | Log in
+      = bootstrap_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+        .field
+          = f.email_field :email, autofocus: true
+        .field
+          = f.password_field :password, autocomplete: 'off'
+        - if devise_mapping.rememberable?
+          .field
+            = f.check_box :remember_me
+        .actions
+          = f.primary 'Log in'
 
-h3 公開投稿一覧
-table
-  thead
-    tr
-      th message
-      th name
-      th posted at
-  tbody
-    - @public_feeds.each do |feed|
-      tr
-        td = feed.content
-        td = feed.user.name
-        td = feed.created_at
+    .col-md-7
+      h3 All public feeds
+      #public_feeds
+        table.page.table.tbodyhover
+          thead.hidden
+            tr
+              td.col-md-1 rowspan='4'
+              td.col-md-1
+              td.col-md-5 colspan='3'
+            tr
+              td.col-md-6 colspan='4'
+            tr
+              td.col-md-6 colspan='4'
+            tr
+              td.col-md-2
+              td.col-md-1
+              td.col-md-2
+              td.col-md-1
+          = render partial: '/users/feeds/before_login_feed.html.slim', collection: @public_feeds, as: :feed
+        = paginate @public_feeds

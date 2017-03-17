@@ -1,0 +1,25 @@
+tbody.post
+  tr
+    td rowspan='4' = image_tag group_post.user.picture.url(:thumb)
+    td = link_to group_post.user.name, users_user_path(group_post.user)
+    td colspan='3' = time_ago_in_words(group_post.created_at) + ' ago'
+  tr
+    td colspan='4' style="word-break:break-word;" = group_post.content
+  tr
+    td.picture colspan='4'
+      - if group_post.group_post_pictures.exists?
+        - group_post.group_post_pictures.each do |p|
+          = image_tag p.picture
+  tr
+    td colspan='2'
+    - if group_post.user_id == current_user.id
+      td *
+    - elsif group_post.group_post_favorites.exists?(user_id: current_user.id)
+      td = link_to 'Remove Favorite',
+        users_group_group_post_group_post_favorite_path(group_post.group, group_post,
+          @group_post_favorites_index_by_group_post_id[group_post.id]),
+        method: :delete
+    - else
+      td = link_to 'Favorite', users_group_group_post_group_post_favorites_path(group_post.group, group_post),
+          method: :post
+    td = group_post.group_post_favorites.count

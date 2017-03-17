@@ -1,8 +1,14 @@
 header
-  nav
-    - if user_signed_in?
-      = link_to 'プロフィール変更 ', edit_user_registration_path
-      = link_to 'ログアウト', destroy_user_session_path, method: :delete
-    - else
-      = link_to 'サインアップ ', new_user_registration_path
-      = link_to 'ログイン', new_user_session_path
+  nav.navbar.navbar-fixed-top
+    .container-fluid
+      .col-md-12
+        - if user_signed_in?
+          .navbar-right
+            span = link_to 'Home ', root_path, class: 'btn btn-primary'
+            span = link_to 'Group ', users_groups_path, class: 'btn btn-primary'
+            span = link_to 'Edit your profile ', edit_user_registration_path, class: 'btn btn-primary'
+            span = link_to 'Log out', destroy_user_session_path, method: :delete, class: 'btn btn-primary'
+        - else
+          .navbar-right
+            span = link_to 'Sign up ', new_user_registration_path, class: 'btn btn-primary'
+            span = link_to 'Log in', new_user_session_path, class: 'btn btn-primary'
