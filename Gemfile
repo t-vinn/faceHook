@@ -96,6 +96,13 @@ gem 'kaminari'
 # for nested_form
 gem 'nested_form'
 
+# for bootstrap_form
+gem 'bootstrap_form'
+
+source 'https://rails-assets.org' do
+  gem 'rails-assets-bootstrap-fileinput', '~> 2.5.0'
+end
+
 # activeadmin, Rails5
 gem 'activeadmin', github: 'activeadmin'
 gem 'inherited_resources', git: 'https://github.com/activeadmin/inherited_resources'

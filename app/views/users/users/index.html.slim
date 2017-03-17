@@ -6,6 +6,11 @@ p
     .col-md-7
       h3 TIMELINE
 
+      //フィード新規投稿フォーム
+      = render partial: 'form', locals: { feed: @feed }
+
+      p * You can only reply to a feed. Also, you cannot like your own feeds, replies, or group posts.
+
       ul.nav.nav-tabs
         li.nav-item
           a.nav-link href='#all' data-toggle='tab' All
@@ -15,7 +20,7 @@ p
       .tab-content
         .tab-pane.active#all
           #posts
-            table.page.table
+            table.page.table.tbodyhover
               thead.hidden
                 tr
                   td.col-md-1 rowspan='4'
@@ -35,7 +40,7 @@ p
 
         .tab-pane#following
           #following_posts
-            table.page.table
+            table.page.table.tbodyhover
               thead.hidden
                 tr
                   td.col-md-1 rowspan='4'
@@ -56,14 +61,6 @@ p
         br
       hr
 
-      //フィード新規投稿フォーム
-      = render partial: 'form', locals: { feed: @feed }
-      hr
-      = link_to 'Back', root_path
-
-      p * You can only reply to a feed. Also, you cannot like your own feeds, replies, or group posts.
-
-
     .col-md-5
       p
         | follow other users and explore the world with faceHook!
@@ -71,7 +68,7 @@ p
       hr
       p
         | users you're not following yet
-      table
+      table.table.table-hover
         thead
           tr
             th Picture
@@ -91,7 +88,7 @@ p
       hr
       p
         | users you're following
-      table
+      table.table.table-hover
         thead
           tr
             th Picture
@@ -108,7 +105,3 @@ p
                 users_follow_relationship_path(@follow_relationships_index_by_followee_user_id[following_user.id]),
                 method: :delete,
                 data: { confirm: 'Unfollow this person?' }
-
-  .row
-    .col-md-12
-      = link_to 'Groups', users_groups_path

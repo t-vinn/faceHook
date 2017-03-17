@@ -2,11 +2,14 @@ tbody.post
   tr
     td rowspan='4' = image_tag group_post.user.picture.url(:thumb)
     td = link_to group_post.user.name, users_user_path(group_post.user)
-    td colspan='2' = time_ago_in_words(group_post.created_at) + ' ago'
+    td colspan='3' = time_ago_in_words(group_post.created_at) + ' ago'
   tr
     td colspan='4' style="word-break:break-word;" = group_post.content
   tr
-    td colspan='4' = image_tag group_post.group_post_pictures.first.picture if group_post.group_post_pictures.exists?
+    td.picture colspan='4'
+      - if group_post.group_post_pictures.exists?
+        - group_post.group_post_pictures.each do |p|
+          = image_tag p.picture
   tr
     td colspan='2'
     - if group_post.user_id == current_user.id
