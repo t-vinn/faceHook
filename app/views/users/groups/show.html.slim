@@ -1,9 +1,9 @@
 .container-fluid
   .row
     .col-md-5
-      h1  グループ詳細
-      p = 'グループ名: ' + @group.name
-      p = '作成者: ' + @group.owner_user.name
+      h1 =  @group.name
+      p = 'Owner: ' + @group.owner_user.name
+      p = 'Enjoy group chats with your friends!'
 
       hr
       // 投稿
