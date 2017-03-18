@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Users::GroupsController, type: :controller do
-  login_user
 
   describe 'GET #index' do
+    login_user
     it 'assigns the requested group to @group' do
       get :index
       expect(assigns(:group)).to be_a_new(Group)
@@ -27,7 +27,7 @@ RSpec.describe Users::GroupsController, type: :controller do
   end
 
   describe 'GET #show' do
-
+    login_user
     it 'assigns the requested group to @group' do
       @group = create(:group)
       get :show, params: { id: @group }
