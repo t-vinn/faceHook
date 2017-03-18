@@ -58,7 +58,7 @@ RSpec.describe Users::FeedsController, type: :controller do
       get :edit, params: { id: @feed }
     end
     it 'assigns the requested feed to @feed' do
-
+      expect(assigns(:feed)).to eq @feed
     end
 
     it 'returns 200' do
