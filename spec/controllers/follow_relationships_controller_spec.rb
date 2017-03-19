@@ -5,11 +5,10 @@ RSpec.describe Users::FollowRelationshipsController, type: :controller do
   describe 'POST #create' do
     context 'with valid parameters' do
       login_user
-      before { allow(controller).to receive(:current_user) { user } }
 
       it 'saves the new follow_relationship' do
         expect{
-          post :create, params: { follow_relationship: attributes_for(:follow_relationship) }
+          post :create, params: { follower_user_id: subject.current_user.id, followee_user_id: subject.current_user.id + 1 }
         }.to change(FollowRelationship, :count).by(1)
       end
 
