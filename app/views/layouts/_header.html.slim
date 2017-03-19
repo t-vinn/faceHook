@@ -1,8 +1,10 @@
 header
   .container-fluid
     .row
-      .col-md-12
-        nav.navbar.navbar-fixed-top
+      nav.page-header.navbar.navbar-fixed-top.col-md-12
+        h1
+          | FaceHook
+          small = ' a brand new sns app for all'
           - if user_signed_in?
             .navbar-right
               span = link_to 'Home ', root_path, class: 'btn btn-primary'
@@ -13,9 +15,3 @@ header
             .navbar-right
               span = link_to 'Sign up ', new_user_registration_path, class: 'btn btn-primary'
               span = link_to 'Log in', new_user_session_path, class: 'btn btn-primary'
-    .row
-      .col-md-12
-        .page-header
-          h1
-            | FaceHook
-            small = ' a brand new sns app for all'
