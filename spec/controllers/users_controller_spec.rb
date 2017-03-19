@@ -48,13 +48,13 @@ RSpec.describe Users::UsersController, type: :controller do
   end
 
   describe 'GET #show' do
-    let!(:feeds)  {
+    let!(:feeds) do
       [
         create(:feed),
         create(:feed),
         create(:feed)
       ]
-    }
+    end
     before do
       @user = create(:user)
       get :show, params: { id: @user }
@@ -65,7 +65,7 @@ RSpec.describe Users::UsersController, type: :controller do
     end
 
     it 'assigns the requested feeds to @feeds' do
-      expect(feeds).to match_array([feeds[0], feeds[1], feeds[2]]) 
+      expect(feeds).to match_array([feeds[0], feeds[1], feeds[2]])
     end
 
     it 'assigns the requested feed_favorites to @feed_favorites_index_by_feed_id' do
