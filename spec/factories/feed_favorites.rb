@@ -1,9 +1,5 @@
 FactoryGirl.define do
   factory :feed_favorite do
-    factory :invalid_feed_favorite do
-      user_id nil
-    end
-
     trait :with_user do
       user
     end
@@ -12,6 +8,8 @@ FactoryGirl.define do
       feed
     end
 
+    trait :invalid do
+      user_id nil
+    end
   end
-
 end
