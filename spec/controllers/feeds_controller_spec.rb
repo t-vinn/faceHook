@@ -4,6 +4,7 @@ RSpec.describe Users::FeedsController, type: :controller do
   login_user
 
   describe 'POST #create' do
+    include ActiveJob::TestHelper
     let(:feed) { build(:feed, :with_user) }
 
     context 'with valid parameters' do
@@ -14,7 +15,24 @@ RSpec.describe Users::FeedsController, type: :controller do
       it { is_expected.to have_http_status(302) }
       it { expect{ subject }.to change(Feed, :count).by(1) }
       it { is_expected.to redirect_to root_path }
-      xit { expect{ subject }.to change(ActionMailer::Base.deliveries, :size).by 1 }
+      it {
+        expect(UserMailer).to receive(:feed_creation).and_return( double('UserMailer', deliver_later: true))
+        expect{ subject }      
+        expect {
+          perform_enqueued_jobs do
+            UserMailer.feed_creation(feed).deliver_later
+          end
+        }.to change{ ActionMailer::Base.deliveries.size }.by(1)
+      }
+
+      it {
+        expect(subject)
+        expect {
+          perform_enqueued_jobs do
+            UserMailer.feed_creation(feed).deliver_later
+          end
+        }.to change{ ActionMailer::Base.deliveries.size }.by(1)
+      }
     end
 
     context 'with invalid parameters' do
