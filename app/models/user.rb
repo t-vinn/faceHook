@@ -29,6 +29,7 @@ class User < ApplicationRecord
   has_many :groups_users, dependent: :destroy
   has_many :group_posts, dependent: :destroy
   has_many :group_post_favorites, dependent: :destroy
+  has_many :similarities_users, dependent: :destroy
   mount_uploader :picture, PictureUploader
   validate :picture_size
   scope :notifiable, -> { where(notification_allowed: true) }

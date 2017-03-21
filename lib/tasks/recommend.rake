@@ -1,0 +1,2 @@
+namespace :recommend do
+end
