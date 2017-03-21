@@ -9,7 +9,7 @@ module Users
       # user: Toshi USE eager loading detected FollowRelationship => [:followee_user]
       # Add to your finder: :includes => [:followee_user_id]
       @follow_relationships_index_by_followee_user_id = \
-        current_user.active_relationships.index_by(&:followee_user_id)
+        current_user.active_relationships.joins(:followee_user).index_by(&:followee_user_id)
       @feed = Feed.new
       @feed.feed_pictures.build
       # show public feeds, current_user's own feeds, and feeds by users current_user follows
