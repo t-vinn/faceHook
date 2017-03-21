@@ -1,4 +1,3 @@
-# rubocop: disable Metrics/AbcSize
 module ApplicationHelper
   def favorite_links(post)
     if post.user_id == current_user.id
