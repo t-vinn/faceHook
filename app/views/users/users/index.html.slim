@@ -98,7 +98,6 @@
               td = image_tag relationship.followee_user.picture.url(:thumb)
               td = link_to relationship.followee_user.name.to_s, users_user_path(relationship.followee_user)
               td = relationship.followee_user.birth_date
-              / viewでいうと以下の@follow_relationships_index_by_followee_user_idのとこです
               td = link_to 'Unfollow',
                 users_follow_relationship_path(relationship),
                 method: :delete,
