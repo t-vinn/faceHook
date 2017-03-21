@@ -11,9 +11,9 @@ namespace :recommend do
   end
 
   task daily_update: :environment do
-    new_relationships = FollowRelationship.where('created_at > ?', Time.now - 1.days)
+    new_relationships = FollowRelationship.where('created_at > ?', Time.zone.now - 1.day)
     changed_user_ids = new_relationships.uniq.pluck(:follower_user_id) & \
-      new_relationships.uniq.pluck(:followee_user_id)
+                       new_relationships.uniq.pluck(:followee_user_id)
     unchanged_user_ids = User.ids - changed_user_ids
     changed_user_ids.each do |id_1|
       unchanged_user_ids.each do |id_2|
