@@ -1,0 +1,4 @@
+tr.post
+  td = link_to group.name, users_group_path(group)
+  td = time_ago_in_words(group.created_at) + ' ago'
+  td = link_to_if(group.owner_user_id == current_user.id, 'Edit', edit_users_group_path(group)) {}

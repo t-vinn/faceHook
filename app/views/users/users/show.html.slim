@@ -1,16 +1,16 @@
 .container-fluid
   .row
     .col-md-5
-      h1 プロフィール
-      h3 = @user.name + 'さんのプロフィール'
+      h1 Profile
+      h3 = @user.name + "'s profile "
       table
         tr
           td = image_tag(@user.picture.url, class: 'img-responsive')
         / if @user.picture.present?
         tr
-          td = '名前: ' + @user.name
+          td = 'Name: ' + @user.name
         tr
-          td = @user.following_users.length.to_s + '人フォロー、フォロワー' + @user.follower_users.length.to_s + '人'
+          td = @user.follower_users.length.to_s + ' followers, ' + @user.following_users.length.to_s + ' following'
         tr
           td = 'Born on: ' + @user.birth_date.to_s if @user.birth_date.present?
         tr
@@ -19,10 +19,11 @@
           td = 'Member since: ' + @user.created_at.to_s
     .col-md-7
       - if @user.feeds.share_with_all.blank?
-        p = '公開投稿がありません'
+        h3 = 'No public feeds yet.'
       - else
+        h3 = 'Previous public feeds'
         #feeds
-          table.page.table
+          table.page.table.tbodyhover
             thead.hidden
               tr
                 td.col-md-1 rowspan='4'
