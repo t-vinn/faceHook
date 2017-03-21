@@ -2,15 +2,9 @@
 module Users
   class UsersController < BaseController
     def index
-      @following_users = current_user.following_users
-      # @unfollowing_users = User.where(id: current_user.recommended_user_ids)
       @unfollowing_users = current_user.recommended_user_ids.map { |id| User.find(id) }
-      @unfollowing_users.delete(current_user)
-      # the following query should be modified
-      # user: Toshi USE eager loading detected FollowRelationship => [:followee_user]
-      # Add to your finder: :includes => [:followee_user_id]
-      @follow_relationships_index_by_followee_user_id = \
-        current_user.active_relationships.includes(:followee_user).index_by(&:followee_user_id)
+      @follow_relationships = \
+        current_user.active_relationships.includes(:followee_user)
       @feed = Feed.new
       @feed.feed_pictures.build
       # show public feeds, current_user's own feeds, and feeds by users current_user follows

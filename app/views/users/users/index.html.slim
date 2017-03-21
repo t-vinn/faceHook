@@ -93,13 +93,13 @@
             th Born on
             th colspan="3"
         tbody
-          - @following_users.each do |following_user|
+          - @follow_relationships.each do |relationship|
             tr
-              td = image_tag following_user.picture.url(:thumb)
-              td = link_to following_user.name.to_s, users_user_path(following_user)
-              td = following_user.birth_date
+              td = image_tag relationship.followee_user.picture.url(:thumb)
+              td = link_to relationship.followee_user.name.to_s, users_user_path(relationship.followee_user)
+              td = relationship.followee_user.birth_date
               / viewでいうと以下の@follow_relationships_index_by_followee_user_idのとこです
               td = link_to 'Unfollow',
-                users_follow_relationship_path(@follow_relationships_index_by_followee_user_id[following_user.id]),
+                users_follow_relationship_path(relationship),
                 method: :delete,
                 data: { confirm: 'Unfollow this person?' }
