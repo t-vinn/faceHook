@@ -109,4 +109,9 @@ gem 'inherited_resources', git: 'https://github.com/activeadmin/inherited_resour
 
 # mailer: Asynchronous processing
 gem 'daemons'
+
+# redis
+gem 'redis'
+
+# mailer delayed_job
 gem 'delayed_job_active_record'
