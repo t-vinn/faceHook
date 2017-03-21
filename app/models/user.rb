@@ -40,8 +40,9 @@ class User < ApplicationRecord
   def recommended_user_ids
     user_ids = User.all.ids - [id]
     similarities = {}
+    following_ids = FollowRelationship.where(follower_user_id: id).pluck(:followee_user_id)
     user_ids.each do |ui|
-      similarities[ui] = cos_similarity(id, ui)
+      similarities[ui] = cos_similarity(following_ids, id, ui)
       # REDIS.zadd 'similarities', cos_similarity(id, ui), ui
     end
     sorted = Hash[similarities.sort_by { |_k, v| -v }]

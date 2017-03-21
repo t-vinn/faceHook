@@ -16,9 +16,8 @@ module ApplicationHelper
     end
   end
 
-  def cos_similarity(id1, id2)
-    user1_following_ids = FollowRelationship.where(follower_user_id: id1).pluck( \
-      :followee_user_id) - [id2]
+  def cos_similarity(ids, id1, id2)
+    user1_following_ids = ids - [id2]
     user2_following_ids = FollowRelationship.where(follower_user_id: id2).pluck( \
       :followee_user_id) - [id1]
     inner_product = (user1_following_ids & user2_following_ids).length
