@@ -26,13 +26,9 @@ RSpec.describe Users::FeedsController, type: :controller do
       }
 
       it {
-        expect(subject)
-        expect {
-          perform_enqueued_jobs do
-            UserMailer.feed_creation(feed).deliver_later
-          end
-        }.to change{ ActionMailer::Base.deliveries.size }.by(1)
+        is_expected.to have_enqueued_job(ActionMailer)
       }
+
     end
 
     context 'with invalid parameters' do
