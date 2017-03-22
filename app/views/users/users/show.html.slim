@@ -18,15 +18,7 @@
         tr
           td = 'Member since: ' + @user.created_at.to_s
         tr
-          - if current_user.following?(@user)
-            td = link_to 'Unfollow',
-              users_follow_relationship_path(@follow_relationships_index_by_followee_user_id[@user.id]),
-              method: :delete,
-              data: { confirm: 'Unfollow this person?' },
-              class: 'btn btn-primary'
-          - else
-            td = link_to 'Follow', users_follow_relationships_path(followee_user_id: @user.id),
-              method: :post, class: 'btn btn-primary'
+          td = follow_links(@user, @follow_relationships_index_by_followee_user_id)
 
 
     .col-md-7
