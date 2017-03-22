@@ -49,10 +49,14 @@ class User < ApplicationRecord
     # top_ten.keys
     # REDIS.zrevrangebyscore 'similarities', 1, 0, limit: [0, 10]
     current_user_similarity_ids = similarities_users.pluck(:similarity_id)
-    top_ten_similarity_ids = Similarity.where(id: current_user_similarity_ids) \
-                                       .order(similarity: :desc).first(10).pluck(:id)
-    SimilaritiesUser.where(similarity_id: top_ten_similarity_ids) \
-                    .where.not(user_id: id).pluck(:user_id)
+    if current_user_similarity_ids.present?
+      top_ten_similarity_ids = Similarity.where(id: current_user_similarity_ids) \
+                                         .order(similarity: :desc).first(10).pluck(:id)
+      SimilaritiesUser.where(similarity_id: top_ten_similarity_ids) \
+                      .where.not(user_id: id).pluck(:user_id)
+    else
+      FollowRelationship.group(:followee_user_id).order('count_followee_user_id desc').count(:followee_user_id).keys.first(10)
+    end
   end
 
   def self.redis
