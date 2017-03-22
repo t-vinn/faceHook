@@ -51,7 +51,8 @@ class User < ApplicationRecord
     current_user_similarity_ids = similarities_users.pluck(:similarity_id)
     top_ten_similarity_ids = Similarity.where(id: current_user_similarity_ids) \
                                        .order(similarity: :desc).first(10).pluck(:id)
-    SimilaritiesUser.where(similarity_id: top_ten_similarity_ids).where.not(user_id: id).pluck(:user_id)
+    SimilaritiesUser.where(similarity_id: top_ten_similarity_ids) \
+                    .where.not(user_id: id).pluck(:user_id)
   end
 
   def self.redis
