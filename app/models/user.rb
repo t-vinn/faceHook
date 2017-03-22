@@ -49,9 +49,9 @@ class User < ApplicationRecord
     # top_ten.keys
     # REDIS.zrevrangebyscore 'similarities', 1, 0, limit: [0, 10]
     current_user_similarity_ids = similarities_users.pluck(:similarity_id)
-    top_ten_similarity_ids = Similarity.find(current_user_similarity_ids) \
-                                       .order(:similarity).first(10).pluck(:id)
-    SimilaritiesUser.find(top_ten_similarity_ids).where.not(user_id: id).pluck(:user_id)
+    top_ten_similarity_ids = Similarity.where(id: current_user_similarity_ids) \
+                                       .order(similarity: :desc).first(10).pluck(:id)
+    SimilaritiesUser.where(similarity_id: top_ten_similarity_ids).where.not(user_id: id).pluck(:user_id)
   end
 
   def self.redis
