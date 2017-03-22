@@ -17,6 +17,18 @@
           / td = '趣味: ' + @user.hobby.to_s if @user.hobby.present?
         tr
           td = 'Member since: ' + @user.created_at.to_s
+        tr
+          - if current_user.following?(@user)
+            td = link_to 'Unfollow',
+              users_follow_relationship_path(@follow_relationships_index_by_followee_user_id[@user.id]),
+              method: :delete,
+              data: { confirm: 'Unfollow this person?' },
+              class: 'btn btn-primary'
+          - else
+            td = link_to 'Follow', users_follow_relationships_path(followee_user_id: @user.id),
+              method: :post, class: 'btn btn-primary'
+
+
     .col-md-7
       - if @user.feeds.share_with_all.blank?
         h3 = 'No public feeds yet.'
@@ -40,6 +52,3 @@
                 td.col-md-1
             = render @feeds
           = paginate @feeds
-
-  .row
-    p = link_to 'Back', root_path
