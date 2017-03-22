@@ -33,7 +33,7 @@
                   td.col-md-2
                   td.col-md-1
               = render @posts
-            = paginate @posts
+            = paginate @posts, param_name: 'posts_page'
 
         .tab-pane#following
           #following_posts
@@ -53,7 +53,7 @@
                   td.col-md-2
                   td.col-md-1
               = render @following_posts
-            = paginate @following_posts
+            = paginate @following_posts, param_name: 'following_posts_page'
 
         br
       hr
@@ -85,20 +85,13 @@
       hr
       p
         | users you're following
-      table.table.table-hover
-        thead
-          tr
-            th Picture
-            th Name
-            th Born on
-            th colspan="3"
-        tbody
-          - @following_users.each do |following_user|
+      #following_users
+        table.page.table.table-hover
+          thead
             tr
-              td = image_tag following_user.picture.url(:thumb)
-              td = link_to following_user.name.to_s, users_user_path(following_user)
-              td = following_user.birth_date
-              td = link_to 'Unfollow',
-                users_follow_relationship_path(@follow_relationships_index_by_followee_user_id[following_user.id]),
-                method: :delete,
-                data: { confirm: 'Unfollow this person?' }
+              th Picture
+              th Name
+              th Born on
+              th colspan="3"
+          = render @following_users
+        = paginate @following_users, param_name: 'following_users_page'

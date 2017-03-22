@@ -1,0 +1,9 @@
+tbody.user
+  tr
+    td = image_tag user.picture.url(:thumb)
+    td = link_to user.name.to_s, users_user_path(_user)
+    td = user.birth_date
+    td = link_to 'Unfollow',
+      users_follow_relationship_path(@follow_relationships_index_by_followee_user_id[user.id]),
+      method: :delete,
+      data: { confirm: 'Unfollow this person?' }
