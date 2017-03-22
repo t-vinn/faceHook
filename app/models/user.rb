@@ -41,10 +41,11 @@ class User < ApplicationRecord
     user_ids = User.all.ids - [id]
     similarities = {}
     following_ids = FollowRelationship.where(follower_user_id: id).pluck(:followee_user_id)
-    user_ids.each do |ui|
-      similarities[ui] = cos_similarity(following_ids, id, ui)
+    similarities = user_ids.each_with_object({}) do |user_id, object|
+      object[user_id] = cos_similarity(following_ids, id, user_id)
       # REDIS.zadd 'similarities', cos_similarity(id, ui), ui
     end
+
     sorted = Hash[similarities.sort_by { |_k, v| -v }]
     top_ten = Hash[*sorted.to_a.shift(10).flatten!]
     top_ten.keys
