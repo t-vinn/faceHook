@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/AbcSize
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -38,16 +39,6 @@ class User < ApplicationRecord
   end
 
   def recommended_user_ids
-    # user_ids = User.all.ids - [id]
-    # similarities = {}
-    # user_ids.each do |ui|
-    # similarities[ui] = cos_similarity(id, ui)
-    # REDIS.zadd 'similarities', cos_similarity(id, ui), ui
-    # end
-    # sorted = Hash[similarities.sort_by { |_k, v| -v }]
-    # top_ten = Hash[*sorted.to_a.shift(10).flatten!]
-    # top_ten.keys
-    # REDIS.zrevrangebyscore 'similarities', 1, 0, limit: [0, 10]
     current_user_similarity_ids = similarities_users.pluck(:similarity_id)
     if current_user_similarity_ids.present?
       top_ten_similarity_ids = Similarity.where(id: current_user_similarity_ids) \
@@ -55,7 +46,8 @@ class User < ApplicationRecord
       SimilaritiesUser.where(similarity_id: top_ten_similarity_ids) \
                       .where.not(user_id: id).pluck(:user_id)
     else
-      FollowRelationship.group(:followee_user_id).order('count_followee_user_id desc').count(:followee_user_id).keys.first(10)
+      FollowRelationship.group(:followee_user_id).order('count_followee_user_id desc') \
+                        .count(:followee_user_id).keys.first(10)
     end
   end
 
