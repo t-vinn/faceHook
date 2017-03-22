@@ -41,7 +41,7 @@ class User < ApplicationRecord
     user_ids = User.all.ids - [id]
     similarities = {}
     following_ids = FollowRelationship.where(follower_user_id: id).pluck(:followee_user_id)
-    similarities = user_ids.each_with_object({}) do |user_id, object|
+    _similarities = user_ids.each_with_object({}) do |user_id, object|
       object[user_id] = cos_similarity(following_ids, id, user_id)
       # REDIS.zadd 'similarities', cos_similarity(id, ui), ui
     end
