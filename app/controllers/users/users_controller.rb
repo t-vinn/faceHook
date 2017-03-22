@@ -2,7 +2,8 @@
 module Users
   class UsersController < BaseController
     def index
-      @following_users = Kaminari.paginate_array(current_user.following_users).page(params[:following_users_page])
+      @following_users = Kaminari.paginate_array(current_user.following_users) \
+                                 .page(params[:following_users_page])
       # @unfollowing_users = User.where(id: current_user.recommended_user_ids)
       @unfollowing_users = current_user.recommended_user_ids.map { |id| User.find(id) }
       @unfollowing_users.delete(current_user)
