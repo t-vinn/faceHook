@@ -34,13 +34,13 @@ module ApplicationHelper
   def follow_links(user, index)
     if current_user.following?(user)
       link_to 'Unfollow',
-        users_follow_relationship_path(index[user.id]),
-        method: :delete,
-        data: { confirm: 'Unfollow this person?' },
-        class: 'btn btn-primary'
+              users_follow_relationship_path(index[user.id]),
+              method: :delete,
+              data: { confirm: 'Unfollow this person?' },
+              class: 'btn btn-primary'
     else
       link_to 'Follow', users_follow_relationships_path(followee_user_id: user.id),
-        method: :post, class: 'btn btn-primary'
+              method: :post, class: 'btn btn-primary'
     end
   end
 end
