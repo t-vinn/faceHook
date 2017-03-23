@@ -27,8 +27,6 @@ namespace :recommend do
       end
     end
 
-
-
     # new follow_relationships => update similarity score
     new_relationships = FollowRelationship.where(created_at: 1.day.ago.all_day)
     changed_user_ids = new_relationships.uniq.pluck(:follower_user_id) | \
