@@ -18,8 +18,8 @@ tbody.post
       td = link_to 'Remove Favorite',
         users_group_group_post_group_post_favorite_path(group_post.group, group_post,
           @group_post_favorites_index_by_group_post_id[group_post.id]),
-        method: :delete
+        method: :delete, data: { disable_with: 'in progress ...' }
     - else
       td = link_to 'Favorite', users_group_group_post_group_post_favorites_path(group_post.group, group_post),
-          method: :post
+          method: :post, data: { disable_with: 'in progress ...' }
     td = group_post.group_post_favorites.count

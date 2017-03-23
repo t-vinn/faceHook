@@ -52,6 +52,6 @@
         | Unhappy?
         = button_to 'Cancel my account',
           registration_path(resource_name),
-          data: { confirm: 'Are you sure?' },
+          data: { confirm: 'Are you sure?', disable_with: 'in progress ...' },
           method: :delete,
           class: 'btn btn-primary'
