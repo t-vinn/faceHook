@@ -41,14 +41,16 @@ class User < ApplicationRecord
   def recommended_user_ids
     current_user_similarity_ids = similarities_users.pluck(:similarity_id)
     if current_user_similarity_ids.present?
-      top_ten_similarity_ids = Similarity.where(id: current_user_similarity_ids) \
-                                         .order(similarity: :desc).first(10).pluck(:id)
-      SimilaritiesUser.where(similarity_id: top_ten_similarity_ids) \
-                      .where.not(user_id: id).pluck(:user_id)
+      top_similarity_ids = Similarity.where(id: current_user_similarity_ids) \
+                                     .order(similarity: :desc).pluck(:id)
+      top_user_ids = SimilaritiesUser.where(similarity_id: top_similarity_ids) \
+                                     .where.not(user_id: id).pluck(:user_id)
     else
-      FollowRelationship.group(:followee_user_id).order('count_followee_user_id desc') \
-                        .count(:followee_user_id).keys.first(10)
+      top_user_ids = FollowRelationship.group(:followee_user_id) \
+                                       .order('count_followee_user_id desc') \
+                                       .count(:followee_user_id).keys
     end
+    top_user_ids - FollowRelationship.where(follower_user_id: id).pluck(:followee_user_id)
   end
 
   def self.redis
