@@ -18,7 +18,7 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
-
+set :output, 'log/crontab.log'
 set :environment, :development
 
 every 1.day, at: '3:00 am' do
