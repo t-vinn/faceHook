@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170307064959) do
+ActiveRecord::Schema.define(version: 20170323073207) do
 
   create_table "active_admin_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "namespace"
@@ -96,6 +96,7 @@ ActiveRecord::Schema.define(version: 20170307064959) do
     t.integer  "group_post_id", null: false
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.index ["user_id", "group_post_id"], name: "index_group_post_favorites_on_user_id_and_group_post_id", unique: true, using: :btree
   end
 
   create_table "group_post_pictures", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -126,6 +127,7 @@ ActiveRecord::Schema.define(version: 20170307064959) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["group_id"], name: "index_groups_users_on_group_id", using: :btree
+    t.index ["user_id", "group_id"], name: "index_groups_users_on_user_id_and_group_id", unique: true, using: :btree
     t.index ["user_id"], name: "index_groups_users_on_user_id", using: :btree
   end
 
@@ -152,6 +154,19 @@ ActiveRecord::Schema.define(version: 20170307064959) do
     t.string   "picture",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "similarities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.float    "similarity", limit: 24, default: 0.0, null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+  end
+
+  create_table "similarities_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "similarity_id", null: false
+    t.integer  "user_id",       null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
