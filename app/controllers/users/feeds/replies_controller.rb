@@ -11,6 +11,8 @@ module Users
         else
           render_404
         end
+      rescue ActiveRecord::RecordNotFound
+        render_404
       end
 
       def create
