@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  before_filter :set_request_from
+  before_action :set_request_from
 
   rescue_from Exception, with: :render_500
 
@@ -15,18 +15,16 @@ class ApplicationController < ActionController::Base
   end
 
   def set_request_from
-    if session[:request_from]
-      @request_from = session[:request_from]
-    end
+    session[:request_from] && @request_from = session[:request_from]
     # save which page the user last visited
     session[:request_from] = request.original_url
   end
 
   def return_back
     if request.referer
-      redirect_to :back and return true
+      redirect_to :back && return
     elsif @request_from
-      redirect_to @request_from and return true
+      redirect_to @request_from && return
     end
   end
 end
