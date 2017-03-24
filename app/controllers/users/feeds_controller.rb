@@ -6,7 +6,7 @@ module Users
         UserMailer.feed_creation(feed).deliver_later
         url = ENV['URL_SLACK']
         msg = feed.content
-        HTTParty.post(url, body: {"text":"#{msg}"}.to_json)
+        HTTParty.delay.post(url, body: {"text":"#{msg}"}.to_json)
         redirect_to root_path, notice: 'a new feed created'
       else
         redirect_to root_path, notice: 'your message is too short or long!'
