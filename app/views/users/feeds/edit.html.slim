@@ -6,14 +6,11 @@ p = @feed.content
 hr
 = bootstrap_form_for [:users, @feed] do |f|
   .field
-    = f.label :privacy, 'Privacy：'
-    = f.radio_button :privacy, 'share_with_all'
-    = f.label :privacy, 'public', value: 0
-    = f.radio_button :privacy, 'share_with_follower'
-    = f.label :privacy, 'follower only', value: 1
-    = f.radio_button :privacy, 'share_with_only_me'
-    = f.label :privacy, 'private', value: 2
+    = f.form_group :privacy, label: { text: 'Privacy ' } do
+      = f.radio_button :privacy, 'share_with_all', label: 'public', inline: true
+      = f.radio_button :privacy, 'share_with_follower', label: 'follower_only', inline: true
+      = f.radio_button :privacy, 'share_with_only_me', label: 'private', inline: true
     = f.hidden_field :user_id, value: current_user.id
 
   .actions
-    = f.submit
+    = f.primary
