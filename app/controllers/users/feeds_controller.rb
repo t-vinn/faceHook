@@ -5,9 +5,11 @@ module Users
       feed = Feed.new(feed_params)
       if feed.save
         UserMailer.feed_creation(feed).deliver_later
-        url = ENV['URL_SLACK']
-        msg = feed.content
-        HTTParty.delay.post(url, body: { "text": msg.to_s }.to_json)
+        # url = ENV['URL_SLACK']
+        # msg = feed.content
+        # HTTParty.delay.post(url, body: { "text": msg.to_s }.to_json)
+        message_service = SlackMessageService.new(feed)
+        message_service.send_to_times
         redirect_to root_path, notice: 'a new feed created'
       else
         redirect_to root_path, notice: 'your message is too short or long!'
