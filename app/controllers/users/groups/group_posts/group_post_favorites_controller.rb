@@ -21,7 +21,6 @@ module Users
         end
 
         def destroy
-          group = Group.find(params[:group_id])
           if GroupPostFavorite.find(params[:id]).destroy
             redirect_to :back, notice: 'Your favorite deleted.'
           else
