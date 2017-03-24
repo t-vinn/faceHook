@@ -1,4 +1,3 @@
-# rubocop:disable Metrics/AbcSize
 module Users
   class FeedsController < BaseController
     def create
