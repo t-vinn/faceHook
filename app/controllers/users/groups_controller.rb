@@ -35,6 +35,9 @@ module Users
 
     def edit
       @group = Group.find(params[:id])
+      if @group.owner_user_id != current_user.id
+        render_404
+      end
     end
 
     def update
