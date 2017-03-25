@@ -13,8 +13,8 @@ RSpec.describe User do
   end
 
   it 'is invalid with a duplicate email address' do
-    create(:another_user)
-    user_1 = build(:another_user)
+    create(:another_user, :same_email)
+    user_1 = build(:another_user, :same_email)
     user_1.valid?
     expect(user_1.errors[:email]).to include('has already been taken')
   end

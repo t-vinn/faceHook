@@ -10,5 +10,8 @@ FactoryGirl.define do
     sequence(:name) { |n| "ENgernineer-#{n}" }
     sequence(:email) { |n| "finc#{n}@example.com" }
     password 'hhhhhergerj'
+    trait :same_email do
+      email 'hoge@mail.com'
+    end
   end
 end
