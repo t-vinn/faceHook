@@ -8,8 +8,9 @@ FactoryGirl.define do
       feed
     end
 
-    trait :invalid do
-      user_id nil
+    factory :invalid_feed_favorite do
+      user nil
+      feed { create(:feed, :with_user) }
     end
   end
 end
