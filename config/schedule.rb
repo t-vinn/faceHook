@@ -24,3 +24,7 @@ set :environment, :development
 every 1.day, at: '4:30 pm' do
   rake 'recommend:daily_update'
 end
+
+every 10.minutes do
+  rake 'recommend:hello'
+end
