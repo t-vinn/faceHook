@@ -7,8 +7,8 @@ FactoryGirl.define do
     end
   end
   factory :another_user, class: User do
-    sequence(:name) { |n| "ENgineer-#{n}" }
-    email 'hoge@mail.cm'
+    sequence(:name) { |n| "ENgernineer-#{n}" }
+    sequence(:email) { |n| "finc#{n}@example.com" }
     password 'hhhhhergerj'
   end
 end

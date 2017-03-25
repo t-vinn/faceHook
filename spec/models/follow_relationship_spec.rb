@@ -14,4 +14,12 @@ RSpec.describe FollowRelationship do
     expect(invalid_follow_relationship.errors[:follower_user_id]).to include("can't be blank")
   end
 
+  it 'returns nil if follower != followee' do
+    relationship = FollowRelationship.new(
+      follower_user_id: 1,
+      followee_user_id: 1
+    )
+    expect(follow_relationship.send(:check_follow_yourself)).to be nil
+  end
+
 end
