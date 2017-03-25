@@ -1,6 +1,10 @@
 FactoryGirl.define do
   factory :follow_relationship do
-    follower_user_id 20
-    sequence(:followee_user_id) { |n| n }
+    follower_user { create(:user, :with_password) }
+    followee_user { create(:another_user) }
+
+    factory :invalid_follow_relationship do
+      follower_user nil
+    end
   end
 end
