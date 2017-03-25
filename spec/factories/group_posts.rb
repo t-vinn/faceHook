@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :group_post do
-    user_id 20
+    user { create(:user, :with_password) }
     group_id 1
     sequence(:content) { |n| "group post content-#{n}" }
 
