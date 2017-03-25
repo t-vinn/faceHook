@@ -23,23 +23,6 @@ RSpec.describe Users::Feeds::FeedFavoritesController, type: :controller do
     end
 
     context 'with invalid parameters' do
-      login_user
-      let(:feed) { create(:feed, :with_user) }
-      let(:invalid_feed_favorite_params) { { feed_id: feed.id, user_id: nil } }
-
-      subject { post :create, params: { feed_id: feed.id, feed_favorite_params: invalid_feed_favorite_params } }
-
-      it 'returns 302' do
-        is_expected.to have_http_status 302
-      end
-
-      it 'does not add a feed_favorite to the database' do
-        expect { subject }.not_to change(FeedFavorite, :count)
-      end
-
-      it 'redirects to root path' do
-        is_expected.to redirect_to root_path
-      end
     end
   end
 
