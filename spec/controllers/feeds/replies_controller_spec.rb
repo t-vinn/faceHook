@@ -24,7 +24,6 @@ RSpec.describe Users::Feeds::RepliesController, type: :controller do
     it 'renders the new template' do
       expect(response).to render_template :new
     end
-
   end
 
   describe 'POST #create' do
@@ -39,21 +38,18 @@ RSpec.describe Users::Feeds::RepliesController, type: :controller do
       end
 
       it 'adds a feed to the database' do
-        expect{
+        expect do
           post :create, params: { feed_id: @feed, reply: attributes_for(:reply) }
-        }.to change(Reply, :count).by(1)
+        end.to change(Reply, :count).by(1)
       end
 
       it 'redirects to root path' do
         post :create, params: { feed_id: @feed, reply: attributes_for(:reply) }
         expect(response).to redirect_to root_path
       end
-
     end
 
     context ' with invalid parameters' do
-
     end
   end
-
 end

@@ -16,7 +16,7 @@ RSpec.describe User do
     create(:another_user)
     user_1 = build(:another_user)
     user_1.valid?
-    expect(user_1.errors[:email]).to include("has already been taken")
+    expect(user_1.errors[:email]).to include('has already been taken')
   end
 
   it 'returns mutual_followers as an array' do

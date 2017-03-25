@@ -11,7 +11,7 @@ RSpec.describe Feed do
     invalid_feed.valid?
     expect(invalid_feed.errors[:content]).to include("can't be blank")
   end
-  
+
   it 'is invalid without user_id' do
     invalid_feed = build(:invalid_feed)
     invalid_feed.valid?
@@ -27,6 +27,6 @@ RSpec.describe Feed do
   it 'is invalid with content too long' do
     too_long_feed = build(:too_long_feed)
     too_long_feed.valid?
-    expect(too_long_feed.errors[:content]).to include("too long")
+    expect(too_long_feed.errors[:content]).to include('too long')
   end
 end
