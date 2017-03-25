@@ -25,13 +25,13 @@ RSpec.describe Users::UsersController, type: :controller do
 
     it 'assigns the requested feed_favorites to @feed_favorites_index_by_feed_id' do
       feed_favorites_index_by_feed_id = create(:feed_favorites_index_by_feed_id)
-      get :show, id: user
+      get :show, id: controller.user
       expect(assigns(:feed_favorites_index_by_feed_id)).to eq feed_favorites_index_by_feed_id
     end
 
     it 'assigns the requested reply_favorites to @reply_favorites_index_by_reply_id' do
       reply_favorites_index_by_reply_id = create(:reply_favorites_index_by_reply_id)
-      get :show, id: user
+      get :show, id: controller.user
       expect(assigns(:reply_favorites_index_by_reply_id)).to eq reply_favorites_index_by_reply_id
     end
 
@@ -48,45 +48,40 @@ RSpec.describe Users::UsersController, type: :controller do
   end
 
   describe 'GET #show' do
-    let!(:feeds) do
-      [
-        create(:feed),
-        create(:feed),
-        create(:feed)
-      ]
-    end
-    before do
-      @user = create(:user)
-      get :show, params: { id: @user }
-    end
+    let(:user) { create(:user, :with_password) }
+    let(:feeds) { create_list(:feed, 2, user: user) }
+    let!(:feed_fav_1) { controller.current_user.feed_favorites.create(feed: feeds[0]) }
+    let!(:feed_fav_2) { controller.current_user.feed_favorites.create(feed: feeds[1]) }
+    let!(:rep_fav_1) { controller.current_user.reply_favorites.create(reply_id: 10) }
+    let!(:rep_fav_2) { controller.current_user.reply_favorites.create(reply_id: 19) }
+    subject { get :show, params: { id: user } }
 
     it 'assigns the requested user to @user' do
-      expect(assigns(:user)).to eq @user
+      subject
+      expect(assigns(:user)).to eq user
     end
 
     it 'assigns the requested feeds to @feeds' do
-      expect(feeds).to match_array([feeds[0], feeds[1], feeds[2]])
+      subject
+      expect(assigns(:feeds)).to match_array feeds
     end
 
     it 'assigns the requested feed_favorites to @feed_favorites_index_by_feed_id' do
-      @feed_fav_1 = create(:feed_favorite, feed_id: 10, user_id: 20)
-      @feed_fav_2 = create(:feed_favorite, feed_id: 19, user_id: 20)
-      expect(assigns(:feed_favorites_index_by_feed_id)).to match_array([@feed_fav_1, @feed_fav_2])
+      subject
+      expect(assigns(:feed_favorites_index_by_feed_id)).to match_array([[feed_fav_1.feed_id, feed_fav_1], [feed_fav_2.feed_id, feed_fav_2]])
     end
 
     it 'assigns the requested reply_favorites to @reply_favorites_index_by_reply_id' do
-      @rep_fav_1 = create(:reply_favorite, reply_id: 10, user_id: 20)
-      @rep_fav_2 = create(:reply_favorite, reply_id: 19, user_id: 20)
-      expect(assigns(:reply_favorites_index_by_reply_id)).to match_array([@rep_fav_1, @rep_fav_2])
+      subject
+      expect(assigns(:reply_favorites_index_by_reply_id)).to match_array([[rep_fav_1.reply_id, rep_fav_1], [rep_fav_2.reply_id, rep_fav_2]])
     end
 
     it 'returns 200' do
-      expect(response.status).to eq 200
+      is_expected.to have_http_status 200
     end
 
     it 'renders the :show template' do
-      testuser = create(:user)
-      expect(response).to render_template :show
+      is_expected.to render_template :show
     end
   end
 end
