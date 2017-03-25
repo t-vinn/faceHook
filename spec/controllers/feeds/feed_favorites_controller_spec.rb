@@ -45,8 +45,8 @@ RSpec.describe Users::Feeds::FeedFavoritesController, type: :controller do
 
   describe 'DELETE #destroy' do
     login_user
-    let(:feed) { create(:feed, :with_user) }
-    let(:feed_favorite) { controller.current_user.feed_favorites.create(feed: feed) }
+    let!(:feed) { create(:feed, :with_user) }
+    let!(:feed_favorite) { controller.current_user.feed_favorites.create(feed: feed) }
     subject { delete :destroy, params: { feed_id: feed_favorite.feed, id: feed_favorite } }
 
     it 'deletes the feed_favorite' do
