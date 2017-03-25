@@ -3,7 +3,7 @@ FactoryGirl.define do
     content 'hhhhhhhfirjf'
     privacy 'share_with_all'
     trait :with_user do
-      user_id 10
+      user { create(:user, :with_password) }
     end
 
     factory :invalid_feed do
