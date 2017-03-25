@@ -14,6 +14,7 @@ RSpec.describe ReplyFavorite do
   end
 
   it 'returns related_users as an array' do
-    expect(reply_favorite.related_users).to match_array([reply_favorite.user, reply_favorite.reply.user])
+    expect(reply_favorite.related_users).to \
+      match_array([reply_favorite.user, reply_favorite.reply.user])
   end
 end

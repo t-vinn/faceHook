@@ -15,6 +15,7 @@ RSpec.describe GroupPostFavorite do
   end
 
   it 'returns related_users as an array' do
-    expect(group_post_favorite.related_users).to match_array([group_post_favorite.user, group_post_favorite.group_post.user])
+    expect(group_post_favorite.related_users).to \
+      match_array([group_post_favorite.user, group_post_favorite.group_post.user])
   end
 end

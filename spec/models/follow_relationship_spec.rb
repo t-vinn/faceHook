@@ -15,10 +15,6 @@ RSpec.describe FollowRelationship do
   end
 
   it 'returns nil if follower != followee' do
-    relationship = described_class.new(
-      follower_user_id: 1,
-      followee_user_id: 1
-    )
     expect(follow_relationship.send(:check_follow_yourself)).to be nil
   end
 end
