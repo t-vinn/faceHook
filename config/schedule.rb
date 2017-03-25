@@ -21,6 +21,6 @@
 set :output, 'log/crontab.log'
 set :environment, :development
 
-every 1.day, at: '3:00 am' do
+every 1.day, at: '4:30 pm' do
   rake 'recommend:daily_update'
 end

@@ -57,5 +57,6 @@ namespace :recommend do
   end
 
   task hello: :environment do
+    puts Time.current
   end
 end
