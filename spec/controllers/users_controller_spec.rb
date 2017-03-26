@@ -4,46 +4,57 @@ RSpec.describe Users::UsersController, type: :controller do
   login_user
 
   describe 'GET #index' do
+    let(:users) { create_list(:user, 2, :with_password) }
+    let!(:follow_relationship_1) { create(:follow_relationship, follower_user: controller.current_user, followee_user: users[0]) }
+    let!(:follow_relationship_2) { create(:follow_relationship, follower_user: users[1], followee_user: users[0]) }
+    let!(:feed) { create(:feed, user: users[1]) }
+    let!(:feeds) { create_list(:feed, 2, user: users[0]) }
+    let!(:group_posts) { create_list(:group_post, 2, user: users[0]) }
+    let!(:group_post_fav_1) { controller.current_user.group_post_favorites.create(group_post: group_posts[0]) }
+    let!(:group_post_fav_2) { controller.current_user.group_post_favorites.create(group_post: group_posts[1]) }
+    subject { get :index, params: { id: users[0] } }
+
     it 'assigns the requested users to @following_users' do
+      subject
+      expect(assigns(:following_users)).to match_array([users[0]])
     end
 
     it 'assigns the requested users to @unfollowing_users' do
+      subject
+      expect(assigns(:unfollowing_users)).to match_array([users[1]])
     end
 
     it 'assigns the requested active_relationships to @follow_relationships_index_by_followee_user_id' do
+      subject
+      expect(assigns(:follow_relationships_index_by_followee_user_id)).to match_array([[users[0].id, follow_relationship_1]])
     end
 
     it 'assigns the requested feed to @feed' do
-      feed = create(:feed)
+      subject
+      expect(assigns(:feed)).to be_a_new(Feed)
     end
 
     it 'assigns the requested feeds or group_posts to @posts' do
+      subject
+      expect(assigns(:posts)).to match_array([feed, feeds[0], feeds[1]])
     end
 
     it 'assigns the requested feeds or group_posts to @following_feeds_or_group_posts' do
+      subject
+      expect(assigns(:following_posts)).to match_array([feeds[0], feeds[1]])
     end
 
-    it 'assigns the requested feed_favorites to @feed_favorites_index_by_feed_id' do
-      feed_favorites_index_by_feed_id = create(:feed_favorites_index_by_feed_id)
-      get :show, id: controller.user
-      expect(assigns(:feed_favorites_index_by_feed_id)).to eq feed_favorites_index_by_feed_id
+    it 'assigns the requested group_post_favorites to @group_post_favorites_index_by_feed_id' do
+      subject
+      expect(assigns(:group_post_favorites_index_by_group_post_id)).to match_array([[group_post_fav_1.group_post_id, group_post_fav_1], [group_post_fav_2.group_post_id, group_post_fav_2]])
     end
 
-    it 'assigns the requested reply_favorites to @reply_favorites_index_by_reply_id' do
-      reply_favorites_index_by_reply_id = create(:reply_favorites_index_by_reply_id)
-      get :show, id: controller.user
-      expect(assigns(:reply_favorites_index_by_reply_id)).to eq reply_favorites_index_by_reply_id
-    end
-
-    it 'assigns the requested group_post_favorites to @group_post_favorites_index_by_group_post_id' do
-      group_post_favorites_index_by_group_post_id = create(:group_post_favorites_index_by_group_post_id)
-      get :show, id: user
-      expect(assigns(:group_post_favorites_index_by_group_post_id)).to eq group_post_favorites_index_by_group_post_id
+    it 'returns 200' do
+      is_expected.to have_http_status 200
     end
 
     it 'renders the :index template' do
-      get :index, id: user
-      expect(response).to render_template :index
+      is_expected.to render_template :index
     end
   end
 
