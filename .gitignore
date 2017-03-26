@@ -23,6 +23,8 @@ vendor/bundle
 
 config/secrets.yml
 
+config/secrets.ci.yml
+
 # Ignore all carrierwave files.
 /public/uploads/
 /public/images/

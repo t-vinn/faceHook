@@ -1,6 +1,7 @@
 database:
   pre:
     - mv config/database.yml.ci config/database.yml
+    - mv config/secrets.ci.yml config/secrets.yml
   override:
     - bundle exec rake db:create db:schema:load RAILS_ENV=test
     - bundle exec rake db:migrate RAILS_ENV=test
