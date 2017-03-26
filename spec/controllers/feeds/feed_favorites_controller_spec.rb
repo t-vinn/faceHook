@@ -6,8 +6,13 @@ RSpec.describe Users::Feeds::FeedFavoritesController, type: :controller do
       login_user
       let(:feed) { create(:feed, :with_user) }
       let(:feed_favorite) { controller.current_user.feed_favorites.build(feed: feed) }
-      let(:feed_favorite_params) { { user_id: feed_favorite.user_id, feed_id: feed_favorite.feed_id } }
-      subject { post :create, params: { feed_id: feed_favorite.feed, feed_favorite: feed_favorite_params } }
+      let(:feed_favorite_params) do
+        { user_id: feed_favorite.user_id, feed_id: feed_favorite.feed_id }
+      end
+      subject do
+        post :create,
+             params: { feed_id: feed_favorite.feed, feed_favorite: feed_favorite_params }
+      end
 
       it 'returns 302' do
         is_expected.to have_http_status(302)

@@ -5,13 +5,25 @@ RSpec.describe Users::UsersController, type: :controller do
 
   describe 'GET #index' do
     let(:users) { create_list(:user, 2, :with_password) }
-    let!(:follow_relationship_1) { create(:follow_relationship, follower_user: controller.current_user, followee_user: users[0]) }
-    let!(:follow_relationship_2) { create(:follow_relationship, follower_user: users[1], followee_user: users[0]) }
+    let!(:follow_relationship_1) do
+      create(:follow_relationship,
+             follower_user: controller.current_user,
+             followee_user: users[0])
+    end
+    let!(:follow_relationship_2) do
+      create(:follow_relationship,
+             follower_user: users[1],
+             followee_user: users[0])
+    end
     let!(:feed) { create(:feed, user: users[1]) }
     let!(:feeds) { create_list(:feed, 2, user: users[0]) }
     let!(:group_posts) { create_list(:group_post, 2, user: users[0]) }
-    let!(:group_post_fav_1) { controller.current_user.group_post_favorites.create(group_post: group_posts[0]) }
-    let!(:group_post_fav_2) { controller.current_user.group_post_favorites.create(group_post: group_posts[1]) }
+    let!(:group_post_fav_1) do
+      controller.current_user.group_post_favorites.create(group_post: group_posts[0])
+    end
+    let!(:group_post_fav_2) do
+      controller.current_user.group_post_favorites.create(group_post: group_posts[1])
+    end
     subject { get :index, params: { id: users[0] } }
 
     it 'assigns the requested users to @following_users' do
@@ -24,9 +36,10 @@ RSpec.describe Users::UsersController, type: :controller do
       expect(assigns(:unfollowing_users)).to match_array([users[1]])
     end
 
-    it 'assigns the requested active_relationships to @follow_relationships_index_by_followee_user_id' do
+    it 'assigns the requested relationships to @follow_relationships_index_by_followee_user_id' do
       subject
-      expect(assigns(:follow_relationships_index_by_followee_user_id)).to match_array([[users[0].id, follow_relationship_1]])
+      expect(assigns(:follow_relationships_index_by_followee_user_id)).to \
+        match_array([[users[0].id, follow_relationship_1]])
     end
 
     it 'assigns the requested feed to @feed' do
@@ -46,7 +59,9 @@ RSpec.describe Users::UsersController, type: :controller do
 
     it 'assigns the requested group_post_favorites to @group_post_favorites_index_by_feed_id' do
       subject
-      expect(assigns(:group_post_favorites_index_by_group_post_id)).to match_array([[group_post_fav_1.group_post_id, group_post_fav_1], [group_post_fav_2.group_post_id, group_post_fav_2]])
+      expect(assigns(:group_post_favorites_index_by_group_post_id)).to \
+        match_array([[group_post_fav_1.group_post_id, group_post_fav_1],
+                     [group_post_fav_2.group_post_id, group_post_fav_2]])
     end
 
     it 'returns 200' do
@@ -79,12 +94,14 @@ RSpec.describe Users::UsersController, type: :controller do
 
     it 'assigns the requested feed_favorites to @feed_favorites_index_by_feed_id' do
       subject
-      expect(assigns(:feed_favorites_index_by_feed_id)).to match_array([[feed_fav_1.feed_id, feed_fav_1], [feed_fav_2.feed_id, feed_fav_2]])
+      expect(assigns(:feed_favorites_index_by_feed_id)).to \
+        match_array([[feed_fav_1.feed_id, feed_fav_1], [feed_fav_2.feed_id, feed_fav_2]])
     end
 
     it 'assigns the requested reply_favorites to @reply_favorites_index_by_reply_id' do
       subject
-      expect(assigns(:reply_favorites_index_by_reply_id)).to match_array([[rep_fav_1.reply_id, rep_fav_1], [rep_fav_2.reply_id, rep_fav_2]])
+      expect(assigns(:reply_favorites_index_by_reply_id)).to \
+        match_array([[rep_fav_1.reply_id, rep_fav_1], [rep_fav_2.reply_id, rep_fav_2]])
     end
 
     it 'returns 200' do

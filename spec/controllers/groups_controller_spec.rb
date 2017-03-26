@@ -28,7 +28,9 @@ RSpec.describe Users::GroupsController, type: :controller do
   describe 'GET #show' do
     let(:group) { create(:group) }
     let!(:group_post) { create(:group_post, group: group) }
-    let!(:group_post_favorite) { create(:group_post_favorite, user: controller.current_user, group_post: group_post) }
+    let!(:group_post_favorite) do
+      create(:group_post_favorite, user: controller.current_user, group_post: group_post)
+    end
     subject { get :show, params: { id: group } }
 
     it 'assigns the requested group to @group' do
@@ -46,9 +48,10 @@ RSpec.describe Users::GroupsController, type: :controller do
       expect(assigns(:group_post)).to be_a_new(GroupPost)
     end
 
-    it 'assigns the requested group_post_favorites to @group_post_favorites_index_by_group_post_id' do
+    it 'assigns the requested group_post_favs to @group_post_favorites_index_by_group_post_id' do
       subject
-      expect(assigns(:group_post_favorites_index_by_group_post_id)).to match_array([[group_post_favorite.id, group_post_favorite]])
+      expect(assigns(:group_post_favorites_index_by_group_post_id)).to \
+        match_array([[group_post_favorite.id, group_post_favorite]])
     end
 
     it 'renders the :show template' do

@@ -7,7 +7,10 @@ RSpec.describe Users::FollowRelationshipsController, type: :controller do
 
       it 'saves the new follow_relationship' do
         expect do
-          post :create, params: { follower_user_id: subject.current_user.id, followee_user_id: subject.current_user.id + 1 }
+          post :create,
+               params: { follower_user_id: subject.current_user.id,
+                         followee_user_id: subject.current_user.id + 1
+               }
         end.to change(FollowRelationship, :count).by(1)
       end
 

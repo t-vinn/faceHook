@@ -12,7 +12,9 @@ FactoryGirl.define do
     end
 
     factory :too_long_feed do
-      content 'rijrfrjfijwojrefiklwemcomeocdksmlfsnlkmcdsklfjmelrksdjcoweijrkfmlksmclekjfsmslkclsmrwoqrfjqwiorjoiwjoqijfqjprjoijjrfiwjksdljznmxkljfkjlejritjpirejlkfsdmxkjesorjfiorwehgihwperohgjiprtohgpowihgpiwhgiohowehgiwojghwiopghwpogijfkdsmlkxz'
+      content 'rijrfrjfijwojrefiklwemcomeocdksmlfsnlkmcdsklfjmelrksdjcoweijrkfm' \
+      'lksmclekjfsmslkclsmrwoqrfjqwiorjoiwjoqijfqjprjoijjrfiwjksdljznmxkljfkjlej' \
+      'ritjpirejlkfsdmxkjesorjfiorwehgihwperohgjiprtohgpowihgpiwhgiohowehgogijfkdsmlkxz'
       user_id 10
     end
   end

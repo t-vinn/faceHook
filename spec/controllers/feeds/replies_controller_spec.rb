@@ -33,7 +33,9 @@ RSpec.describe Users::Feeds::RepliesController, type: :controller do
 
       let(:reply) { build(:reply) }
 
-      let(:reply_params) { { content: reply.content, user_id: reply.user_id, feed_id: reply.feed_id } }
+      let(:reply_params) do
+        { content: reply.content, user_id: reply.user_id, feed_id: reply.feed_id }
+      end
 
       subject { post :create, params: { feed_id: feed, reply: reply_params } }
 

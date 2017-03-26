@@ -15,15 +15,6 @@ RSpec.describe Users::FeedsController, type: :controller do
       it { is_expected.to have_http_status(302) }
       it { expect { subject }.to change(Feed, :count).by(1) }
       it { is_expected.to redirect_to root_path }
-      it do
-        expect(UserMailer).to receive(:feed_creation).and_return(double('UserMailer', deliver_later: true))
-        expect { subject }
-        expect do
-          perform_enqueued_jobs do
-            UserMailer.feed_creation(feed).deliver_later
-          end
-        end.to change { ActionMailer::Base.deliveries.size }.by(1)
-      end
 
       it do
         is_expected.to have_enqueued_job(ActionMailer)
@@ -51,7 +42,9 @@ RSpec.describe Users::FeedsController, type: :controller do
 
   describe 'PATCH #update' do
     let(:feed) { create(:feed, :with_user) }
-    let(:changed_feed_params) { { content: feed.content, user_id: feed.user_id, privacy: 'share_with_only_me' } }
+    let(:changed_feed_params) do
+      { content: feed.content, user_id: feed.user_id, privacy: 'share_with_only_me' }
+    end
     subject { patch :update, params: { id: feed, feed: changed_feed_params } }
 
     context 'valid attributes' do
