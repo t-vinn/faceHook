@@ -1,19 +1,14 @@
-= nested_form_for [:users, feed], html: { multipart: true } do |f|
+= bootstrap_nested_form_for [:users, feed], html: { multipart: true } do |f|
   .field
-    = f.label :content, 'Content：'
     = f.text_field :content, size: 60, maxlength: 140
-    br
-    = f.label :privacy, 'Privacy：'
-    = f.radio_button :privacy, 'share_with_all'
-    = f.label :privacy, 'public', value: 0
-    = f.radio_button :privacy, 'share_with_follower'
-    = f.label :privacy, 'follower_only', value: 1
-    = f.radio_button :privacy, 'share_with_only_me'
-    = f.label :privacy, 'private', value: 2
+    = f.form_group :privacy, label: { text: 'Privacy ' } do
+      = f.radio_button :privacy, 'share_with_all', label: 'public', inline: true
+      = f.radio_button :privacy, 'share_with_follower', label: 'follower_only', inline: true
+      = f.radio_button :privacy, 'share_with_only_me', label: 'private', inline: true
     = f.hidden_field :user_id, value: current_user.id
     = f.fields_for :feed_pictures do |fp|
-      = fp.file_field :picture, accept: 'image/jpeg,image/gif,image/png'
+      = fp.file_field :picture, accept: 'image/jpeg,image/gif,image/png', class: 'picture_upload'
       = fp.link_to_remove 'Remove this picture'
-    p = f.link_to_add 'Add a picture', :feed_pictures
+    = f.link_to_add 'Add a picture', :feed_pictures
   .actions
-    = f.submit
+    = f.primary

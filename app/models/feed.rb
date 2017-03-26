@@ -8,4 +8,9 @@ class Feed < ApplicationRecord
   has_many :feed_favorites, dependent: :destroy
   has_many :feed_pictures, inverse_of: :feed, dependent: :destroy
   accepts_nested_attributes_for :feed_pictures, allow_destroy: true, reject_if: :all_blank
+
+  def repliable_by?(replying_user)
+    return true if privacy == 'share_with_all'
+    privacy == 'share_with_follower' && user.following?(replying_user)
+  end
 end
