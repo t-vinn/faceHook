@@ -25,18 +25,15 @@ RSpec.describe Users::FollowRelationshipsController, type: :controller do
 
   describe 'DELETE #destroy' do
     login_user
-    before do
-      @follow_relationship = create(:follow_relationship)
-    end
+    let(:follow_relationship) { create(:follow_relationship) }
+    subject { delete :destroy, params: { id: follow_relationship } }
+
     it 'deletes the follow_relationship' do
-      expect do
-        delete :destroy, params: { id: @follow_relationship }
-      end.to change(FollowRelationship, :count).by(-1)
+      expect { subject }.to change(FollowRelationship, :count).by(-1)
     end
 
     it 'redirects to root_path' do
-      delete :destroy, params: { id: @follow_relationship }
-      expect(response).to redirect_to root_path
+      is_expected.to redirect_to root_path
     end
   end
 end
