@@ -27,6 +27,6 @@ RSpec.describe Feed do
   it 'is invalid with content too long' do
     too_long_feed = build(:too_long_feed)
     too_long_feed.valid?
-    expect(too_long_feed.errors[:content]).to eq ["is too long (maximum is 140 characters)"]
+    expect(too_long_feed.errors[:content]).to eq ['is too long (maximum is 140 characters)']
   end
 end
