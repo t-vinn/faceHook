@@ -17,7 +17,8 @@ RSpec.describe Users::FeedsController, type: :controller do
       it { is_expected.to redirect_to root_path }
 
       it do
-        is_expected.to have_enqueued_job(ActionMailer)
+        expect(UserMailer).to receive(:feed_creation).and_return(double("mailer", deliver_later: true))
+        subject
       end
     end
 
