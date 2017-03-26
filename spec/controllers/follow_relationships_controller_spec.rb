@@ -25,7 +25,7 @@ RSpec.describe Users::FollowRelationshipsController, type: :controller do
 
   describe 'DELETE #destroy' do
     login_user
-    let(:follow_relationship) { create(:follow_relationship) }
+    let!(:follow_relationship) { create(:follow_relationship) }
     subject { delete :destroy, params: { id: follow_relationship } }
 
     it 'deletes the follow_relationship' do
