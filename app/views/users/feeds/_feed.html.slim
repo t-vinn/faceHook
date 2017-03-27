@@ -17,10 +17,10 @@ tbody.post
       td = link_to 'Edit privacy', edit_users_feed_path(feed)
     - elsif feed.feed_favorites.exists?(user_id: current_user.id)
       td = link_to 'Remove Favorite',
-        users_feed_feed_favorite_path(feed, @feed_favorites_index_by_feed_id[feed.id]),
+        users_feed_feed_favorite_path(feed, @feed_favorites_index_by_feed_id[feed.id], path: request.path),
         method: :delete
     - else
-      td = link_to 'Favorite', users_feed_feed_favorites_path(feed),
+      td = link_to 'Favorite', users_feed_feed_favorites_path(feed, path: request.path),
           method: :post
     td = feed.feed_favorites.count
     - feed.replies.each do |reply|
@@ -44,9 +44,9 @@ tbody.post
         - elsif reply.reply_favorites.exists?(user_id: current_user.id)
           td = link_to 'Remove Favorite',
             users_feed_reply_reply_favorite_path(feed, reply,
-              @reply_favorites_index_by_reply_id[reply.id]),
+              @reply_favorites_index_by_reply_id[reply.id], path: request.path),
             method: :delete
         - else
-          td = link_to 'Favorite', users_feed_reply_reply_favorites_path(feed, reply),
+          td = link_to 'Favorite', users_feed_reply_reply_favorites_path(feed, reply, path: request.path),
               method: :post
         td = reply.reply_favorites.count
