@@ -118,3 +118,6 @@ gem 'delayed_job_active_record'
 
 # slack integration
 gem 'httparty'
+
+# run rake task once a day
+gem 'whenever', require: false
