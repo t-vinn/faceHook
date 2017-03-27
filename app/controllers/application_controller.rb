@@ -13,5 +13,4 @@ class ApplicationController < ActionController::Base
   def render_500
     render file: "#{Rails.root}/public/500.html", layout: false, status: 500
   end
-
 end
