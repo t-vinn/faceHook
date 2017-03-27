@@ -50,6 +50,7 @@ class User < ApplicationRecord
                                        .order('count_followee_user_id desc') \
                                        .count(:followee_user_id).keys
     end
+    # users who are already followed by current_user should never be recommended
     top_user_ids - FollowRelationship.where(follower_user_id: id).pluck(:followee_user_id)
   end
 
