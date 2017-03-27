@@ -18,7 +18,7 @@
         tr
           td = 'Member since: ' + @user.created_at.to_s
         tr
-          td = follow_links(@user, @follow_relationships_index_by_followee_user_id)
+          td = follow_or_unfollow_links(@user, @follow_relationships_index_by_followee_user_id)
 
 
     .col-md-7

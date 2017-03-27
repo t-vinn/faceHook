@@ -31,7 +31,7 @@ module ApplicationHelper
     end
   end
 
-  def follow_links(user, index)
+  def follow_or_unfollow_links(user, index)
     if current_user.following?(user)
       link_to 'Unfollow',
               users_follow_relationship_path(index[user.id]),
@@ -43,6 +43,14 @@ module ApplicationHelper
               method: :post,
               data: { disable_with: 'in progress...' },
               class: 'btn btn-primary'
+    end
+  end
+
+  def follow_links_for_unfollowing_users(unfollowing_users)
+    if unfollowing_users.present?
+      render 'follow_links'
+    else
+      content_tag :p, "Congratulations, you've followed all the people in FaceHook!"
     end
   end
 end

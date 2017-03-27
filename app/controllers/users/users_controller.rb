@@ -2,10 +2,10 @@
 module Users
   class UsersController < BaseController
     def index
-      @following_users = current_user.following_users
-      # @unfollowing_users = User.where(id: current_user.recommended_user_ids)
-      @unfollowing_users = current_user.recommended_user_ids.map { |id| User.find(id) }
-      @unfollowing_users.delete(current_user)
+      @following_users = current_user.following_users.page(params[:following_users_page])
+      ids = current_user.recommended_user_ids.first(10)
+      users = User.where(id: ids).index_by(&:id)
+      @unfollowing_users = ids.map { |id| users[id] }
       @follow_relationships_index_by_followee_user_id = \
         current_user.active_relationships.index_by(&:followee_user_id)
       @feed = Feed.new
@@ -20,14 +20,15 @@ module Users
       group_posts = GroupPost.where(group_id: groups.pluck(:id))
       feeds_or_group_posts = \
         (feeds | group_posts).sort_by(&:created_at).reverse
-      @posts = Kaminari.paginate_array(feeds_or_group_posts).page(params[:page])
+      @posts = Kaminari.paginate_array(feeds_or_group_posts).page(params[:posts_page])
       following_feeds = Feed.where(
         privacy: [:share_with_all, :share_with_follower],
         user: current_user.following_users
       )
       following_feeds_or_group_posts = \
         (following_feeds | group_posts).sort_by(&:created_at).reverse
-      @following_posts = Kaminari.paginate_array(following_feeds_or_group_posts).page(params[:page])
+      @following_posts = Kaminari.paginate_array(following_feeds_or_group_posts) \
+                                 .page(params[:following_posts_page])
       @feed_favorites_index_by_feed_id = current_user.feed_favorites.index_by(&:feed_id)
       @reply_favorites_index_by_reply_id = current_user.reply_favorites.index_by(&:reply_id)
       @group_post_favorites_index_by_group_post_id = \
@@ -36,8 +37,7 @@ module Users
 
     def show
       @user = User.find(params[:id])
-      feeds = @user.feeds.share_with_all.sort_by(&:created_at).reverse
-      @feeds = Kaminari.paginate_array(feeds).page(params[:page])
+      @feeds = @user.feeds.share_with_all.order(created_at: :desc).page(params[:page])
       @feed_favorites_index_by_feed_id = current_user.feed_favorites.index_by(&:feed_id)
       @reply_favorites_index_by_reply_id = current_user.reply_favorites.index_by(&:reply_id)
       @follow_relationships_index_by_followee_user_id = \
