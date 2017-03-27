@@ -5,7 +5,6 @@ class SimilarityCreateService
     @similarity = similarity
   end
 
-
   def create_similarity
     a = Similarity.create(similarity: @similarity)
     SimilaritiesUser.create(similarity_id: a.id, user_id: @id_1)

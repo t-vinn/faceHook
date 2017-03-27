@@ -12,7 +12,7 @@ class SimilarityUpdateService
     next unless similarity.update( \
       similarity: ApplicationController.helpers.cos_similarity(id_1, id_2))
   end
-  
+
   private
 
     attr_reader :id_1, :id_2
