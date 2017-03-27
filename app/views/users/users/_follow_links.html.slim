@@ -1,0 +1,21 @@
+p
+  | Follow other users and explore the world with FaceHook!
+hr
+p
+  | Users you're not following yet
+table.table.table-hover
+  thead
+    tr
+      th Picture
+      th Name
+      th Born on
+      th colspan="3"
+  tbody
+    - @recommended_users.each do |recommended_user|
+      tr
+        td = image_tag recommended_user.picture.url(:thumb)
+        td = link_to recommended_user.name.to_s, users_user_path(recommended_user)
+        td = recommended_user.birth_date
+        td = link_to 'Follow',
+          users_follow_relationships_path(followee_user_id: recommended_user.id),
+          method: :post, data: { disable_with: 'in progress ...' }
