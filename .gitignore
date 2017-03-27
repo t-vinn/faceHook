@@ -26,3 +26,6 @@ config/secrets.yml
 # Ignore all carrierwave files.
 /public/uploads/
 /public/images/
+
+# Ignore spec result files.
+spec/examples.txt
