@@ -3,9 +3,9 @@ namespace :recommend do
   task start_from_scratch: :environment do
     User.ids.sort.each do |id_1|
       User.where('id > ?', id_1).ids.each do |id_2|
-        a = Similarity.create(similarity: ApplicationController.helpers.cos_similarity(id_1, id_2))
-        SimilaritiesUser.create(similarity_id: a.id, user_id: id_1)
-        SimilaritiesUser.create(similarity_id: a.id, user_id: id_2)
+        similarity = ApplicationController.helpers.cos_similarity(id_1, id_2)
+        similarity_create_service = SimilarityCreateService.new(id_1, id_2, similarity)
+        similarity_create_service.create_similarity
       end
     end
   end
@@ -16,14 +16,12 @@ namespace :recommend do
     existing_user_ids = User.ids - new_user_ids
     new_user_ids.each do |id_1|
       existing_user_ids.each do |id_2|
-        a = Similarity.create(similarity: 0)
-        SimilaritiesUser.create(similarity_id: a.id, user_id: id_1)
-        SimilaritiesUser.create(similarity_id: a.id, user_id: id_2)
+        similarity_create_service = SimilarityCreateService.new(id_1, id_2, 0)
+        similarity_create_service.create_similarity
       end
       new_user_ids.select { |item| item > id_1 }.each do |id_2|
-        a = Similarity.create(similarity: 0)
-        SimilaritiesUser.create(similarity_id: a.id, user_id: id_1)
-        SimilaritiesUser.create(similarity_id: a.id, user_id: id_2)
+        similarity_create_service = SimilarityCreateService.new(id_1, id_2, 0)
+        similarity_create_service.create_similarity
       end
     end
 
