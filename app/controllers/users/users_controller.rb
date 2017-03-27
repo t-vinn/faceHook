@@ -38,7 +38,8 @@ module Users
 
     def show
       @user = User.find(params[:id])
-      @feeds = @user.feeds.share_with_all.includes(replies: :user).order(created_at: :desc).page(params[:page])
+      @feeds = @user.feeds.share_with_all.includes(replies: :user) \
+        .order(created_at: :desc).page(params[:page])
       @feed_favorites_index_by_feed_id = current_user.feed_favorites.index_by(&:feed_id)
       @reply_favorites_index_by_reply_id = current_user.reply_favorites.index_by(&:reply_id)
       @follow_relationships_index_by_followee_user_id = \
