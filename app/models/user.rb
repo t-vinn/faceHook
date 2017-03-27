@@ -1,4 +1,4 @@
-# rubocop: disable AbcSize
+# rubocop:disable Metrics/AbcSize
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -29,6 +29,7 @@ class User < ApplicationRecord
   has_many :groups_users, dependent: :destroy
   has_many :group_posts, dependent: :destroy
   has_many :group_post_favorites, dependent: :destroy
+  has_many :similarities_users, dependent: :destroy
   mount_uploader :picture, PictureUploader
   validate :picture_size
   scope :notifiable, -> { where(notification_allowed: true) }
@@ -38,16 +39,19 @@ class User < ApplicationRecord
   end
 
   def recommended_user_ids
-    user_ids = User.all.ids - [id]
-    similarities = {}
-    user_ids.each do |ui|
-      similarities[ui] = cos_similarity(id, ui)
-      # REDIS.zadd 'similarities', cos_similarity(id, ui), ui
+    current_user_similarity_ids = similarities_users.pluck(:similarity_id)
+    if current_user_similarity_ids.present?
+      top_similarity_ids = Similarity.where(id: current_user_similarity_ids) \
+                                     .order(similarity: :desc).pluck(:id)
+      top_user_ids = SimilaritiesUser.where(similarity_id: top_similarity_ids) \
+                                     .where.not(user_id: id).pluck(:user_id)
+    else
+      top_user_ids = FollowRelationship.group(:followee_user_id) \
+                                       .order('count_followee_user_id desc') \
+                                       .count(:followee_user_id).keys
     end
-    sorted = Hash[similarities.sort_by { |_k, v| -v }]
-    top_ten = Hash[*sorted.to_a.shift(10).flatten!]
-    top_ten.keys
-    # REDIS.zrevrangebyscore 'similarities', 1, 0, limit: [0, 10]
+    # users who are already followed by current_user should never be recommended
+    top_user_ids - FollowRelationship.where(follower_user_id: id).pluck(:followee_user_id)
   end
 
   def self.redis

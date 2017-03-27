@@ -20,6 +20,10 @@ $ ->
       navSelector: "nav.pagination" # selector for the paged navigation (it will be hidden)
       nextSelector: "nav.pagination a[rel=next]" # selector for the NEXT link (to page 2)
       itemSelector: "#following_posts tbody.post" # selector for all items you'll retrieve
+    $("#following_users .page").infinitescroll
+      navSelector: "nav.pagination" # selector for the paged navigation (it will be hidden)
+      nextSelector: "nav.pagination a[rel=next]" # selector for the NEXT link (to page 2)
+      itemSelector: "#following_users tbody.user" # selector for all items you'll retrieve
   else if $('body').attr('id').match(/users-show/)
     $("#feeds .page").infinitescroll
       navSelector: "nav.pagination" # selector for the paged navigation (it will be hidden)
