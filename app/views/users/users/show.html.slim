@@ -17,6 +17,10 @@
           / td = '趣味: ' + @user.hobby.to_s if @user.hobby.present?
         tr
           td = 'Member since: ' + @user.created_at.to_s
+        tr
+          td = follow_or_unfollow_links(@user, @follow_relationships_index_by_followee_user_id)
+
+
     .col-md-7
       - if @user.feeds.share_with_all.blank?
         h3 = 'No public feeds yet.'
@@ -40,6 +44,3 @@
                 td.col-md-1
             = render @feeds
           = paginate @feeds
-
-  .row
-    p = link_to 'Back', root_path

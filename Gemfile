@@ -132,3 +132,6 @@ gem 'redis'
 
 # mailer delayed_job
 gem 'delayed_job_active_record'
+
+# run rake task once a day
+gem 'whenever', require: false
