@@ -7,7 +7,7 @@ tbody.post
     td colspan='4' style="word-break:break-word;" = feed.content
   tr
     td.picture colspan='4'
-      - if feed.feed_pictures.exists?
+      - if feed.feed_pictures.present?
         - feed.feed_pictures.each do |p|
           = image_tag p.picture
   tr
@@ -32,7 +32,7 @@ tbody.post
         td colspan='4' style="word-break:break-word;" = '[REPLY]---> ' + reply.content
       tr
         td.picture colspan='4'
-          - if reply.reply_pictures.exists?
+          - if reply.reply_pictures.present?
             - reply.reply_pictures.each do |p|
               = image_tag p.picture
       tr

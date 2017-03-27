@@ -7,7 +7,7 @@ tbody.post
     td colspan='4' style="word-break:break-word;" = group_post.content
   tr
     td.picture colspan='4'
-      - if group_post.group_post_pictures.exists?
+      - if group_post.group_post_pictures.present?
         - group_post.group_post_pictures.each do |p|
           = image_tag p.picture
   tr
