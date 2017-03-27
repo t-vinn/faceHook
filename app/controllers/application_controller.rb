@@ -1,6 +1,4 @@
 class ApplicationController < ActionController::Base
-  before_action :set_request_from
-
   rescue_from Exception, with: :render_500
 
   rescue_from ActionController::RoutingError, with: :render_404
