@@ -3,7 +3,9 @@ module Users
   class UsersController < BaseController
     def index
       @following_users = current_user.following_users.page(params[:following_users_page])
-      @unfollowing_users = current_user.recommended_user_ids.map { |id| User.find(id) }
+      ids = current_user.recommended_user_ids.first(10)
+      users = User.where(id: ids).index_by(&:id)
+      @unfollowing_users = ids.map { |id| users[id] }
       @follow_relationships_index_by_followee_user_id = \
         current_user.active_relationships.index_by(&:followee_user_id)
       @feed = Feed.new
