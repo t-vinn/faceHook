@@ -18,4 +18,4 @@ table.table.table-hover
         td = unfollowing_user.birth_date
         td = link_to 'Follow',
           users_follow_relationships_path(followee_user_id: unfollowing_user.id),
-          method: :post
+          method: :post, data: { disable_with: 'in progress ...' }

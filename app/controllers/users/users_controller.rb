@@ -40,6 +40,8 @@ module Users
       @feeds = @user.feeds.share_with_all.order(created_at: :desc).page(params[:page])
       @feed_favorites_index_by_feed_id = current_user.feed_favorites.index_by(&:feed_id)
       @reply_favorites_index_by_reply_id = current_user.reply_favorites.index_by(&:reply_id)
+      @follow_relationships_index_by_followee_user_id = \
+        current_user.active_relationships.index_by(&:followee_user_id)
     end
   end
 end
