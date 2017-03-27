@@ -32,7 +32,9 @@
 |18|グループ|	グループ内の投稿はグループメンバーのみ閲覧可能|
 |19|グループ|グループへの投稿内容はコメントと写真、返信はなし、いいねあり|
 |20|管理画面|ユーザが一覧できる|
-|21|管理画面|ユーザ情報の詳細が見られる|
+|21|管理画面|ユーザ情報の詳細、Feedの内容などが見られる|
+|22|ユーザ|影響力をrakeタスクでカスタマイズする|
+|23|ユーザ|Feed, Reply, GroupPostが投稿されると、Slackに通知が飛ぶ|
 
 ###機能要件の未確定部分
 テーブル設計にも関連
@@ -53,7 +55,7 @@
 
 |モデル名|編集|削除|
 |---|---|---|
-|feed|公開度のみ可|不可|
+|feed|公開度のみ可|不可(公開を自分のみにすることはできる)|
 |reply|不可|不可|
 |feed_favorite|不可（定義的に）|可|
 |reply_favorite|不可（定義的に）|可|
@@ -123,25 +125,15 @@
 |name|ユーザーネーム | string | | false | |
 |password|パスワード | string | | false | |
 |birth_date||date||true|自由登録|
-|portfolio||写真||true|自由登録|
+|picture||写真||true|自由登録|
+|notification_allowed|通知設定|tinyint|0|false||
 
 誕生日は登録自由、公開only。
-
 ageはbirth_datesに合体
 
-###2. hobbies
-|column|説明|type|default|null|備考|
-|---|---|---|---|---|---|
-|name|趣味|string||false|同上|
+###2. hobbies => 類似度に使わないことになったので不要となった
 
-これはオススメに使いたいので公開only。
-このテーブル作れば趣味複数登録できる
-
-###3. users_hobbies
-|column|説明|type|default|null|備考|
-|---|---|---|---|---|---|
-|user_id||integer||false||
-|hobby_id||integer||false||
+###3. users_hobbies => 類似度に使わないことになったので不要となった
 
 ###4. follow_relationships
 
@@ -151,19 +143,24 @@ ageはbirth_datesに合体
 |followee_user_id||integer||false||
 
 
-###5. user_influence
+###5. similarities (influecesより変更)
 
 |column|説明|type|default|null|備考|
 |---|---|---|---|---|---|
-|influencer_user_id||integer||false||
-|influenced_user_id|影響される側|integer||false||
-|influence|影響力|integer|0|false||
+|similarity|類似度|float|0|false||
 
+#### 元々の実装方法（予定）
 influenceをどうやって定義するか
 ①自分のフォローしてるユーザーにいいねされまくってるユーザー、趣味共通のユーザー、をオススメしたい（年齢や誕生日はプライバシー感があるのでオススメには使わず）
 ②始めたばっかで友達少ないユーザーにはフォロワーめっちゃ多い人もオススメ
 
 つまり、完全カスタマイズではなく、多少は共通部分もあるようにする。そうすればユーザーからすると、使い始めもサポートしてくれる一方で友達増やしたりサービス使えば使うほどオススメの精度が上がったように感じられるはず？
+
+#### 実際の実装方法
+=> 投稿の情報を元にオススメすると、複数種類の情報を組み合わせて類似度として評価することになり、どうしても恣意的になる。
+今回はフォロー関係のみからcos類似度を用いて評価することにした。
+フォロー関係が一切存在しない場合、類似度は全て0になってしまい評価できないので、
+この場合はフォロワーが多い人をオススメすることにした。
 
 ###6. groups
 
@@ -228,7 +225,7 @@ influenceをどうやって定義するか
 |reply_id||integer||false||
 |user_id||integer||false||
 
-###14. admin
+###14. admin_users
 
 |column|説明|type|default|null|備考|
 |---|---|---|---|---|---|
@@ -236,3 +233,35 @@ influenceをどうやって定義するか
 |name|ユーザーネーム | string | | false | |
 |password|パスワード | string | | false | |
 
+### 15. feed_pictures
+
+|column|説明|type|default|null|備考|
+|---|---|---|---|---|---|
+|feed_id||integer||false||
+|picture||string||false||
+
+carrierwaveを使ったので、pictureカラムにはstringが入る
+
+### 16. reply_pictures
+
+|column|説明|type|default|null|備考|
+|---|---|---|---|---|---|
+|reply_id||integer||false||
+|picture||string||false||
+
+### 17. group_post_pictures
+
+|column|説明|type|default|null|備考|
+|---|---|---|---|---|---|
+|group_post_id||integer||false||
+|picture||string||false||
+
+### 18. similarities_users
+
+|column|説明|type|default|null|備考|
+|---|---|---|---|---|---|
+|similairty_id||integer||false||
+|user_id||integer||false||
+
+類似度はユーザー2人の組に対して計算されるものなので、5.で定義したsimilaritiesテーブルの各レコードに対して、
+それがどの2人の類似度かを示したもの。
