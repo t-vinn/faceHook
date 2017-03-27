@@ -13,6 +13,8 @@
         .field
           = f.text_field :name, size: 15, maxlength: 20, label: 'Group name (max 20 letters)'
           = f.hidden_field :owner_user_id, value: current_user.id
+          = f.fields_for :groups_users do |g|
+            = g.hidden_field :user_id, value: current_user.id
         .field
           = f.fields_for :groups_users do |g|
             = g.select :user_id, options_for_select(current_user.mutual_followers.map { |user| [user.name, user.id] }),
