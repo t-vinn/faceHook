@@ -13,16 +13,16 @@ module Users
             )
             if group_post_favorite.save
               UserMailer.group_post_favorite_creation(group_post_favorite).deliver_later
-              redirect_to :back, notice: 'You liked a post!'
+              redirect_to root_path, notice: 'You liked a post!'
             else
-              redirect_to :back, notice: 'FAIL. Try again.'
+              redirect_to root_path, notice: 'FAIL. Try again.'
             end
           end
         end
 
         def destroy
           if GroupPostFavorite.find(params[:id]).destroy
-            redirect_to :back, notice: 'Your favorite deleted.'
+            redirect_to root_path, notice: 'Your favorite deleted.'
           else
             flash.now[:notice] = 'An error occured and faceHook failed to delete your favorite.'
           end
