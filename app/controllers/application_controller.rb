@@ -14,17 +14,4 @@ class ApplicationController < ActionController::Base
     render file: "#{Rails.root}/public/500.html", layout: false, status: 500
   end
 
-  def set_request_from
-    session[:request_from] && @request_from = session[:request_from]
-    # save which page the user last visited
-    session[:request_from] = request.original_url
-  end
-
-  def return_back
-    if request.referer
-      redirect_to :back && return
-    elsif @request_from
-      redirect_to @request_from && return
-    end
-  end
 end
