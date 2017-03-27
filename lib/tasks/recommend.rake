@@ -32,20 +32,12 @@ namespace :recommend do
     unchanged_user_ids = User.ids - changed_user_ids
     changed_user_ids.each do |id_1|
       unchanged_user_ids.each do |id_2|
-        array1 = SimilaritiesUser.where(user_id: id_1).pluck(:similarity_id)
-        array2 = SimilaritiesUser.where(user_id: id_2).pluck(:similarity_id)
-        next unless (array1 & array2).present?
-        similarity = Similarity.find((array1 & array2)[0])
-        next unless similarity.update( \
-          similarity: ApplicationController.helpers.cos_similarity(id_1, id_2))
+        similarity_update_service = SimilarityUpdateService.new(id_1, id_2)
+        similarity_update_service.update_similarity
       end
       changed_user_ids.select { |item| item > id_1 }.each do |id_2|
-        array1 = SimilaritiesUser.where(user_id: id_1).pluck(:similarity_id)
-        array2 = SimilaritiesUser.where(user_id: id_2).pluck(:similarity_id)
-        next unless (array1 & array2).present?
-        similarity = Similarity.find((array1 & array2)[0])
-        next unless similarity.update( \
-          similarity: ApplicationController.helpers.cos_similarity(id_1, id_2))
+        similarity_update_service = SimilarityUpdateService.new(id_1, id_2)
+        similarity_update_service.update_similarity
       end
     end
   end
