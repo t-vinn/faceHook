@@ -7,7 +7,7 @@
           = f.hidden_field :user_id, value: current_user.id
           = f.hidden_field :feed_id, value: @feed.id
           = f.fields_for :reply_pictures do |g|
-            = g.file_field :picture, accept: 'image/jpeg,image/gif,image/png'
+            = g.file_field :picture, accept: 'image/jpeg,image/gif,image/png', class: 'picture_upload'
             = g.link_to_remove 'Remove this picture'
           p = f.link_to_add 'add another picture', :reply_pictures
         .actions

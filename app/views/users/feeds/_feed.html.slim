@@ -7,7 +7,7 @@ tbody.post
     td colspan='4' style="word-break:break-word;" = feed.content
   tr
     td.picture colspan='4'
-      - if feed.feed_pictures.exists?
+      - if feed.feed_pictures.present?
         - feed.feed_pictures.each do |p|
           = image_tag p.picture
   tr
@@ -17,11 +17,11 @@ tbody.post
       td = link_to 'Edit privacy', edit_users_feed_path(feed)
     - elsif feed.feed_favorites.exists?(user_id: current_user.id)
       td = link_to 'Remove Favorite',
-        users_feed_feed_favorite_path(feed, @feed_favorites_index_by_feed_id[feed.id]),
-        method: :delete
+        users_feed_feed_favorite_path(feed, @feed_favorites_index_by_feed_id[feed.id], path: request.path),
+        method: :delete, data: { disable_with: 'in progress ...' }
     - else
-      td = link_to 'Favorite', users_feed_feed_favorites_path(feed),
-          method: :post
+      td = link_to 'Favorite', users_feed_feed_favorites_path(feed, path: request.path),
+          method: :post, data: { disable_with: 'in progress ...' }
     td = feed.feed_favorites.count
     - feed.replies.each do |reply|
       tr
@@ -32,7 +32,7 @@ tbody.post
         td colspan='4' style="word-break:break-word;" = '[REPLY]---> ' + reply.content
       tr
         td.picture colspan='4'
-          - if reply.reply_pictures.exists?
+          - if reply.reply_pictures.present?
             - reply.reply_pictures.each do |p|
               = image_tag p.picture
       tr
@@ -44,9 +44,9 @@ tbody.post
         - elsif reply.reply_favorites.exists?(user_id: current_user.id)
           td = link_to 'Remove Favorite',
             users_feed_reply_reply_favorite_path(feed, reply,
-              @reply_favorites_index_by_reply_id[reply.id]),
-            method: :delete
+              @reply_favorites_index_by_reply_id[reply.id], path: request.path),
+            method: :delete, data: { disable_with: 'in progress ...' }
         - else
-          td = link_to 'Favorite', users_feed_reply_reply_favorites_path(feed, reply),
-              method: :post
+          td = link_to 'Favorite', users_feed_reply_reply_favorites_path(feed, reply, path: request.path),
+              method: :post, data: { disable_with: 'in progress ...' }
         td = reply.reply_favorites.count

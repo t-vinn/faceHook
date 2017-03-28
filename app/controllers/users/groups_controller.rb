@@ -4,12 +4,12 @@ module Users
     def index
       @group = Group.new
       @group.groups_users.build
-      groups = current_user.groups.sort_by(&:created_at).reverse
+      groups = current_user.groups.order(created_at: :desc)
       @groups = Kaminari.paginate_array(groups).page(params[:page])
     end
 
     def show
-      @group = Group.find(params[:id])
+      @group = Group.includes(groups_users: :user).find(params[:id])
       if @group.users.exclude?(current_user)
         render_404
       else
@@ -17,7 +17,7 @@ module Users
         @group_post.group_post_pictures.build
         @group_post_favorites_index_by_group_post_id = \
           current_user.group_post_favorites.index_by(&:group_post_id)
-        group_posts = @group.group_posts.sort_by(&:created_at).reverse
+        group_posts = @group.group_posts.includes(:user).order(created_at: :desc)
         @group_posts = Kaminari.paginate_array(group_posts).page(params[:page])
       end
     end
@@ -35,6 +35,7 @@ module Users
 
     def edit
       @group = Group.find(params[:id])
+      @group.owner_user_id != current_user.id && render_404
     end
 
     def update
