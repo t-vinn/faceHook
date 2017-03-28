@@ -2,17 +2,18 @@ header
   .container-fluid
     .row
       nav.page-header.navbar.navbar-fixed-top.col-md-12
-        h1
+        h2.white
           | FaceHook
-          small = ' a brand new sns app for all'
+          small.white = ' a brand new sns app for all'
           - if user_signed_in?
             .navbar-right
-              span = link_to 'Home ', root_path, class: 'btn btn-primary'
-              span = link_to 'Group ', users_groups_path, class: 'btn btn-primary'
-              span = link_to 'My Profile ', users_user_path(current_user), class: 'btn btn-primary'
-              span = link_to 'Edit your profile ', edit_user_registration_path, class: 'btn btn-primary'
-              span = link_to 'Log out', destroy_user_session_path, method: :delete, class: 'btn btn-primary'
+              span = link_to 'Home ', root_path, class: 'btn btn-primary hover-dark-blue'
+              span = link_to 'Group ', users_groups_path, class: 'btn btn-primary hover-dark-blue'
+              span = link_to 'My Profile ', users_user_path(current_user), class: 'btn btn-primary hover-dark-blue'
+              span = link_to 'Edit your profile ', edit_user_registration_path, class: 'btn btn-primary hover-dark-blue'
+              span = link_to 'Log out', destroy_user_session_path, method: :delete,
+                class: 'btn btn-primary hover-dark-blue'
           - else
             .navbar-right
-              span = link_to 'Sign up ', new_user_registration_path, class: 'btn btn-primary'
-              span = link_to 'Log in', new_user_session_path, class: 'btn btn-primary'
+              span = link_to 'Sign up ', new_user_registration_path, class: 'btn btn-primary hover-dark-blue'
+              span = link_to 'Log in', new_user_session_path, class: 'btn btn-primary hover-dark-blue'
