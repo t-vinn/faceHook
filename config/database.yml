@@ -14,7 +14,7 @@ default: &default
   encoding: utf8
   pool: 5
   username: Toshi 
-  password: <%= ENV['DB_PASSWORD'] %>
+  password: <%= Settings.DB_PASSWORD %>
   host: localhost
 
 development:
