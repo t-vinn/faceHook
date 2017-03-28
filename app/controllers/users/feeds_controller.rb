@@ -4,6 +4,7 @@ module Users
       feed = Feed.new(feed_params)
       if feed.save
         UserMailer.feed_creation(feed).deliver_later
+        SlackMessageService.call(post_with_content: feed)
         redirect_to root_path, notice: 'a new feed created'
       else
         redirect_to root_path, notice: 'your message is too short or long!'
@@ -11,7 +12,11 @@ module Users
     end
 
     def edit
-      @feed = Feed.find(params[:id])
+      if Feed.find(params[:id]).user_id == current_user.id
+        @feed = Feed.find(params[:id])
+      else
+        render_404
+      end
     end
 
     def update

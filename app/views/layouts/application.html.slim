@@ -10,8 +10,9 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   body.col-md-12 id="#{controller_name}-#{action_name}"
     = render 'layouts/header'
-    p.notice
-      = notice
-    p.alert
-      = alert
-    = yield
+    .main
+      p.notice
+        = notice
+      p.alert
+        = alert
+      = yield

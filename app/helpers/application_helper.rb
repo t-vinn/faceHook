@@ -36,7 +36,7 @@ module ApplicationHelper
               method: :delete,
               data: { confirm: 'Unfollow this person?', disable_with: 'in progress...' },
               class: 'btn btn-primary'
-    else
+    elsif user != current_user
       link_to 'Follow', users_follow_relationships_path(followee_user_id: user.id),
               method: :post,
               data: { disable_with: 'in progress...' },
@@ -44,8 +44,8 @@ module ApplicationHelper
     end
   end
 
-  def follow_links_for_unfollowing_users(unfollowing_users)
-    if unfollowing_users.present?
+  def follow_links_for_recommended_users(recommended_users)
+    if recommended_users.present?
       render 'follow_links'
     else
       content_tag :p, "Congratulations, you've followed all the people in FaceHook!"
