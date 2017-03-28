@@ -27,6 +27,7 @@ RSpec.describe Users::GroupsController, type: :controller do
 
   describe 'GET #show' do
     let(:group) { create(:group) }
+    let!(:groups_user) { create(:groups_user, group: group, user: controller.current_user) }
     let!(:group_post) { create(:group_post, group: group) }
     let!(:group_post_favorite) do
       create(:group_post_favorite, user: controller.current_user, group_post: group_post)
