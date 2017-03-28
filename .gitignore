@@ -27,3 +27,5 @@ vendor/bundle
 
 # Ignore spec result files.
 spec/examples.txt
+
+config/secrets.yml

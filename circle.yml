@@ -1,3 +1,6 @@
+dependencies:
+  override:
+    - mv config/secrets.ci.yml config/secrets.yml
 test:
   post:
     #- 'bundle exec "rake factory_girl:lint" 2> ${CIRCLE_ARTIFACTS}/factory_girl.txt || :'
