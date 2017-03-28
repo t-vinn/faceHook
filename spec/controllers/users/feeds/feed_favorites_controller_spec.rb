@@ -11,7 +11,7 @@ RSpec.describe Users::Feeds::FeedFavoritesController, type: :controller do
       end
       subject do
         post :create,
-             params: { feed_id: feed_favorite.feed, feed_favorite: feed_favorite_params }
+             params: { feed_id: feed_favorite.feed, feed_favorite: feed_favorite_params, path: root_path }
       end
 
       it 'returns 302' do
@@ -35,7 +35,7 @@ RSpec.describe Users::Feeds::FeedFavoritesController, type: :controller do
     login_user
     let!(:feed) { create(:feed, :with_user) }
     let!(:feed_favorite) { controller.current_user.feed_favorites.create(feed: feed) }
-    subject { delete :destroy, params: { feed_id: feed_favorite.feed, id: feed_favorite } }
+    subject { delete :destroy, params: { feed_id: feed_favorite.feed, id: feed_favorite, path: root_path } }
 
     it 'deletes the feed_favorite' do
       expect { subject }.to change(FeedFavorite, :count).by(-1)

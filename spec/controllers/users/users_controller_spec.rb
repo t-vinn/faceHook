@@ -33,7 +33,7 @@ RSpec.describe Users::UsersController, type: :controller do
 
     it 'assigns the requested users to @unfollowing_users' do
       subject
-      expect(assigns(:unfollowing_users)).to match_array([users[1]])
+      expect(assigns(:recommended_users)).to match_array([])
     end
 
     it 'assigns the requested relationships to @follow_relationships_index_by_followee_user_id' do

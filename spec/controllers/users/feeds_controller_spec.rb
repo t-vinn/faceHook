@@ -34,7 +34,7 @@ RSpec.describe Users::FeedsController, type: :controller do
   end
 
   describe 'GET #edit' do
-    let(:feed) { create(:feed, :with_user) }
+    let(:feed) { create(:feed, user: controller.current_user) }
     subject! { get :edit, params: { id: feed } }
 
     it { expect(assigns(:feed)).to eq feed }
