@@ -11,6 +11,8 @@ class Feed < ApplicationRecord
 
   def repliable_by?(replying_user)
     return true if privacy == 'share_with_all'
+    return false if privacy == 'share_with_only_me'
+    return true if user == replying_user
     privacy == 'share_with_follower' && user.following?(replying_user)
   end
 end

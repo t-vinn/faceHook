@@ -11,7 +11,11 @@ module Users
     end
 
     def edit
-      @feed = Feed.find(params[:id])
+      if Feed.find(params[:id]).user_id == current_user.id
+        @feed = Feed.find(params[:id])
+      else
+        render_404
+      end
     end
 
     def update
