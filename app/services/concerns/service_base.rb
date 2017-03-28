@@ -16,6 +16,6 @@ module ServiceBase
   end
 
   def call
-    fail StandardError.new('Must override `call` instance method.')
+    fail StandardError, 'Must override `call` instance method.'
   end
 end
