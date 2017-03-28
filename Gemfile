@@ -138,3 +138,7 @@ gem 'httparty'
 
 # run rake task once a day
 gem 'whenever', require: false
+
+
+# passwords
+gem 'config'
