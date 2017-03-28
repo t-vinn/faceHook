@@ -142,3 +142,5 @@ gem 'whenever', require: false
 
 # passwords
 gem 'config'
+
+gem 'activesupport'
