@@ -36,7 +36,7 @@ module ApplicationHelper
               method: :delete,
               data: { confirm: 'Unfollow this person?', disable_with: 'in progress...' },
               class: 'btn btn-primary'
-    else
+    elsif user != current_user
       link_to 'Follow', users_follow_relationships_path(followee_user_id: user.id),
               method: :post,
               data: { disable_with: 'in progress...' },
