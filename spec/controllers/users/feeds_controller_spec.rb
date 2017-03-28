@@ -45,7 +45,8 @@ RSpec.describe Users::FeedsController, type: :controller do
   describe 'PATCH #update' do
     let(:feed) { create(:feed, :with_user) }
     let(:changed_feed_params) do
-      { content: feed.content, user_id: feed.user_id, privacy: 'share_with_only_me' }
+      { content: feed.content, user_id: feed.user_id,
+        privacy: 'share_with_only_me' }
     end
     subject { patch :update, params: { id: feed, feed: changed_feed_params } }
 
