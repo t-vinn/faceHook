@@ -44,8 +44,8 @@ module ApplicationHelper
     end
   end
 
-  def follow_links_for_unfollowing_users(unfollowing_users)
-    if unfollowing_users.present?
+  def follow_links_for_recommended_users(recommended_users)
+    if recommended_users.present?
       render 'follow_links'
     else
       content_tag :p, "Congratulations, you've followed all the people in FaceHook!"
