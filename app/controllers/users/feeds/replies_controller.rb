@@ -19,6 +19,7 @@ module Users
           reply = Reply.new(reply_params)
           if reply.save
             UserMailer.reply_creation(reply).deliver_later
+            SlackMessageService.call(post_with_content: reply)
             redirect_to root_path, notice: 'You successfully replied to a comment!'
           else
             redirect_to new_users_feed_reply_path, notice: 'Your message is too short or long!'
