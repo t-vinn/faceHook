@@ -38,6 +38,9 @@ group :development, :test do
   gem 'rubocop-rspec'
   gem 'rubycritic'
   gem 'slim_lint'
+  gem 'rspec'
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
 end
 
 group :development do
@@ -66,6 +69,17 @@ group :development do
 
   # find n+1 problem
   gem 'bullet'
+end
+
+group :test do
+  gem 'faker'
+  gem 'capybara'
+  gem 'database_cleaner'
+  gem 'launchy'
+  gem 'selenium-webdriver'
+  gem 'spring-commands-rspec'
+  gem 'shoulda-matchers'
+  gem 'rails-controller-testing', require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -124,3 +138,8 @@ gem 'httparty'
 
 # run rake task once a day
 gem 'whenever', require: false
+
+# passwords
+gem 'config'
+
+gem 'activesupport'

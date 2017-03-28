@@ -21,8 +21,13 @@ vendor/bundle
 *.swp
 *.swo
 
-config/secrets.yml
-
 # Ignore all carrierwave files.
 /public/uploads/
 /public/images/
+
+# Ignore spec result files.
+spec/examples.txt
+
+config/settings.local.yml
+config/settings/*.local.yml
+config/environments/*.local.yml

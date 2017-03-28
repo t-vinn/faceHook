@@ -101,10 +101,19 @@ GEM
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.10.0)
     byebug (9.0.6)
+    capybara (2.12.1)
+      addressable
+      mime-types (>= 1.16)
+      nokogiri (>= 1.3.3)
+      rack (>= 1.0.0)
+      rack-test (>= 0.5.4)
+      xpath (~> 2.0)
     carrierwave (1.0.0)
       activemodel (>= 4.0.0)
       activesupport (>= 4.0.0)
       mime-types (>= 1.16)
+    childprocess (0.6.2)
+      ffi (~> 1.0, >= 1.0.11)
     chronic (0.10.2)
     chunky_png (1.3.8)
     codeclimate-engine-rb (0.4.0)
@@ -136,10 +145,15 @@ GEM
       sass-rails (< 5.1)
       sprockets (< 4.0)
     concurrent-ruby (1.0.5)
+    config (1.4.0)
+      activesupport (>= 3.0)
+      deep_merge (~> 1.1.1)
     coolline (0.5.0)
       unicode_utils (~> 1.4)
     daemons (1.2.4)
+    database_cleaner (1.5.3)
     debug_inspector (0.0.2)
+    deep_merge (1.1.1)
     delayed_job (4.1.2)
       activesupport (>= 3.0, < 5.1)
     delayed_job_active_record (4.1.1)
@@ -153,9 +167,17 @@ GEM
       railties (>= 4.1.0, < 5.1)
       responders
       warden (~> 1.2.3)
+    diff-lcs (1.3)
     equalizer (0.0.11)
     erubis (2.7.0)
     execjs (2.7.0)
+    factory_girl (4.8.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.8.0)
+      factory_girl (~> 4.8.0)
+      railties (>= 3.0.0)
+    faker (1.7.3)
+      i18n (~> 0.5)
     ffi (1.9.18)
     flay (2.8.1)
       erubis (~> 2.7.0)
@@ -275,6 +297,10 @@ GEM
       rails-assets-bootstrap (>= 3.0.0)
       rails-assets-jquery (>= 1.9.0)
     rails-assets-jquery (3.1.1)
+    rails-controller-testing (1.0.1)
+      actionpack (~> 5.x)
+      actionview (~> 5.x)
+      activesupport (~> 5.x)
     rails-dom-testing (2.0.2)
       activesupport (>= 4.2.0, < 6.0)
       nokogiri (~> 1.6)
@@ -304,6 +330,27 @@ GEM
       rainbow (~> 2.0)
     responders (2.3.0)
       railties (>= 4.2.0, < 5.1)
+    rspec (3.5.0)
+      rspec-core (~> 3.5.0)
+      rspec-expectations (~> 3.5.0)
+      rspec-mocks (~> 3.5.0)
+    rspec-core (3.5.4)
+      rspec-support (~> 3.5.0)
+    rspec-expectations (3.5.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.5.0)
+    rspec-mocks (3.5.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.5.0)
+    rspec-rails (3.5.2)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      railties (>= 3.0)
+      rspec-core (~> 3.5.0)
+      rspec-expectations (~> 3.5.0)
+      rspec-mocks (~> 3.5.0)
+      rspec-support (~> 3.5.0)
+    rspec-support (3.5.0)
     rubocop (0.36.0)
       parser (>= 2.3.0.0, < 3.0)
       powerpack (~> 0.1)
@@ -322,6 +369,7 @@ GEM
       reek (~> 4.4)
       ruby_parser (~> 3.8)
       virtus (~> 1.0)
+    rubyzip (1.2.1)
     sass (3.4.23)
     sass-rails (5.0.6)
       railties (>= 4.0.0, < 6)
@@ -329,7 +377,13 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
+    selenium-webdriver (3.3.0)
+      childprocess (~> 0.5)
+      rubyzip (~> 1.0)
+      websocket (~> 1.0)
     sexp_processor (4.8.0)
+    shoulda-matchers (3.1.1)
+      activesupport (>= 4.0.0)
     slim (3.0.7)
       temple (~> 0.7.6)
       tilt (>= 1.3.3, < 2.1)
@@ -345,6 +399,8 @@ GEM
     slop (3.6.0)
     spring (2.0.1)
       activesupport (>= 4.2)
+    spring-commands-rspec (1.0.4)
+      spring (>= 0.9.1)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
       spring (>= 1.2, < 3.0)
@@ -382,17 +438,21 @@ GEM
       activemodel (>= 5.0)
       debug_inspector
       railties (>= 5.0)
+    websocket (1.2.4)
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
     whenever (0.9.7)
       chronic (>= 0.6.3)
+    xpath (2.0.0)
+      nokogiri (~> 1.3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   activeadmin!
+  activesupport
   awesome_print
   better_errors
   binding_of_caller
@@ -401,12 +461,17 @@ DEPENDENCIES
   brakeman
   bullet
   byebug
+  capybara
   carrierwave
   coffee-rails (~> 4.2)
   compass-rails
+  config
   daemons
+  database_cleaner
   delayed_job_active_record
   devise
+  factory_girl_rails
+  faker
   font-awesome-rails
   hirb
   hirb-unicode
@@ -416,6 +481,7 @@ DEPENDENCIES
   jquery-rails
   jquery-turbolinks
   kaminari
+  launchy
   listen (~> 3.0.5)
   mini_magick
   mysql2 (>= 0.3.18, < 0.5)
@@ -427,14 +493,20 @@ DEPENDENCIES
   puma (~> 3.0)
   rails (~> 5.0.1)
   rails-assets-bootstrap-fileinput (~> 2.5.0)!
+  rails-controller-testing
   redis
+  rspec
+  rspec-rails
   rubocop
   rubocop-rspec
   rubycritic
   sass-rails (~> 5.0)
+  selenium-webdriver
+  shoulda-matchers
   slim-rails
   slim_lint
   spring
+  spring-commands-rspec
   spring-watcher-listen (~> 2.0.0)
   turbolinks (~> 5)
   tzinfo-data
