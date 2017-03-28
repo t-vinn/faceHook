@@ -28,7 +28,6 @@ vendor/bundle
 # Ignore spec result files.
 spec/examples.txt
 
-config/settings.yml
 config/settings.local.yml
 config/settings/*.local.yml
 config/environments/*.local.yml
