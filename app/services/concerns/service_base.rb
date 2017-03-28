@@ -11,9 +11,7 @@ module ServiceBase
 
   def initialize(params)
     params.each do |attr, value|
-      value.each do |key, value|
-        self.send("#{key}", value)
-      end
+      self.send("#{attr}=", value)
     end if params
   end
 

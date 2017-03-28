@@ -1,17 +1,14 @@
 class SlackMessageService
-  def initialize(post_with_content)
-    @content = post_with_content.content
-    @class_name = post_with_content.class.name
-  end
+  include ServiceBase
 
-  def send_to_times
+  def call
     url = ENV['URL_SLACK']
-    msg = @class_name + " was posted. The message was \n" + \
-          @content
+    msg = post_with_content.class.name + " was posted. The message was \n" + \
+          post_with_content.content
     HTTParty.delay.post(url, body: { "text": msg.to_s }.to_json)
   end
 
   private
 
-    attr_reader :post_with_content
+    attr_accessor :post_with_content
 end
