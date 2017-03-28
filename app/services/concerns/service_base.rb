@@ -3,7 +3,7 @@ module ServiceBase
   included do
     class << self
       protected :new
-      def call(params={})
+      def call(params = {})
         new(params).call
       end
     end
@@ -11,11 +11,11 @@ module ServiceBase
 
   def initialize(params)
     params.each do |attr, value|
-      self.send("#{attr}=", value)
+      send("#{attr}=", value)
     end if params
   end
 
   def call
-    raise StandardError.new('Must override `call` instance method.')
+    fail StandardError.new('Must override `call` instance method.')
   end
 end
