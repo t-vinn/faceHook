@@ -49,4 +49,8 @@ namespace :recommend do
   task hello: :environment do
     puts Time.current
   end
+
+  task delay: :environment do
+    DelayTestService.call
+  end
 end
